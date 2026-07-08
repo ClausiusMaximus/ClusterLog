@@ -1,124 +1,225 @@
 /* ==========================================
    ClusterLog
-   attack.js
+   UI - Attack
 ========================================== */
 
-let selectedKip = 0;
-let selectedSide = "";
-let selectedActivities = [];
-let duration = 0;
+class AttackUI {
 
-/* -----------------------------
-   Datum/Uhrzeit übernehmen
------------------------------- */
+    static render() {
 
-function fillCurrentDateTime() {
+        const page = document.getElementById("newPage");
 
-    const now = new Date();
+        if (!page) return;
 
-    const date =
-        now.toISOString().slice(0, 10);
+        page.innerHTML = `
 
-    const time =
-        now.toTimeString().slice(0, 8);
+        <div class="card">
 
-    document.getElementById("attackDate").value = date;
-    document.getElementById("attackTime").value = time;
+            <h2>Neue Attacke</h2>
 
-}
+            <p>Neue Cluster-Attacke erfassen</p>
 
-/* -----------------------------
-   Dauer
------------------------------- */
+        </div>
 
-function changeDuration(value){
+        <div class="card">
 
-    duration += value;
+            <label>Datum</label>
 
-    if(duration < 0)
-        duration = 0;
+            <input
+                id="attackDate"
+                type="date">
 
-    document.getElementById("durationValue")
-        .textContent = duration + " s";
+            <label>Uhrzeit</label>
 
-}
+            <input
+                id="attackTime"
+                type="time"
+                step="1">
 
-/* -----------------------------
-   KIP auswählen
------------------------------- */
+            <button
+                id="nowButton"
+                class="primaryButton">
 
-function selectKip(value){
+                Jetzt übernehmen
 
-    selectedKip = value;
+            </button>
 
-    document
-        .querySelectorAll(".kipButton")
-        .forEach(button=>{
+        </div>
 
-            button.classList.remove("selected");
+        <div class="card">
+
+            <h3>KIP</h3>
+
+            <div
+                id="kipGrid"
+                class="buttonGrid">
+
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <h3>Dauer</h3>
+
+            <div class="durationRow">
+
+                <button id="minus10">-10</button>
+
+                <button id="minus1">-1</button>
+
+                <span id="durationValue">
+
+                    0 s
+
+                </span>
+
+                <button id="plus1">+1</button>
+
+                <button id="plus10">+10</button>
+
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <h3>Kopfseite</h3>
+
+            <div
+                id="sideGrid"
+                class="buttonGrid">
+
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <h3>Tätigkeiten</h3>
+
+            <div
+                id="activitiesGrid"
+                class="buttonGrid">
+
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <label>Notizen</label>
+
+            <textarea
+                id="notes"
+                rows="5"></textarea>
+
+        </div>
+
+        <button
+            id="saveAttack"
+            class="primaryButton">
+
+            💾 Speichern
+
+        </button>
+
+        `;
+
+        this.renderKip();
+
+        this.renderSides();
+
+        this.renderActivities();
+
+    }
+
+    static renderKip(){
+
+        const grid=document.getElementById("kipGrid");
+
+        for(let i=1;i<=10;i++){
+
+            grid.innerHTML+=`
+                <button
+                    id="kip${i}"
+                    class="kipButton">
+
+                    ${i}
+
+                </button>
+            `;
+
+        }
+
+    }
+
+    static renderSides(){
+
+        const grid=document.getElementById("sideGrid");
+
+        const sides=[
+
+            "Links",
+
+            "Rechts",
+
+            "Beidseitig"
+
+        ];
+
+        sides.forEach(side=>{
+
+            grid.innerHTML+=`
+                <button
+                    class="sideButton">
+
+                    ${side}
+
+                </button>
+            `;
 
         });
 
-    document
-        .getElementById("kip"+value)
-        .classList.add("selected");
+    }
 
-}
+    static renderActivities(){
 
-/* -----------------------------
-   Kopfseite
------------------------------- */
+        const grid=document.getElementById("activitiesGrid");
 
-function selectSide(side){
+        const list=[
 
-    selectedSide = side;
+            "Heben",
+            "Kopf rechts",
+            "Kopf links",
+            "Kopf hoch",
+            "Kopf runter",
+            "Bücken",
+            "Drehen",
+            "Husten",
+            "Niesen",
+            "Ruhe",
+            "Schlaf",
+            "Sport",
+            "Sonstiges"
 
-}
+        ];
 
-/* -----------------------------
-   Tätigkeit
------------------------------- */
+        list.forEach(activity=>{
 
-function toggleActivity(activity){
+            grid.innerHTML+=`
 
-    if(selectedActivities.includes(activity)){
+            <button
+                class="activityButton">
 
-        selectedActivities =
-            selectedActivities.filter(a=>a!==activity);
+                ${activity}
 
-    }else{
+            </button>
 
-        selectedActivities.push(activity);
+            `;
+
+        });
 
     }
 
 }
-
-/* -----------------------------
-   Formular zurücksetzen
------------------------------- */
-
-function resetAttackForm(){
-
-    duration = 0;
-
-    selectedKip = 0;
-
-    selectedSide = "";
-
-    selectedActivities = [];
-
-    document.getElementById("durationValue")
-        .textContent = "0 s";
-
-}
-
-/* -----------------------------
-   Initialisierung
------------------------------- */
-
-document.addEventListener("DOMContentLoaded",()=>{
-
-    fillCurrentDateTime();
-
-});
