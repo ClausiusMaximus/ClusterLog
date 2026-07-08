@@ -138,30 +138,91 @@ textarea:focus {
 
 }
 
+
 /* =========================================
    KIP Skala
 ========================================= */
 
 .kip-grid {
+
     display: grid;
+
     grid-template-columns: repeat(6, 1fr);
-    gap: 8px;
+
+    gap: 10px;
+
 }
 
 .kip-btn {
-    height: 52px;
-    border-radius: var(--radius-md);
-    background: var(--color-surface-2);
-    border: 1px solid var(--color-border);
-    color: var(--color-text);
+
+    height: 58px;
+
+    border-radius: 14px;
+
+    border: none;
+
+    color: white;
+
+    font-size: 1.1rem;
+
     font-weight: 700;
-    font-size: 1rem;
+
+    transition: .15s;
+
+}
+
+.kip-btn:active {
+
+    transform: scale(.95);
+
 }
 
 .kip-btn.active {
-    background: var(--color-primary);
-    color: white;
-    border-color: var(--color-primary);
+
+    outline: 3px solid white;
+
+    transform: scale(1.08);
+
+}
+
+/* Farben */
+
+.kip-btn[data-kip="0"],
+.kip-btn[data-kip="1"],
+.kip-btn[data-kip="2"] {
+
+    background: var(--kip-low);
+
+}
+
+.kip-btn[data-kip="3"],
+.kip-btn[data-kip="4"],
+.kip-btn[data-kip="5"] {
+
+    background: var(--kip-mild);
+
+}
+
+.kip-btn[data-kip="6"],
+.kip-btn[data-kip="7"] {
+
+    background: var(--kip-medium);
+
+    color: black;
+
+}
+
+.kip-btn[data-kip="8"],
+.kip-btn[data-kip="9"] {
+
+    background: var(--kip-high);
+
+}
+
+.kip-btn[data-kip="10"] {
+
+    background: var(--kip-extreme);
+
 }
 
 /* =========================================
