@@ -1,5 +1,22 @@
 document.addEventListener("DOMContentLoaded", init);
 
-function init() {
+async function init() {
     console.log("ClusterLog gestartet");
+
+    registerServiceWorker();
+}
+
+async function registerServiceWorker() {
+
+    if (!("serviceWorker" in navigator)) {
+        return;
+    }
+
+    try {
+        await navigator.serviceWorker.register("./sw.js");
+        console.log("✅ Service Worker registriert");
+    } catch (error) {
+        console.error("❌ Service Worker konnte nicht registriert werden", error);
+    }
+
 }
