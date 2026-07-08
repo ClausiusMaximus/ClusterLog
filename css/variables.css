@@ -1,4 +1,4 @@
-:root {
+ii:root {
 
     /* Farben */
     --color-primary: #3b82f6;
@@ -37,4 +37,14 @@
 
     /* Navigation */
     --nav-height: 64px;
+
+/* =========================================
+   KIP Farben
+========================================= */
+
+--kip-low: #6b7280;
+--kip-mild: #2563eb;
+--kip-medium: #facc15;
+--kip-high: #fb923c;
+--kip-extreme: #ef4444;
 }
