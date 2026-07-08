@@ -33,21 +33,27 @@ body {
 ========================================= */
 
 header {
-    background: var(--color-surface);
-
-    color: var(--color-text);
-
-    padding: var(--space-lg);
-
-    border-bottom: 1px solid var(--color-border);
-
-    box-shadow: var(--shadow);
-
-    text-align: center;
-
     position: sticky;
     top: 0;
     z-index: 100;
+
+    background: var(--color-surface);
+
+    border-bottom: 1px solid var(--color-border);
+
+    padding: 18px;
+
+    text-align: center;
+
+    box-shadow: var(--shadow);
+}
+
+h1 {
+    font-size: 1.5rem;
+}
+
+h2 {
+    margin-bottom: var(--space-md);
 }
 
 /* =========================================
@@ -57,31 +63,14 @@ header {
 main {
     flex: 1;
 
-    padding: var(--space-lg);
+    width: 100%;
+    max-width: 700px;
 
-    padding-bottom: calc(var(--nav-height) + var(--space-xl));
-}
+    margin: auto;
 
-/* =========================================
-   Überschriften
-========================================= */
+    padding: var(--space-md);
 
-h1 {
-    font-size: 1.6rem;
-    font-weight: 700;
-}
-
-h2 {
-    font-size: 1.25rem;
-    margin-bottom: var(--space-md);
-}
-
-/* =========================================
-   Text
-========================================= */
-
-p {
-    color: var(--color-text-light);
+    padding-bottom: calc(var(--nav-height) + 30px);
 }
 
 /* =========================================
@@ -89,24 +78,23 @@ p {
 ========================================= */
 
 button {
+
     font: inherit;
-
-    background: var(--color-surface);
-    color: var(--color-text);
-
-    border: 1px solid var(--color-border);
-
-    border-radius: var(--radius-md);
-
-    padding: 12px 16px;
 
     cursor: pointer;
 
-    transition: .2s ease;
+    border: none;
+
+    border-radius: var(--radius-md);
+
+    transition: .15s;
+
 }
 
 button:active {
-    transform: scale(.97);
+
+    transform: scale(.96);
+
 }
 
 /* =========================================
@@ -114,6 +102,7 @@ button:active {
 ========================================= */
 
 nav {
+
     position: fixed;
 
     left: 0;
@@ -122,45 +111,29 @@ nav {
 
     height: var(--nav-height);
 
-    display: flex;
+    display: grid;
+
+    grid-template-columns: repeat(3,1fr);
 
     background: var(--color-surface);
 
     border-top: 1px solid var(--color-border);
 
-    backdrop-filter: blur(12px);
-
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, .35);
 }
 
 nav button {
-    flex: 1;
 
     background: transparent;
 
     color: var(--color-text-light);
 
-    border: none;
+    font-size: .85rem;
 
-    border-radius: 0;
-
-    font-weight: 600;
 }
 
 nav button:hover,
 nav button:active {
+
     color: var(--color-primary);
-}
 
-/* =========================================
-   Links
-========================================= */
-
-a {
-    color: var(--color-primary);
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
 }
