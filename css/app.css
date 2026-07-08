@@ -1,0 +1,59 @@
+/* Karten */
+.card {
+    background: var(--color-surface);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow);
+
+    padding: var(--space-lg);
+    margin-bottom: var(--space-lg);
+}
+
+/* Formular */
+.form-group {
+    display: flex;
+    flex-direction: column;
+
+    margin-bottom: var(--space-lg);
+}
+
+.form-group label {
+    font-weight: 600;
+    margin-bottom: var(--space-sm);
+}
+
+/* Eingabefelder */
+input,
+select,
+textarea {
+    font: inherit;
+
+    padding: 12px;
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+
+    width: 100%;
+}
+
+/* Primärer Button */
+.btn-primary {
+    width: 100%;
+
+    background: var(--color-primary);
+    color: white;
+
+    font-weight: 600;
+}
+
+.btn-primary:active {
+    background: var(--color-primary-light);
+}
+
+/* Platzhalter für leere Ansichten */
+.empty-state {
+    text-align: center;
+
+    color: var(--color-text-light);
+
+    margin-top: 48px;
+}
