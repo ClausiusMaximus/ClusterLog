@@ -89,26 +89,29 @@ function updateDurationDisplay() {
 
     if (!display) return;
 
-    if (duration < 60) {
+    const hours = Math.floor(duration / 3600);
+    const minutes = Math.floor((duration % 3600) / 60);
+    const seconds = duration % 60;
 
-        display.textContent = `${duration} s`;
+    let formattedTime;
 
-    } else if (duration < 3600) {
+    if (hours > 0) {
 
-        const minutes = Math.floor(duration / 60);
-        const seconds = duration % 60;
-
-        display.textContent =
-            `${minutes} min ${String(seconds).padStart(2, "0")} s`;
+        formattedTime =
+            `${String(hours).padStart(2, "0")}:` +
+            `${String(minutes).padStart(2, "0")}:` +
+            `${String(seconds).padStart(2, "0")}`;
 
     } else {
 
-        const hours = Math.floor(duration / 3600);
-        const minutes = Math.floor((duration % 3600) / 60);
+        const totalMinutes = Math.floor(duration / 60);
 
-        display.textContent =
-            `${hours} h ${minutes} min`;
+        formattedTime =
+            `${String(totalMinutes).padStart(2, "0")}:` +
+            `${String(seconds).padStart(2, "0")}`;
 
     }
+
+    display.textContent = formattedTime;
 
 }
