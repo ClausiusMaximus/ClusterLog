@@ -90,6 +90,9 @@ class App {
             if(pageId==="newPage"){
 
                 if(typeof fillCurrentDateTime==="function"){
+    if(typeof AttackUI!=="undefined"){AttackUI.render();
+
+}
 
                     fillCurrentDateTime();
 
