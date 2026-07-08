@@ -1,108 +1,162 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>ClusterLog</title>
 
-    <meta name="theme-color" content="#0d47a1">
+    <meta name="theme-color"
+          content="#2563eb">
 
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest"
+          href="manifest.json">
 
-    <link rel="stylesheet" href="css/variables.css">
-    <link rel="stylesheet" href="css/base.css">
-    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet"
+          href="css/variables.css">
+
+    <link rel="stylesheet"
+          href="css/base.css">
+
+    <link rel="stylesheet"
+          href="css/app.css">
+
 </head>
 
 <body>
 
 <header>
+
     <h1>ClusterLog</h1>
+
 </header>
 
 <main id="app">
+
+    <!-- Datum / Uhrzeit -->
 
     <section class="card">
 
         <h2>Neuer Angriff</h2>
 
+        <button
+                id="nowButton"
+                class="btn-primary">
+
+            📅 Jetzt übernehmen
+
+        </button>
+
         <div class="form-group">
-            <button id="nowButton" class="btn-primary">
-                📅 Jetzt
-            </button>
+
+            <label for="attackDate">
+                Datum
+            </label>
+
+            <input
+                    id="attackDate"
+                    type="date">
+
         </div>
 
         <div class="form-group">
-            <label for="attackDate">Datum</label>
-            <input id="attackDate" type="date">
-        </div>
 
-        <div class="form-group">
-            <label for="attackTime">Uhrzeit</label>
-            <input id="attackTime" type="time" step="1">
+            <label for="attackTime">
+                Uhrzeit
+            </label>
+
+            <input
+                    id="attackTime"
+                    type="time"
+                    step="1">
+
         </div>
 
     </section>
 
-  <section class="card">
+    <!-- Dauer -->
 
-    <h2>Dauer</h2>
+    <section class="card">
 
-    <div class="duration-row">
+        <h2>Dauer</h2>
 
-        <button id="minus60">-60</button>
-        <button id="minus10">-10</button>
-        <button id="minus1">-1</button>
+        <div class="duration-row">
 
-        <div id="durationValue" class="duration-display">
-            00:00
+            <button id="minus60">-60</button>
+
+            <button id="minus10">-10</button>
+
+            <button id="minus1">-1</button>
+
+            <div
+                    id="durationValue"
+                    class="duration-display">
+
+                00:00
+
+            </div>
+
+            <button id="plus1">+1</button>
+
+            <button id="plus10">+10</button>
+
+            <button id="plus60">+60</button>
+
         </div>
 
-        <button id="plus1">+1</button>
-        <button id="plus10">+10</button>
-        <button id="plus60">+60</button>
+    </section>
 
-    </div>
+    <!-- KIP -->
 
-</section>
+    <section class="card">
 
-<section class="card">
+        <h2>KIP-Skala</h2>
 
-    <h2>KIP-Skala</h2>
+        <div class="kip-grid">
 
-    <div class="kip-grid">
+            <button class="kip-btn" data-kip="0">0</button>
+            <button class="kip-btn" data-kip="1">1</button>
+            <button class="kip-btn" data-kip="2">2</button>
+            <button class="kip-btn" data-kip="3">3</button>
+            <button class="kip-btn" data-kip="4">4</button>
+            <button class="kip-btn" data-kip="5">5</button>
+            <button class="kip-btn" data-kip="6">6</button>
+            <button class="kip-btn" data-kip="7">7</button>
+            <button class="kip-btn" data-kip="8">8</button>
+            <button class="kip-btn" data-kip="9">9</button>
+            <button class="kip-btn" data-kip="10">10</button>
 
-        <button class="kip-btn" data-kip="0">0</button>
-        <button class="kip-btn" data-kip="1">1</button>
-        <button class="kip-btn" data-kip="2">2</button>
-        <button class="kip-btn" data-kip="3">3</button>
-        <button class="kip-btn" data-kip="4">4</button>
-        <button class="kip-btn" data-kip="5">5</button>
-        <button class="kip-btn" data-kip="6">6</button>
-        <button class="kip-btn" data-kip="7">7</button>
-        <button class="kip-btn" data-kip="8">8</button>
-        <button class="kip-btn" data-kip="9">9</button>
-        <button class="kip-btn" data-kip="10">10</button>
+        </div>
 
-    </div>
+    </section>
 
-</section>
+    <button
+            id="saveButton"
+            class="btn-primary">
 
-    <button class="btn-primary">
         💾 Angriff speichern
+
     </button>
 
 </main>
 
 <nav>
-    <button>Erfassen</button>
-    <button>Verlauf</button>
-    <button>Statistik</button>
+
+    <button>📝<br>Erfassen</button>
+
+    <button>📋<br>Verlauf</button>
+
+    <button>📊<br>Statistik</button>
+
 </nav>
 
-<script type="module" src="js/app.js"></script>
-
+<script type="module"
+        src="js/app.js"></script>
 
 </body>
+
 </html>
