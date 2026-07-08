@@ -63,3 +63,11 @@ main{
     padding:20px;
 
 }
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
