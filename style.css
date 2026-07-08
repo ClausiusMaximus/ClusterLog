@@ -108,11 +108,11 @@ main{
 
     display:flex;
 
-    gap:10px;
+    justify-content:space-between;
 
-    overflow-x:auto;
+    gap:8px;
 
-    padding:0 18px 20px;
+    padding:0 18px 14px;
 
 }
 
@@ -124,13 +124,13 @@ main{
 
 .topNav button{
 
-    min-width:120px;
+    min-width:90px;
 
-    height:82px;
+    height:64px;
 
     border:none;
 
-    border-radius:18px;
+    border-radius:16px;
 
     background:var(--primary);
 
@@ -144,21 +144,25 @@ main{
 
     align-items:center;
 
-    gap:6px;
+    gap:2px;
 
-    font-size:24px;
+    font-size:20px;
 
-    font-weight:bold;
+    font-weight:600;
 
     cursor:pointer;
 
     transition:.15s;
 
+    flex-shrink:0;
+
 }
 
 .topNav button span{
 
-    font-size:14px;
+    font-size:11px;
+
+    font-weight:500;
 
 }
 
