@@ -28,30 +28,68 @@
         <h2>Neuer Angriff</h2>
 
         <div class="form-group">
-            <label>Datum</label>
-
-            <input
-                id="attackDate"
-                type="date">
+            <button id="nowButton" class="btn-primary">
+                📅 Jetzt
+            </button>
         </div>
 
         <div class="form-group">
-            <label>Uhrzeit</label>
-
-            <input
-                id="attackTime"
-                type="time">
+            <label for="attackDate">Datum</label>
+            <input id="attackDate" type="date">
         </div>
 
-        <button
-            id="nowButton"
-            class="btn-primary">
-
-            Jetzt
-
-        </button>
+        <div class="form-group">
+            <label for="attackTime">Uhrzeit</label>
+            <input id="attackTime" type="time">
+        </div>
 
     </section>
+
+    <section class="card">
+
+        <h2>Dauer</h2>
+
+        <div class="duration-display">
+            <span id="durationValue">180</span> Sekunden
+        </div>
+
+        <div class="duration-controls">
+
+            <button id="minus10">-10</button>
+            <button id="minus1">-1</button>
+
+            <button id="plus1">+1</button>
+            <button id="plus10">+10</button>
+
+        </div>
+
+    </section>
+
+    <section class="card">
+
+        <h2>KIP-Skala</h2>
+
+        <div class="kip-grid">
+
+            <button class="kip-btn">0</button>
+            <button class="kip-btn">1</button>
+            <button class="kip-btn">2</button>
+            <button class="kip-btn">3</button>
+            <button class="kip-btn">4</button>
+            <button class="kip-btn">5</button>
+            <button class="kip-btn">6</button>
+            <button class="kip-btn">7</button>
+            <button class="kip-btn">8</button>
+            <button class="kip-btn">9</button>
+            <button class="kip-btn">10</button>
+
+        </div>
+
+    </section>
+
+    <button class="btn-primary">
+        💾 Angriff speichern
+    </button>
 
 </main>
 
