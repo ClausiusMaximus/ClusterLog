@@ -1,19 +1,23 @@
 /* ==========================================
    ClusterLog
+   js/app.js
+   Version 0.3 Alpha
 ========================================== */
 
 class App {
 
     static init() {
 
-        console.log("ClusterLog gestartet");
+        console.log("🧠 ClusterLog gestartet");
 
         this.initNavigation();
 
+        // Formular vorbereiten
         if (typeof fillCurrentDateTime === "function") {
             fillCurrentDateTime();
         }
 
+        // Dashboard aktualisieren
         if (typeof updateDashboard === "function") {
             updateDashboard();
         }
@@ -24,48 +28,122 @@ class App {
 
         const pages = document.querySelectorAll(".page");
 
+        const navButtons = {
+
+            dashboardPage: document.getElementById("dashboardBtn"),
+
+            newPage: document.getElementById("newBtn"),
+
+            calendarPage: document.getElementById("calendarBtn"),
+
+            statsPage: document.getElementById("statsBtn")
+
+        };
+
         function showPage(pageId){
 
+            // Seiten ausblenden
             pages.forEach(page=>{
+
                 page.classList.remove("active");
+
             });
 
-            document
-                .getElementById(pageId)
-                .classList.add("active");
+            // Gewählte Seite anzeigen
+            const page = document.getElementById(pageId);
 
-            if(typeof updateDashboard==="function"){
-                updateDashboard();
+            if(page){
+
+                page.classList.add("active");
+
             }
 
-            // Aktive Navigation markieren
-            document
-                .querySelectorAll(".topNav button")
-                .forEach(btn=>btn.classList.remove("active"));
+            // Navigation aktualisieren
+            Object.values(navButtons).forEach(button=>{
 
-            const map={
-                dashboardPage:"dashboardBtn",
-                newPage:"newBtn",
-                calendarPage:"calendarBtn",
-                statsPage:"statsBtn"
-            };
+                if(button){
 
-            document
-                .getElementById(map[pageId])
-                ?.classList.add("active");
+                    button.classList.remove("active");
+
+                }
+
+            });
+
+            if(navButtons[pageId]){
+
+                navButtons[pageId].classList.add("active");
+
+            }
+
+            // Dashboard aktualisieren
+            if(pageId==="dashboardPage"){
+
+                if(typeof updateDashboard==="function"){
+
+                    updateDashboard();
+
+                }
+
+            }
+
+            // Formular vorbereiten
+            if(pageId==="newPage"){
+
+                if(typeof fillCurrentDateTime==="function"){
+
+                    fillCurrentDateTime();
+
+                }
+
+            }
 
         }
 
-        dashboardBtn.onclick=()=>showPage("dashboardPage");
-        newBtn.onclick=()=>showPage("newPage");
-        calendarBtn.onclick=()=>showPage("calendarPage");
-        statsBtn.onclick=()=>showPage("statsPage");
+        // Buttons
+
+        navButtons.dashboardPage.onclick=()=>showPage("dashboardPage");
+
+        navButtons.newPage.onclick=()=>showPage("newPage");
+
+        navButtons.calendarPage.onclick=()=>showPage("calendarPage");
+
+        navButtons.statsPage.onclick=()=>showPage("statsPage");
+
+        // Dashboard beim Start
 
         showPage("dashboardPage");
 
     }
 
 }
+
+
+/* ==========================================
+   Toast
+========================================== */
+
+function showToast(message){
+
+    const toast=document.getElementById("toast");
+
+    if(!toast) return;
+
+    toast.textContent=message;
+
+    toast.classList.add("show");
+
+    setTimeout(()=>{
+
+        toast.classList.remove("show");
+
+    },2000);
+
+}
+
+
+/* ==========================================
+   Start
+========================================== */
 
 document.addEventListener("DOMContentLoaded",()=>{
 
