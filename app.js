@@ -139,3 +139,12 @@ document.addEventListener("DOMContentLoaded",()=>{
     updateDashboard();
 
 });
+document.addEventListener("DOMContentLoaded",()=>{
+
+    UI.renderAttackForm();
+
+    fillCurrentDateTime();
+
+    updateDashboard();
+
+});
