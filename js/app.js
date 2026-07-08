@@ -1,18 +1,27 @@
 import { initDatabase } from "./storage.js";
+
 document.addEventListener("DOMContentLoaded", init);
 
-async function init() {
+function init() {
+
     console.log("ClusterLog gestartet");
 
-    //registerServiceWorker();
     initDatabase();
+
+    setupNowButton();
+
+    // Datum und Uhrzeit direkt beim Start setzen
+    setCurrentDateTime();
+
 }
 
 function setupNowButton() {
 
     const button = document.getElementById("nowButton");
 
-    button.addEventListener("click", setCurrentDateTime);
+    if (button) {
+        button.addEventListener("click", setCurrentDateTime);
+    }
 
 }
 
@@ -20,32 +29,28 @@ function setCurrentDateTime() {
 
     const now = new Date();
 
-    const date =
-        now.getFullYear() + "-" +
-        String(now.getMonth() + 1).padStart(2, "0") + "-" +
-        String(now.getDate()).padStart(2, "0");
+    // Datum YYYY-MM-DD
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
 
-    const time =
-        String(now.getHours()).padStart(2, "0") + ":" +
-        String(now.getMinutes()).padStart(2, "0") + ":" +
-        String(now.getSeconds()).padStart(2, "0");
+    // Uhrzeit HH:MM:SS
+    const hours = String(now.getHours()).padStart(2, "0");
+    const minutes = String(now.getMinutes()).padStart(2, "0");
+    const seconds = String(now.getSeconds()).padStart(2, "0");
 
-    document.getElementById("attackDate").value = date;
-    document.getElementById("attackTime").value = time;
+    const date = `${year}-${month}-${day}`;
+    const time = `${hours}:${minutes}:${seconds}`;
 
-}
+    const dateInput = document.getElementById("attackDate");
+    const timeInput = document.getElementById("attackTime");
 
-async function registerServiceWorker() {
-
-    if (!("serviceWorker" in navigator)) {
-        return;
+    if (dateInput) {
+        dateInput.value = date;
     }
 
-    try {
-        await navigator.serviceWorker.register("./sw.js");
-        console.log("✅ Service Worker registriert");
-    } catch (error) {
-        console.error("❌ Service Worker konnte nicht registriert werden", error);
+    if (timeInput) {
+        timeInput.value = time;
     }
 
 }
