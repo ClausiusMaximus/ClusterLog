@@ -42,7 +42,73 @@
 
 <h2>Neue Attacke</h2>
 
-<p>Hier entsteht das Eingabeformular.</p>
+<div class="card">
+
+<label>Datum</label>
+<input type="date" id="attackDate">
+
+<label>Uhrzeit</label>
+<input type="time" id="attackTime" step="1">
+
+<button class="smallButton" id="nowButton">
+Jetzt übernehmen
+</button>
+
+</div>
+
+<div class="card">
+
+<h3>KIP</h3>
+
+<div id="kipGrid"></div>
+
+</div>
+
+<div class="card">
+
+<h3>Dauer</h3>
+
+<div class="durationRow">
+
+<button id="minus10">-10</button>
+
+<button id="minus1">-1</button>
+
+<span id="durationValue">
+
+0 s
+
+</span>
+
+<button id="plus1">+1</button>
+
+<button id="plus10">+10</button>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>Kopfseite</h3>
+
+<div id="sideButtons">
+
+<button data-side="Links">Links</button>
+
+<button data-side="Rechts">Rechts</button>
+
+<button data-side="Beidseitig">Beidseitig</button>
+
+</div>
+
+</div>
+
+<button id="saveAttack">
+
+💾 Speichern
+
+</button>
 
 </section>
 
