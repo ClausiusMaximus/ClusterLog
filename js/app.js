@@ -1,8 +1,9 @@
 import { initDatabase } from "./storage.js";
 
-document.addEventListener("DOMContentLoaded", init);
-
 let duration = 0;
+let selectedKip = null;
+
+document.addEventListener("DOMContentLoaded", init);
 
 function init() {
 
@@ -11,14 +12,17 @@ function init() {
     initDatabase();
 
     setupNowButton();
-
-    // Datum und Uhrzeit direkt beim Start setzen
-    setCurrentDateTime();
-
     setupDurationButtons();
+    setupKipButtons();
+
+    setCurrentDateTime();
     updateDurationDisplay();
 
 }
+
+/* =========================================
+   Datum & Uhrzeit
+========================================= */
 
 function setupNowButton() {
 
@@ -34,31 +38,26 @@ function setCurrentDateTime() {
 
     const now = new Date();
 
-    // Datum YYYY-MM-DD
     const year = now.getFullYear();
     const month = String(now.getMonth() + 1).padStart(2, "0");
     const day = String(now.getDate()).padStart(2, "0");
 
-    // Uhrzeit HH:MM:SS
     const hours = String(now.getHours()).padStart(2, "0");
     const minutes = String(now.getMinutes()).padStart(2, "0");
     const seconds = String(now.getSeconds()).padStart(2, "0");
 
-    const date = `${year}-${month}-${day}`;
-    const time = `${hours}:${minutes}:${seconds}`;
+    document.getElementById("attackDate").value =
+        `${year}-${month}-${day}`;
 
-    const dateInput = document.getElementById("attackDate");
-    const timeInput = document.getElementById("attackTime");
-
-    if (dateInput) {
-        dateInput.value = date;
-    }
-
-    if (timeInput) {
-        timeInput.value = time;
-    }
+    document.getElementById("attackTime").value =
+        `${hours}:${minutes}:${seconds}`;
 
 }
+
+/* =========================================
+   Dauer
+========================================= */
+
 function setupDurationButtons() {
 
     document.getElementById("minus60").addEventListener("click", () => changeDuration(-60));
@@ -93,11 +92,9 @@ function updateDurationDisplay() {
     const minutes = Math.floor((duration % 3600) / 60);
     const seconds = duration % 60;
 
-    let formattedTime;
-
     if (hours > 0) {
 
-        formattedTime =
+        display.textContent =
             `${String(hours).padStart(2, "0")}:` +
             `${String(minutes).padStart(2, "0")}:` +
             `${String(seconds).padStart(2, "0")}`;
@@ -106,12 +103,38 @@ function updateDurationDisplay() {
 
         const totalMinutes = Math.floor(duration / 60);
 
-        formattedTime =
+        display.textContent =
             `${String(totalMinutes).padStart(2, "0")}:` +
             `${String(seconds).padStart(2, "0")}`;
 
     }
 
-    display.textContent = formattedTime;
+}
+
+/* =========================================
+   KIP
+========================================= */
+
+function setupKipButtons() {
+
+    const buttons = document.querySelectorAll(".kip-btn");
+
+    buttons.forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            buttons.forEach(btn =>
+                btn.classList.remove("active")
+            );
+
+            button.classList.add("active");
+
+            selectedKip = Number(button.dataset.kip);
+
+            console.log("KIP:", selectedKip);
+
+        });
+
+    });
 
 }
