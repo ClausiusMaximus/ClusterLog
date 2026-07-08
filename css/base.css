@@ -1,13 +1,22 @@
-/* Reset */
-* {
+/* =========================================
+   Reset
+========================================= */
+
+*,
+*::before,
+*::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Grundlayout */
+/* =========================================
+   Body
+========================================= */
+
 body {
     font-family: var(--font-family);
+
     background: var(--color-background);
     color: var(--color-text);
 
@@ -15,52 +24,95 @@ body {
 
     display: flex;
     flex-direction: column;
+
+    line-height: 1.5;
 }
 
-/* Header */
-header {
-    background: var(--color-primary);
-    color: white;
+/* =========================================
+   Header
+========================================= */
 
-    padding: var(--space-md);
+header {
+    background: var(--color-surface);
+
+    color: var(--color-text);
+
+    padding: var(--space-lg);
+
+    border-bottom: 1px solid var(--color-border);
+
+    box-shadow: var(--shadow);
 
     text-align: center;
 
-    box-shadow: var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
-/* Hauptbereich */
+/* =========================================
+   Main
+========================================= */
+
 main {
     flex: 1;
 
     padding: var(--space-lg);
 
-    padding-bottom: calc(var(--nav-height) + var(--space-lg));
+    padding-bottom: calc(var(--nav-height) + var(--space-xl));
 }
 
-/* Überschriften */
+/* =========================================
+   Überschriften
+========================================= */
+
 h1 {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
+    font-weight: 700;
 }
 
 h2 {
+    font-size: 1.25rem;
     margin-bottom: var(--space-md);
 }
 
-/* Buttons */
+/* =========================================
+   Text
+========================================= */
+
+p {
+    color: var(--color-text-light);
+}
+
+/* =========================================
+   Buttons
+========================================= */
+
 button {
     font: inherit;
 
-    border: none;
+    background: var(--color-surface);
+    color: var(--color-text);
+
+    border: 1px solid var(--color-border);
 
     border-radius: var(--radius-md);
 
     padding: 12px 16px;
 
     cursor: pointer;
+
+    transition: .2s ease;
 }
 
-/* Navigation */
+button:active {
+    transform: scale(.97);
+}
+
+/* =========================================
+   Navigation
+========================================= */
+
 nav {
     position: fixed;
 
@@ -76,7 +128,9 @@ nav {
 
     border-top: 1px solid var(--color-border);
 
-    box-shadow: var(--shadow);
+    backdrop-filter: blur(12px);
+
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, .35);
 }
 
 nav button {
@@ -84,5 +138,29 @@ nav button {
 
     background: transparent;
 
+    color: var(--color-text-light);
+
+    border: none;
+
     border-radius: 0;
+
+    font-weight: 600;
+}
+
+nav button:hover,
+nav button:active {
+    color: var(--color-primary);
+}
+
+/* =========================================
+   Links
+========================================= */
+
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
 }
