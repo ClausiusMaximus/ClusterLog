@@ -4,15 +4,10 @@
 
 .card {
     background: var(--color-surface);
-
     border: 1px solid var(--color-border);
-
     border-radius: var(--radius-lg);
-
     box-shadow: var(--shadow);
-
     padding: var(--space-lg);
-
     margin-bottom: var(--space-lg);
 }
 
@@ -23,13 +18,11 @@
 .form-group {
     display: flex;
     flex-direction: column;
-
     margin-bottom: var(--space-lg);
 }
 
 .form-group label {
     margin-bottom: var(--space-sm);
-
     font-weight: 600;
 }
 
@@ -41,17 +34,11 @@ input,
 select,
 textarea {
     width: 100%;
-
     padding: 14px;
-
     font: inherit;
-
     background: var(--color-surface-2);
-
     color: var(--color-text);
-
     border: 1px solid var(--color-border);
-
     border-radius: var(--radius-md);
 }
 
@@ -59,7 +46,6 @@ input:focus,
 select:focus,
 textarea:focus {
     outline: none;
-
     border-color: var(--color-primary);
 }
 
@@ -69,13 +55,9 @@ textarea:focus {
 
 .btn-primary {
     width: 100%;
-
     background: var(--color-primary);
-
     color: white;
-
     border: none;
-
     font-weight: 600;
 }
 
@@ -85,65 +67,58 @@ textarea:focus {
 
 .btn-secondary {
     background: var(--color-surface-2);
-
     color: var(--color-text);
 }
 
 /* =========================================
-   Dauer Buttons
+   Dauer
 ========================================= */
 
-.duration-controls {
+.duration-row {
     display: grid;
+    grid-template-columns: auto auto auto 1fr auto auto auto;
+    gap: 8px;
+    align-items: center;
+}
 
-    grid-template-columns: repeat(5, 1fr);
-
-    gap: var(--space-sm);
-
-    margin-top: var(--space-md);
+.duration-row button {
+    min-width: 54px;
+    height: 52px;
+    font-size: 1rem;
+    font-weight: 600;
 }
 
 .duration-display {
     text-align: center;
-
     font-size: 2rem;
-
-    font-weight: bold;
-
-    margin: var(--space-lg) 0;
+    font-weight: 700;
+    letter-spacing: 2px;
+    white-space: nowrap;
 }
 
 /* =========================================
-   KIP Buttons
+   KIP Skala
 ========================================= */
 
 .kip-grid {
     display: grid;
-
     grid-template-columns: repeat(6, 1fr);
-
-    gap: var(--space-sm);
+    gap: 8px;
 }
 
 .kip-btn {
-    aspect-ratio: 1;
-
+    height: 52px;
     border-radius: var(--radius-md);
-
     background: var(--color-surface-2);
-
     border: 1px solid var(--color-border);
-
-    font-weight: bold;
-
+    color: var(--color-text);
+    font-weight: 700;
     font-size: 1rem;
 }
 
 .kip-btn.active {
     background: var(--color-primary);
-
     color: white;
-
     border-color: var(--color-primary);
 }
 
@@ -153,37 +128,27 @@ textarea:focus {
 
 .stats-grid {
     display: grid;
-
     grid-template-columns: repeat(2, 1fr);
-
     gap: var(--space-md);
 }
 
 .stat-card {
     background: var(--color-surface);
-
     border: 1px solid var(--color-border);
-
     border-radius: var(--radius-md);
-
     padding: var(--space-lg);
-
     text-align: center;
 }
 
 .stat-value {
     font-size: 2rem;
-
     font-weight: bold;
-
     color: var(--color-primary);
 }
 
 .stat-label {
     margin-top: var(--space-sm);
-
     color: var(--color-text-light);
-
     font-size: .9rem;
 }
 
@@ -193,31 +158,22 @@ textarea:focus {
 
 .attack-item {
     background: var(--color-surface);
-
     border: 1px solid var(--color-border);
-
     border-radius: var(--radius-md);
-
     padding: var(--space-md);
-
     margin-bottom: var(--space-md);
 }
 
 .attack-date {
     font-size: .9rem;
-
     color: var(--color-text-light);
-
     margin-bottom: var(--space-sm);
 }
 
 .attack-values {
     display: flex;
-
     justify-content: space-between;
-
     align-items: center;
-
     font-weight: 600;
 }
 
@@ -227,9 +183,7 @@ textarea:focus {
 
 .empty-state {
     text-align: center;
-
     color: var(--color-text-light);
-
     padding: 64px 16px;
 }
 
@@ -237,13 +191,28 @@ textarea:focus {
    Responsive
 ========================================= */
 
+@media (max-width: 600px) {
+
+    .duration-row {
+        grid-template-columns: repeat(7, 1fr);
+    }
+
+    .duration-row button {
+        min-width: auto;
+        height: 48px;
+        font-size: .9rem;
+    }
+
+    .duration-display {
+        font-size: 1.3rem;
+    }
+
+}
+
 @media (min-width: 768px) {
 
     main {
         max-width: 700px;
-
-        width: 100%;
-
         margin: auto;
     }
 
