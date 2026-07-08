@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", init);
 async function init() {
     console.log("ClusterLog gestartet");
 
-    registerServiceWorker();
+    //registerServiceWorker();
     initDatabase();
 }
 
