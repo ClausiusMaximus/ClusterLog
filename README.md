@@ -1,16 +1,31 @@
-# 🧠 ClusterLog
+# ClusterLog
 
-Offline-Protokoll für Cluster-Kopfschmerz.
+Eine installierbare Progressive Web App (PWA) zum Erfassen und Auswerten von Clusterkopfschmerz-Attacken.
 
-## Funktionen
+## Ziele
 
-- Attacken erfassen
-- Monatskalender
+- Offline nutzbar
+- Schnell bedienbar
+- Lokale Datenspeicherung
 - Statistik
-- Export
-- Offline
+- CSV- und JSON-Export
+
+## Roadmap
+
+### Phase 1
+- Projektstruktur
 - PWA
+- Service Worker
+- IndexedDB
 
-## Status
+### Phase 2
+- Angriff erfassen
 
-🚧 Version 0.2.0 Alpha# ClusterLog
+### Phase 3
+- Verlauf
+
+### Phase 4
+- Statistik
+
+### Phase 5
+- Export/Import
