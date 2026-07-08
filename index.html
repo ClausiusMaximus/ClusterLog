@@ -1,141 +1,327 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
     <title>ClusterLog</title>
 
+    <meta name="theme-color" content="#111827">
+
     <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
 
-<header>
-    <h1>🧠 ClusterLog</h1>
+<header class="header">
+
+    <div class="logo">
+
+        🧠
+
+    </div>
+
+    <div>
+
+        <h1>ClusterLog</h1>
+
+        <span class="version">
+
+            Version 0.3 Alpha
+
+        </span>
+
+    </div>
+
 </header>
 
-<nav>
 
-<button id="dashboardBtn">🏠 Dashboard</button>
 
-<button id="newBtn">➕ Neue Attacke</button>
+<nav class="topNav">
 
-<button id="calendarBtn">📅 Kalender</button>
+    <button id="dashboardBtn">
 
-<button id="statsBtn">📊 Statistik</button>
+        🏠
 
+        <span>Dashboard</span>
+
+    </button>
+
+    <button id="newBtn">
+
+        ➕
+
+        <span>Attacke</span>
+
+    </button>
+
+    <button id="calendarBtn">
+
+        📅
+
+        <span>Kalender</span>
+
+    </button>
+
+    <button id="statsBtn">
+
+        📊
+
+        <span>Statistik</span>
+
+    </button>
 
 </nav>
 
+
+
 <main>
 
-<section id="dashboardPage" class="page active">
-
-<h2>Willkommen 👋</h2>
-
-<p>ClusterLog ist bereit.</p>
-
-</section>
 
 
-<section id="newPage" class="page">
+<section
 
-<h2>Neue Attacke</h2>
+id="dashboardPage"
+
+class="page active">
+
+
 
 <div class="card">
 
-<label>Datum</label>
-<input type="date" id="attackDate">
+<h2>
 
-<label>Uhrzeit</label>
-<input type="time" id="attackTime" step="1">
+Willkommen 👋
 
-<button class="smallButton" id="nowButton">
-Jetzt übernehmen
-</button>
+</h2>
+
+<p>
+
+ClusterLog ist bereit.
+
+</p>
 
 </div>
 
+
+
 <div class="card">
 
-<h3>KIP</h3>
+<h3>
 
-<div id="kipGrid"></div>
+Überblick
+
+</h3>
+
+
+
+<div class="statsGrid">
+
+
+
+<div>
+
+<div class="statValue"
+
+id="todayAttacks">
+
+0
 
 </div>
 
-<div class="card">
+<div class="statTitle">
 
-<h3>Dauer</h3>
+Attacken
 
-<div class="durationRow">
+</div>
 
-<button id="minus10">-10</button>
+</div>
 
-<button id="minus1">-1</button>
 
-<span id="durationValue">
+
+<div>
+
+<div class="statValue"
+
+id="todayKip">
+
+0
+
+</div>
+
+<div class="statTitle">
+
+Ø KIP
+
+</div>
+
+</div>
+
+
+
+<div>
+
+<div class="statValue"
+
+id="todayDuration">
 
 0 s
 
-</span>
+</div>
 
-<button id="plus1">+1</button>
+<div class="statTitle">
 
-<button id="plus10">+10</button>
+Ø Dauer
 
 </div>
 
 </div>
+
+
+
+</div>
+
+</div>
+
+
 
 <div class="card">
 
-<h3>Kopfseite</h3>
+<h3>
 
-<div id="sideButtons">
+Letzte Attacke
 
-<button data-side="Links">Links</button>
+</h3>
 
-<button data-side="Rechts">Rechts</button>
 
-<button data-side="Beidseitig">Beidseitig</button>
+
+<div id="lastAttack">
+
+Noch keine Einträge.
 
 </div>
 
 </div>
 
-<button id="saveAttack">
 
-💾 Speichern
-
-</button>
 
 </section>
 
 
-<section id="calendarPage" class="page">
 
-<h2>Kalender</h2>
+<section
 
-<p>Hier entsteht der Monatskalender.</p>
+id="newPage"
+
+class="page">
+
+
+
+<h2>
+
+Neue Attacke
+
+</h2>
+
+
+
+<p>
+
+Hier entsteht jetzt das Eingabeformular.
+
+</p>
+
+
 
 </section>
 
 
-<section id="statsPage" class="page">
 
-<h2>Statistik</h2>
+<section
 
-<p>Hier entstehen die Auswertungen.</p>
+id="calendarPage"
+
+class="page">
+
+
+
+<h2>
+
+Kalender
+
+</h2>
+
+
+
+<p>
+
+Der Monatskalender folgt im nächsten Sprint.
+
+</p>
+
+
 
 </section>
+
+
+
+<section
+
+id="statsPage"
+
+class="page">
+
+
+
+<h2>
+
+Statistik
+
+</h2>
+
+
+
+<p>
+
+Hier erscheinen später Diagramme und Auswertungen.
+
+</p>
+
+
+
+</section>
+
+
 
 </main>
 
+
+
+<div
+
+id="toast"
+
+class="toast">
+
+Gespeichert
+
+</div>
+
+
+
 <script src="js/models.js"></script>
+
 <script src="js/storage.js"></script>
+
 <script src="js/dashboard.js"></script>
+
 <script src="app.js"></script>
 
 </body>
+
 </html>
