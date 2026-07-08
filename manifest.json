@@ -2,12 +2,13 @@
   "name": "ClusterLog",
   "short_name": "ClusterLog",
   "description": "Clusterkopfschmerz-Protokoll",
+  "lang": "de",
   "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#121212",
-  "theme_color": "#3b82f6",
-  "lang": "de",
+  "theme_color": "#2563eb",
   "icons": [
     {
       "src": "assets/icons/icon-192.png",
