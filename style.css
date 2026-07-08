@@ -392,3 +392,13 @@ button{
     }
 
 }
+
+.topNav button.active{
+
+    background:#1D4ED8;
+
+    transform:scale(.97);
+
+    box-shadow:0 0 14px rgba(37,99,235,.45);
+
+}
