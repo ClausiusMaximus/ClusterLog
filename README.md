@@ -1,31 +1,34 @@
 # ClusterLog
 
-Eine installierbare Progressive Web App (PWA) zum Erfassen und Auswerten von Clusterkopfschmerz-Attacken.
+ClusterLog ist eine Progressive Web App (PWA) zum schnellen Erfassen von Clusterkopfschmerz-Attacken.
 
-## Ziele
+## Funktionen
 
-- Offline nutzbar
-- Schnell bedienbar
-- Lokale Datenspeicherung
-- Statistik
-- CSV- und JSON-Export
+- 📅 Datum & Uhrzeit automatisch
+- ⏱ Dauer im Format MM:SS bzw. HH:MM:SS
+- 🔥 KIP-Skala 0–10
+- 💾 Speicherung in IndexedDB
+- 📱 Installierbare PWA
+- 🌙 Dark Mode
 
 ## Roadmap
 
-### Phase 1
-- Projektstruktur
-- PWA
-- Service Worker
-- IndexedDB
-
-### Phase 2
+### Version 0.1
 - Angriff erfassen
+- Speicherung
 
-### Phase 3
+### Version 0.2
 - Verlauf
+- Löschen
 
-### Phase 4
+### Version 0.3
 - Statistik
 
-### Phase 5
-- Export/Import
+### Version 0.4
+- CSV Export
+- JSON Backup
+
+### Version 1.0
+- Offline
+- Finales Design
+- Einstellungen
