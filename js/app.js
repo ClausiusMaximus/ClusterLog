@@ -1,9 +1,11 @@
+import { initDatabase } from "./storage.js";
 document.addEventListener("DOMContentLoaded", init);
 
 async function init() {
     console.log("ClusterLog gestartet");
 
     registerServiceWorker();
+    initDatabase();
 }
 
 async function registerServiceWorker() {
