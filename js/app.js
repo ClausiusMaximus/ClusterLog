@@ -2,6 +2,8 @@ import { initDatabase } from "./storage.js";
 
 document.addEventListener("DOMContentLoaded", init);
 
+let duration = 0;
+
 function init() {
 
     console.log("ClusterLog gestartet");
@@ -12,6 +14,9 @@ function init() {
 
     // Datum und Uhrzeit direkt beim Start setzen
     setCurrentDateTime();
+
+    setupDurationButtons();
+    updateDurationDisplay();
 
 }
 
@@ -51,6 +56,59 @@ function setCurrentDateTime() {
 
     if (timeInput) {
         timeInput.value = time;
+    }
+
+}
+function setupDurationButtons() {
+
+    document.getElementById("minus60").addEventListener("click", () => changeDuration(-60));
+    document.getElementById("minus10").addEventListener("click", () => changeDuration(-10));
+    document.getElementById("minus1").addEventListener("click", () => changeDuration(-1));
+
+    document.getElementById("plus1").addEventListener("click", () => changeDuration(1));
+    document.getElementById("plus10").addEventListener("click", () => changeDuration(10));
+    document.getElementById("plus60").addEventListener("click", () => changeDuration(60));
+
+}
+
+function changeDuration(value) {
+
+    duration += value;
+
+    if (duration < 0) {
+        duration = 0;
+    }
+
+    updateDurationDisplay();
+
+}
+
+function updateDurationDisplay() {
+
+    const display = document.getElementById("durationValue");
+
+    if (!display) return;
+
+    if (duration < 60) {
+
+        display.textContent = `${duration} s`;
+
+    } else if (duration < 3600) {
+
+        const minutes = Math.floor(duration / 60);
+        const seconds = duration % 60;
+
+        display.textContent =
+            `${minutes} min ${String(seconds).padStart(2, "0")} s`;
+
+    } else {
+
+        const hours = Math.floor(duration / 3600);
+        const minutes = Math.floor((duration % 3600) / 60);
+
+        display.textContent =
+            `${hours} h ${minutes} min`;
+
     }
 
 }
