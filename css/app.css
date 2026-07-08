@@ -2,325 +2,238 @@
    Karten
 ========================================= */
 
-.card {
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow);
-    padding: var(--space-lg);
-    margin-bottom: var(--space-lg);
+.card{
+
+    background:var(--color-surface);
+
+    border:1px solid var(--color-border);
+
+    border-radius:var(--radius-lg);
+
+    padding:20px;
+
+    margin-bottom:20px;
+
+    box-shadow:var(--shadow);
+
 }
 
 /* =========================================
    Formular
 ========================================= */
 
-.form-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: var(--space-lg);
+.form-group{
+
+    display:flex;
+
+    flex-direction:column;
+
+    margin-top:16px;
+
 }
 
-.form-group label {
-    margin-bottom: var(--space-sm);
-    font-weight: 600;
+label{
+
+    margin-bottom:6px;
+
+    font-weight:600;
+
+}
+
+input{
+
+    width:100%;
+
+    padding:14px;
+
+    font:inherit;
+
+    color:var(--color-text);
+
+    background:var(--color-surface-2);
+
+    border:1px solid var(--color-border);
+
+    border-radius:12px;
+
+}
+
+input:focus{
+
+    outline:none;
+
+    border-color:var(--color-primary);
+
 }
 
 /* =========================================
-   Eingabefelder
+   Primärer Button
 ========================================= */
 
-input,
-select,
-textarea {
-    width: 100%;
-    padding: 14px;
-    font: inherit;
-    background: var(--color-surface-2);
-    color: var(--color-text);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-}
+.btn-primary{
 
-input:focus,
-select:focus,
-textarea:focus {
-    outline: none;
-    border-color: var(--color-primary);
-}
+    width:100%;
 
-/* =========================================
-   Buttons
-========================================= */
+    height:56px;
 
-.btn-primary {
-    width: 100%;
-    background: var(--color-primary);
-    color: white;
-    border: none;
-    font-weight: 600;
-}
+    background:var(--color-primary);
 
-.btn-primary:active {
-    background: var(--color-primary-light);
-}
+    color:white;
 
-.btn-secondary {
-    background: var(--color-surface-2);
-    color: var(--color-text);
+    font-weight:700;
+
+    margin-top:12px;
+
 }
 
 /* =========================================
    Dauer
 ========================================= */
 
-.duration-row {
-    display: grid;
-    grid-template-columns: auto auto auto 1fr auto auto auto;
-    gap: 8px;
-    align-items: center;
-}
+.duration-row{
 
-.duration-row button {
+    display:grid;
 
-    height: 54px;
+    grid-template-columns:auto auto auto 1fr auto auto auto;
 
-    min-width: 56px;
+    gap:8px;
 
-    border-radius: 12px;
-
-    font-size: 1rem;
-
-    font-weight: 700;
-
-    transition: .15s;
+    align-items:center;
 
 }
 
-.duration-row button:active {
+.duration-row button{
 
-    transform: scale(.95);
+    width:58px;
 
-}
+    height:54px;
 
-.duration-display {
+    background:var(--color-surface-2);
 
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    min-height: 60px;
-
-    font-size: 2.5rem;
-
-    font-weight: 700;
-
-    letter-spacing: 3px;
-
-    font-variant-numeric: tabular-nums;
-
-    color: var(--color-primary);
-
-    user-select: none;
-
-}
-.duration-display::before {
-
-    content: "⏱";
-
-    font-size: 1.6rem;
-
-    margin-right: 12px;
-
-    opacity: .8;
+    color:white;
 
 }
 
+.duration-display{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    min-height:60px;
+
+    font-size:2.3rem;
+
+    font-weight:700;
+
+    letter-spacing:2px;
+
+    font-variant-numeric:tabular-nums;
+
+    color:white;
+
+}
 
 /* =========================================
-   KIP Skala
+   KIP
 ========================================= */
 
-.kip-grid {
+.kip-grid{
 
-    display: grid;
+    display:grid;
 
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns:repeat(6,1fr);
 
-    gap: 10px;
-
-}
-
-.kip-btn {
-
-    height: 58px;
-
-    border-radius: 14px;
-
-    border: none;
-
-    color: white;
-
-    font-size: 1.1rem;
-
-    font-weight: 700;
-
-    transition: .15s;
+    gap:10px;
 
 }
 
-.kip-btn:active {
+.kip-btn{
 
-    transform: scale(.95);
+    height:58px;
+
+    border-radius:14px;
+
+    color:white;
+
+    font-size:1.1rem;
+
+    font-weight:700;
 
 }
-
-.kip-btn.active {
-
-    outline: 3px solid white;
-
-    transform: scale(1.08);
-
-}
-
-/* Farben */
 
 .kip-btn[data-kip="0"],
 .kip-btn[data-kip="1"],
-.kip-btn[data-kip="2"] {
+.kip-btn[data-kip="2"]{
 
-    background: var(--kip-low);
+    background:var(--kip-low);
 
 }
 
 .kip-btn[data-kip="3"],
 .kip-btn[data-kip="4"],
-.kip-btn[data-kip="5"] {
+.kip-btn[data-kip="5"]{
 
-    background: var(--kip-mild);
+    background:var(--kip-mild);
 
 }
 
 .kip-btn[data-kip="6"],
-.kip-btn[data-kip="7"] {
+.kip-btn[data-kip="7"]{
 
-    background: var(--kip-medium);
+    background:var(--kip-medium);
 
-    color: black;
+    color:black;
 
 }
 
 .kip-btn[data-kip="8"],
-.kip-btn[data-kip="9"] {
+.kip-btn[data-kip="9"]{
 
-    background: var(--kip-high);
-
-}
-
-.kip-btn[data-kip="10"] {
-
-    background: var(--kip-extreme);
+    background:var(--kip-high);
 
 }
 
-/* =========================================
-   Statistik
-========================================= */
+.kip-btn[data-kip="10"]{
 
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-md);
+    background:var(--kip-extreme);
+
 }
 
-.stat-card {
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: var(--space-lg);
-    text-align: center;
-}
+.kip-btn.active{
 
-.stat-value {
-    font-size: 2rem;
-    font-weight: bold;
-    color: var(--color-primary);
-}
+    outline:3px solid white;
 
-.stat-label {
-    margin-top: var(--space-sm);
-    color: var(--color-text-light);
-    font-size: .9rem;
-}
+    transform:scale(1.08);
 
-/* =========================================
-   Verlauf
-========================================= */
-
-.attack-item {
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: var(--space-md);
-    margin-bottom: var(--space-md);
-}
-
-.attack-date {
-    font-size: .9rem;
-    color: var(--color-text-light);
-    margin-bottom: var(--space-sm);
-}
-
-.attack-values {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-weight: 600;
-}
-
-/* =========================================
-   Empty State
-========================================= */
-
-.empty-state {
-    text-align: center;
-    color: var(--color-text-light);
-    padding: 64px 16px;
 }
 
 /* =========================================
    Responsive
 ========================================= */
 
-@media (max-width: 600px) {
+@media(max-width:600px){
 
-    .duration-row {
-        grid-template-columns: repeat(7, 1fr);
+    .duration-row{
+
+        grid-template-columns:repeat(7,1fr);
+
     }
 
-    .duration-row button {
-        min-width: auto;
-        height: 48px;
-        font-size: .9rem;
+    .duration-row button{
+
+        width:auto;
+
+        font-size:.9rem;
+
     }
 
-    .duration-display {
-        font-size: 1.3rem;
-    }
+    .duration-display{
 
-}
+        font-size:1.5rem;
 
-@media (min-width: 768px) {
-
-    main {
-        max-width: 700px;
-        margin: auto;
-    }
-
-    .kip-grid {
-        grid-template-columns: repeat(11, 1fr);
     }
 
 }
