@@ -402,3 +402,52 @@ button{
     box-shadow:0 0 14px rgba(37,99,235,.45);
 
 }
+.buttonGrid{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:10px;
+
+}
+
+.kipButton,
+.sideButton,
+.activityButton{
+
+    min-height:56px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:#334155;
+
+    color:white;
+
+    font-size:16px;
+
+}
+
+.durationRow{
+
+    display:grid;
+
+    grid-template-columns:60px 60px 1fr 60px 60px;
+
+    gap:8px;
+
+    align-items:center;
+
+}
+
+#durationValue{
+
+    text-align:center;
+
+    font-size:24px;
+
+    font-weight:bold;
+
+}
