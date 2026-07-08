@@ -1,25 +1,23 @@
-console.log("ClusterLog gestartet.");
+function showPage(pageId){
 
 document
-.getElementById("newBtn")
-.addEventListener("click",()=>{
+.querySelectorAll(".page")
+.forEach(page=>{
 
-alert("Neue Attacke kommt im nächsten Build.");
+page.classList.remove("active");
 
 });
 
 document
-.getElementById("calendarBtn")
-.addEventListener("click",()=>{
+.getElementById(pageId)
+.classList.add("active");
 
-alert("Kalender kommt im nächsten Build.");
+}
 
-});
+dashboardBtn.onclick=()=>showPage("dashboardPage");
 
-document
-.getElementById("statsBtn")
-.addEventListener("click",()=>{
+newBtn.onclick=()=>showPage("newPage");
 
-alert("Statistik kommt im nächsten Build.");
+calendarBtn.onclick=()=>showPage("calendarPage");
 
-});
+statsBtn.onclick=()=>showPage("statsPage");
