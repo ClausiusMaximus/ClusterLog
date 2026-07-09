@@ -481,6 +481,9 @@ function formatDate(date) {
 
 function formatDuration(seconds) {
 
+    const display =
+        document.getElementById("durationValue");
+
     const hours =
         Math.floor(seconds / 3600);
 
