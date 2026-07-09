@@ -1,4 +1,30 @@
 /* =========================================
+   Layout
+========================================= */
+
+#app{
+
+    width:min(900px,100%);
+
+    margin:0 auto;
+
+    padding:20px;
+
+    padding-bottom:96px;
+
+}
+
+section{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:20px;
+
+}
+
+/* =========================================
    Karten
 ========================================= */
 
@@ -12,9 +38,44 @@
 
     padding:20px;
 
-    margin-bottom:20px;
-
     box-shadow:var(--shadow);
+
+    transition:
+        transform .15s ease,
+        box-shadow .2s ease;
+
+}
+
+.card:hover{
+
+    box-shadow:
+        0 8px 24px rgba(0,0,0,.15);
+
+}
+
+/* =========================================
+   Überschriften
+========================================= */
+
+h1{
+
+    margin:0;
+
+}
+
+h2{
+
+    margin:0 0 16px;
+
+    font-size:1.2rem;
+
+}
+
+h3{
+
+    margin:0 0 12px;
+
+    color:var(--color-primary);
 
 }
 
@@ -28,13 +89,13 @@
 
     flex-direction:column;
 
+    gap:6px;
+
     margin-top:16px;
 
 }
 
 label{
-
-    margin-bottom:6px;
 
     font-weight:600;
 
@@ -56,6 +117,10 @@ input{
 
     border-radius:12px;
 
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease;
+
 }
 
 input:focus{
@@ -63,6 +128,50 @@ input:focus{
     outline:none;
 
     border-color:var(--color-primary);
+
+    box-shadow:
+        0 0 0 3px rgba(37,99,235,.15);
+
+}
+
+/* =========================================
+   Buttons
+========================================= */
+
+button{
+
+    cursor:pointer;
+
+    border:none;
+
+    border-radius:12px;
+
+    font:inherit;
+
+    transition:
+        background .2s ease,
+        transform .12s ease,
+        box-shadow .2s ease;
+
+}
+
+button:hover{
+
+    filter:brightness(1.05);
+
+}
+
+button:active{
+
+    transform:scale(.96);
+
+}
+
+button:disabled{
+
+    opacity:.5;
+
+    cursor:not-allowed;
 
 }
 
@@ -76,13 +185,19 @@ input:focus{
 
     height:56px;
 
+    margin-top:12px;
+
     background:var(--color-primary);
 
     color:white;
 
     font-weight:700;
 
-    margin-top:12px;
+}
+
+.btn-primary:hover{
+
+    filter:brightness(1.08);
 
 }
 
@@ -96,7 +211,7 @@ input:focus{
 
     grid-template-columns:auto auto auto 1fr auto auto auto;
 
-    gap:8px;
+    gap:10px;
 
     align-items:center;
 
@@ -104,11 +219,23 @@ input:focus{
 
 .duration-row button{
 
-    width:58px;
+    width:60px;
 
-    height:54px;
+    height:56px;
 
     background:var(--color-surface-2);
+
+    color:var(--color-text);
+
+    font-weight:700;
+
+    border:1px solid var(--color-border);
+
+}
+
+.duration-row button:hover{
+
+    background:var(--color-primary);
 
     color:white;
 
@@ -124,15 +251,25 @@ input:focus{
 
     min-height:60px;
 
-    font-size:2.3rem;
+    padding:0 12px;
+
+    font-size:2rem;
 
     font-weight:700;
 
-    letter-spacing:2px;
+    font-family:monospace;
 
     font-variant-numeric:tabular-nums;
 
-    color:white;
+    letter-spacing:1px;
+
+    color:var(--color-text);
+
+    background:var(--color-surface-2);
+
+    border-radius:12px;
+
+    border:1px solid var(--color-border);
 
 }
 
@@ -152,15 +289,37 @@ input:focus{
 
 .kip-btn{
 
-    height:58px;
+    height:60px;
 
     border-radius:14px;
-
-    color:white;
 
     font-size:1.1rem;
 
     font-weight:700;
+
+    color:white;
+
+    transition:
+        transform .15s ease,
+        filter .2s ease,
+        box-shadow .2s ease;
+
+}
+
+.kip-btn:hover{
+
+    transform:translateY(-2px);
+
+}
+
+.kip-btn.active{
+
+    outline:3px solid white;
+
+    transform:scale(1.08);
+
+    box-shadow:
+        0 0 0 3px rgba(255,255,255,.25);
 
 }
 
@@ -202,11 +361,313 @@ input:focus{
 
 }
 
-.kip-btn.active{
+/* =========================================
+   Navigation
+========================================= */
 
-    outline:3px solid white;
+nav{
 
-    transform:scale(1.08);
+    position:fixed;
+
+    left:0;
+
+    right:0;
+
+    bottom:0;
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    background:var(--color-surface);
+
+    border-top:1px solid var(--color-border);
+
+    box-shadow:0 -2px 10px rgba(0,0,0,.15);
+
+    z-index:1000;
+
+}
+
+nav button{
+
+    height:68px;
+
+    border-radius:0;
+
+    background:transparent;
+
+    color:var(--color-text);
+
+    font-size:.9rem;
+
+    font-weight:600;
+
+}
+
+nav button.active{
+
+    background:var(--color-primary);
+
+    color:white;
+
+}
+
+nav button:hover{
+
+    background:var(--color-surface-2);
+
+}
+
+nav button.active:hover{
+
+    background:var(--color-primary);
+
+}
+
+/* =========================================
+   Verlauf
+========================================= */
+
+.history-day{
+
+    margin-bottom:24px;
+
+}
+
+.history-day h3{
+
+    margin-bottom:12px;
+
+    color:var(--color-primary);
+
+}
+
+.history-item{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+
+    padding:16px;
+
+    margin-bottom:12px;
+
+    background:var(--color-surface-2);
+
+    border:1px solid var(--color-border);
+
+    border-radius:16px;
+
+    transition:
+        transform .15s ease,
+        box-shadow .2s ease;
+
+}
+
+.history-item:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:var(--shadow);
+
+}
+
+.history-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+.delete-btn{
+
+    width:40px;
+
+    height:40px;
+
+    padding:0;
+
+    border-radius:50%;
+
+    background:transparent;
+
+    color:var(--color-text);
+
+}
+
+.delete-btn:hover{
+
+    background:rgba(255,0,0,.12);
+
+}
+
+/* =========================================
+   Kalender
+========================================= */
+
+.calendar-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:20px;
+
+}
+
+.calendar-header button{
+
+    width:42px;
+
+    height:42px;
+
+    border-radius:50%;
+
+    background:var(--color-surface-2);
+
+}
+
+.calendar-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(7,1fr);
+
+    gap:8px;
+
+}
+
+.calendar-day{
+
+    aspect-ratio:1;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    position:relative;
+
+    border-radius:12px;
+
+    border:1px solid var(--color-border);
+
+    background:var(--color-surface);
+
+    cursor:pointer;
+
+    transition:
+        background .2s ease,
+        transform .15s ease;
+
+}
+
+.calendar-day:hover{
+
+    transform:scale(1.05);
+
+}
+
+.calendar-day.today{
+
+    border:2px solid var(--color-primary);
+
+}
+
+.calendar-day.selected{
+
+    background:var(--color-primary);
+
+    color:white;
+
+}
+
+.calendar-day.has-attack::after{
+
+    content:"";
+
+    position:absolute;
+
+    bottom:6px;
+
+    width:8px;
+
+    height:8px;
+
+    border-radius:50%;
+
+    background:var(--kip-extreme);
+
+}
+
+/* =========================================
+   Statistik
+========================================= */
+
+.stats-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:16px;
+
+}
+
+.stat-card{
+
+    padding:20px;
+
+    border-radius:16px;
+
+    text-align:center;
+
+    background:var(--color-surface-2);
+
+    border:1px solid var(--color-border);
+
+}
+
+.stat-value{
+
+    font-size:2rem;
+
+    font-weight:700;
+
+    font-variant-numeric:tabular-nums;
+
+}
+
+.stat-label{
+
+    margin-top:8px;
+
+    opacity:.75;
+
+}
+
+/* =========================================
+   Empty State
+========================================= */
+
+.empty-state{
+
+    padding:32px;
+
+    text-align:center;
+
+    color:var(--color-text);
+
+    opacity:.65;
 
 }
 
@@ -214,7 +675,7 @@ input:focus{
    Responsive
 ========================================= */
 
-@media(max-width:600px){
+@media (max-width:700px){
 
     .duration-row{
 
@@ -232,77 +693,52 @@ input:focus{
 
     .duration-display{
 
-        font-size:1.5rem;
+        font-size:1.3rem;
+
+    }
+
+    .kip-grid{
+
+        grid-template-columns:repeat(4,1fr);
+
+    }
+
+    .stats-grid{
+
+        grid-template-columns:1fr;
 
     }
 
 }
 
-/* =========================================
-   CALENDAR
-========================================= */
+@media (max-width:420px){
 
-.calendar-header{
+    #app{
 
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:20px;
+        padding:12px;
 
-}
+        padding-bottom:90px;
 
-.calendar-grid{
+    }
 
-    display:grid;
-    grid-template-columns:repeat(7,1fr);
-    gap:8px;
+    .card{
 
-}
+        padding:16px;
 
-.calendar-day{
+    }
 
-    aspect-ratio:1;
-    border-radius:12px;
-    border:1px solid #ddd;
+    .duration-display{
 
-    display:flex;
-    justify-content:center;
-    align-items:center;
+        font-size:1.1rem;
 
-    position:relative;
+    }
 
-    cursor:pointer;
+    .kip-btn{
 
-    background:white;
+        height:52px;
 
-}
+        font-size:1rem;
 
-.calendar-day.today{
-
-    border:2px solid #2563eb;
-
-}
-
-.calendar-day.has-attack::after{
-
-    content:"";
-
-    position:absolute;
-
-    bottom:6px;
-
-    width:8px;
-    height:8px;
-
-    border-radius:50%;
-
-    background:#ef4444;
-
-}
-
-.calendar-day.selected{
-
-    background:#2563eb;
-    color:white;
+    }
 
 }
