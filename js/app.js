@@ -146,36 +146,6 @@ function updateNavigation() {
 
 }
 
-
-/* =========================================
-   Datum / Uhrzeit
-========================================= */
-
-function setupNowButton() {
-
-    document
-        .getElementById("nowButton")
-        .addEventListener("click", setCurrentDateTime);
-
-}
-
-function setCurrentDateTime() {
-
-    const now = new Date();
-
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, "0");
-    const day = String(now.getDate()).padStart(2, "0");
-
-    const hours = String(now.getHours()).padStart(2, "0");
-    const minutes = String(now.getMinutes()).padStart(2, "0");
-    const seconds = String(now.getSeconds()).padStart(2, "0");
-
-    document.getElementById("attackDate").value = `${year}-${month}-${day}`;
-    document.getElementById("attackTime").value = `${hours}:${minutes}:${seconds}`;
-
-}
-
 /* =========================================
    Dauer
 ========================================= */
@@ -232,20 +202,7 @@ function updateDurationDisplay() {
 
 }
 
-function formatDate(date) {
-
-    return new Date(date).toLocaleDateString("de-DE", {
-        weekday: "long",
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric"
-    });
-
-}
-
 function formatDuration(totalSeconds) {
-
-    totalSeconds = Math.max(0, Math.floor(totalSeconds));
 
     const hours =
         Math.floor(totalSeconds / 3600);
