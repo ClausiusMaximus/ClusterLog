@@ -5,17 +5,28 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-    <title>ClusterLog</title>
+    <title>ClusterLog v0.3.5 Stable</title>
 
-    <meta name="theme-color" content="#2563eb">
+    <meta name="theme-color"
+          content="#2563eb">
 
-    <link rel="manifest" href="manifest.json">
+    <meta name="description"
+          content="Clusterkopfschmerz-Tagebuch">
 
-    <link rel="stylesheet" href="css/variables.css">
-    <link rel="stylesheet" href="css/base.css">
-    <link rel="stylesheet" href="css/app.css">
+    <link rel="manifest"
+          href="manifest.json">
+
+    <link rel="stylesheet"
+          href="css/variables.css">
+
+    <link rel="stylesheet"
+          href="css/base.css">
+
+    <link rel="stylesheet"
+          href="css/app.css">
 
 </head>
 
@@ -29,110 +40,150 @@
 
 <main id="app">
 
-    <!-- =====================================
-         ERFASSEN
-    ====================================== -->
+<!-- =====================================
+     ERFASSEN
+===================================== -->
 
-    <section id="captureView">
+<section
+    id="captureView"
+    class="view active">
 
-        <div class="card">
+    <div class="card">
 
-            <h2>Neuer Angriff</h2>
-
-            <button id="nowButton" class="btn-primary">
-                📅 Jetzt übernehmen
-            </button>
-
-            <div class="form-group">
-
-                <label for="attackDate">Datum</label>
-
-                <input
-                    id="attackDate"
-                    type="date">
-
-            </div>
-
-            <div class="form-group">
-
-                <label for="attackTime">Uhrzeit</label>
-
-                <input
-                    id="attackTime"
-                    type="time"
-                    step="1">
-
-            </div>
-
-        </div>
-
-        <div class="card">
-
-            <h2>Dauer</h2>
-
-            <div class="duration-row">
-
-                <button id="minus60">-60</button>
-
-                <button id="minus10">-10</button>
-
-                <button id="minus1">-1</button>
-
-                <div
-                    id="durationValue"
-                    class="duration-display">
-
-                    00:00
-
-                </div>
-
-                <button id="plus1">+1</button>
-
-                <button id="plus10">+10</button>
-
-                <button id="plus60">+60</button>
-
-            </div>
-
-        </div>
-
-        <div class="card">
-
-            <h2>KIP-Skala</h2>
-
-            <div class="kip-grid">
-
-                <button class="kip-btn" data-kip="0">0</button>
-                <button class="kip-btn" data-kip="1">1</button>
-                <button class="kip-btn" data-kip="2">2</button>
-                <button class="kip-btn" data-kip="3">3</button>
-                <button class="kip-btn" data-kip="4">4</button>
-                <button class="kip-btn" data-kip="5">5</button>
-
-                <button class="kip-btn" data-kip="6">6</button>
-                <button class="kip-btn" data-kip="7">7</button>
-                <button class="kip-btn" data-kip="8">8</button>
-                <button class="kip-btn" data-kip="9">9</button>
-                <button class="kip-btn" data-kip="10">10</button>
-
-            </div>
-
-        </div>
+        <h2>Neuen Angriff erfassen</h2>
 
         <button
-            id="saveButton"
+            id="nowButton"
             class="btn-primary">
 
-            💾 Angriff speichern
+            📅 Jetzt übernehmen
 
         </button>
 
-    </section>
+        <div class="form-group">
 
-    <!-- =====================================
-         VERLAUF
-    ====================================== -->
-<section id="historyView" class="view hidden">
+            <label for="attackDate">
+
+                Datum
+
+            </label>
+
+            <input
+                id="attackDate"
+                type="date">
+
+        </div>
+
+        <div class="form-group">
+
+            <label for="attackTime">
+
+                Uhrzeit
+
+            </label>
+
+            <input
+                id="attackTime"
+                type="time"
+                step="1">
+
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Dauer</h2>
+
+        <div class="duration-row">
+
+            <button id="minus60">
+
+                -60
+
+            </button>
+
+            <button id="minus10">
+
+                -10
+
+            </button>
+
+            <button id="minus1">
+
+                -1
+
+            </button>
+
+            <div
+                id="durationValue"
+                class="duration-display">
+
+                00:00:00
+
+            </div>
+
+            <button id="plus1">
+
+                +1
+
+            </button>
+
+            <button id="plus10">
+
+                +10
+
+            </button>
+
+            <button id="plus60">
+
+                +60
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h2>KIP-Skala</h2>
+
+        <div class="kip-grid">
+
+            <button class="kip-btn" data-kip="0">0</button>
+            <button class="kip-btn" data-kip="1">1</button>
+            <button class="kip-btn" data-kip="2">2</button>
+            <button class="kip-btn" data-kip="3">3</button>
+            <button class="kip-btn" data-kip="4">4</button>
+            <button class="kip-btn" data-kip="5">5</button>
+
+            <button class="kip-btn" data-kip="6">6</button>
+            <button class="kip-btn" data-kip="7">7</button>
+            <button class="kip-btn" data-kip="8">8</button>
+            <button class="kip-btn" data-kip="9">9</button>
+            <button class="kip-btn" data-kip="10">10</button>
+
+        </div>
+
+    </div>
+
+    <button
+        id="saveButton"
+        class="btn-primary">
+
+        💾 Angriff speichern
+
+    </button>
+
+</section>
+<!-- =====================================
+     VERLAUF
+===================================== -->
+
+<section
+    id="historyView"
+    class="view hidden">
 
     <div class="card">
 
@@ -142,7 +193,7 @@
 
             <div class="empty-state">
 
-                Noch keine Einträge.
+                Noch keine Angriffe gespeichert.
 
             </div>
 
@@ -152,63 +203,87 @@
 
 </section>
 
-    <!-- =====================================
-         STATISTIK
-    ====================================== -->
+<!-- =====================================
+     STATISTIK
+===================================== -->
 
-    <section id="statisticsView">
+<section
+    id="statisticsView"
+    class="view hidden">
 
-        <div class="card">
+    <div class="card">
 
-            <h2>Statistik</h2>
+        <h2>Statistik</h2>
 
-            <div class="stats-grid">
+        <div class="stats-grid">
 
-                <div class="stat-card">
+            <div class="stat-card">
 
-                    <div class="stat-value" id="statToday">
-                        0
-                    </div>
+                <div
+                    id="statToday"
+                    class="stat-value">
 
-                    <div class="stat-label">
-                        Heute
-                    </div>
-
-                </div>
-
-                <div class="stat-card">
-
-                    <div class="stat-value" id="statWeek">
-                        0
-                    </div>
-
-                    <div class="stat-label">
-                        Diese Woche
-                    </div>
+                    0
 
                 </div>
 
-                <div class="stat-card">
+                <div class="stat-label">
 
-                    <div class="stat-value" id="statMonth">
-                        0
-                    </div>
-
-                    <div class="stat-label">
-                        Dieser Monat
-                    </div>
+                    Heute
 
                 </div>
 
-                <div class="stat-card">
+            </div>
 
-                    <div class="stat-value" id="statAverage">
-                        00:00
-                    </div>
+            <div class="stat-card">
 
-                    <div class="stat-label">
-                        Ø Dauer
-                    </div>
+                <div
+                    id="statWeek"
+                    class="stat-value">
+
+                    0
+
+                </div>
+
+                <div class="stat-label">
+
+                    Diese Woche
+
+                </div>
+
+            </div>
+
+            <div class="stat-card">
+
+                <div
+                    id="statMonth"
+                    class="stat-value">
+
+                    0
+
+                </div>
+
+                <div class="stat-label">
+
+                    Dieser Monat
+
+                </div>
+
+            </div>
+
+            <div class="stat-card">
+
+                <div
+                    id="statAverage"
+                    class="stat-value">
+
+                    00:00:00
+
+                </div>
+
+                <div class="stat-label">
+
+                    Ø Dauer
 
                 </div>
 
@@ -216,13 +291,21 @@
 
         </div>
 
-    </section>
+    </div>
+
+</section>
 
 </main>
 
+<!-- =====================================
+     NAVIGATION
+===================================== -->
+
 <nav>
 
-    <button id="navCapture">
+    <button
+        id="navCapture"
+        class="active">
 
         📝<br>
 
@@ -230,7 +313,8 @@
 
     </button>
 
-    <button id="navHistory">
+    <button
+        id="navHistory">
 
         📋<br>
 
@@ -238,7 +322,8 @@
 
     </button>
 
-    <button id="navStatistics">
+    <button
+        id="navStatistics">
 
         📊<br>
 
@@ -248,7 +333,21 @@
 
 </nav>
 
-<script type="module" src="js/app.js"></script>
+<!-- =====================================
+     TOAST
+===================================== -->
+
+<div
+    id="toast"
+    class="toast">
+
+</div>
+
+<script
+    type="module"
+    src="js/app.js">
+
+</script>
 
 </body>
 
