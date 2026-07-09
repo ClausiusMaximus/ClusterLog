@@ -479,27 +479,27 @@ function formatDate(date) {
 
 }
 
-function formatDuration(seconds) {
+function updateDurationDisplay() {
 
     const display =
         document.getElementById("durationValue");
 
     const hours =
-        Math.floor(seconds / 3600);
+        Math.floor(duration / 3600);
 
     const minutes =
-        Math.floor((seconds % 3600) / 60);
+        Math.floor((duration % 3600) / 60);
 
-    const secs =
-        seconds % 60;
+    const seconds =
+        duration % 60;
 
-    return (
+    display.textContent =
         `${String(hours).padStart(2, "0")}:` +
         `${String(minutes).padStart(2, "0")}:` +
-        `${String(secs).padStart(2, "0")}`
-    );
+        `${String(seconds).padStart(2, "0")}`;
 
 }
+
 
 /* =========================================
    Statistik
