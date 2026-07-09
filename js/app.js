@@ -1,3 +1,6 @@
+let calendarDate = new Date();
+let selectedDate = null;
+
 import {
     initDatabase,
     saveAttack,
