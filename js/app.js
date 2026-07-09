@@ -479,27 +479,6 @@ function formatDate(date) {
 
 }
 
-function updateDurationDisplay() {
-
-    const display =
-        document.getElementById("durationValue");
-
-    const hours =
-        Math.floor(duration / 3600);
-
-    const minutes =
-        Math.floor((duration % 3600) / 60);
-
-    const seconds =
-        duration % 60;
-
-    display.textContent =
-        `${String(hours).padStart(2, "0")}:` +
-        `${String(minutes).padStart(2, "0")}:` +
-        `${String(seconds).padStart(2, "0")}`;
-
-}
-
 
 /* =========================================
    Statistik
