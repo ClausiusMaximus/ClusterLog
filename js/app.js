@@ -486,3 +486,312 @@ async function refreshCurrentView(){
     }
 
 }
+/* ==========================================
+   Teil 2a
+   Verlauf
+========================================== */
+
+async function renderHistory() {
+
+    const historyList =
+        document.getElementById("historyList");
+
+    const attacks =
+        await getAttacks();
+
+    if (!attacks.length) {
+
+        historyList.innerHTML = `
+            <div class="empty-state">
+                Noch keine Angriffe gespeichert.
+            </div>
+        `;
+
+        return;
+
+    }
+
+    historyList.innerHTML = "";
+
+    const groups = groupAttacksByDate(attacks);
+
+    Object.keys(groups)
+        .sort((a, b) => new Date(b) - new Date(a))
+        .forEach(date => {
+
+            const section =
+                createHistorySection(
+                    date,
+                    groups[date]
+                );
+
+            historyList.appendChild(section);
+
+        });
+
+}
+
+/* ==========================================
+   Gruppieren
+========================================== */
+
+function groupAttacksByDate(attacks) {
+
+    const result = {};
+
+    attacks
+
+        .sort((a, b) => {
+
+            return new Date(
+                `${b.date}T${b.time}`
+            ) -
+            new Date(
+                `${a.date}T${a.time}`
+            );
+
+        })
+
+        .forEach(attack => {
+
+            if (!result[attack.date]) {
+
+                result[attack.date] = [];
+
+            }
+
+            result[attack.date].push(attack);
+
+        });
+
+    return result;
+
+}
+
+/* ==========================================
+   Tagesblock
+========================================== */
+
+function createHistorySection(
+    date,
+    attacks
+) {
+
+    const wrapper =
+        document.createElement("div");
+
+    wrapper.className =
+        "history-day";
+
+    const title =
+        document.createElement("h3");
+
+    title.textContent =
+        formatHistoryDate(date);
+
+    wrapper.appendChild(title);
+
+    attacks.forEach(attack => {
+
+        wrapper.appendChild(
+
+            createHistoryItem(attack)
+
+        );
+
+    });
+
+    return wrapper;
+
+}
+
+/* ==========================================
+   Datum formatieren
+========================================== */
+
+function formatHistoryDate(date) {
+
+    return new Date(date)
+        .toLocaleDateString(
+            "de-DE",
+            {
+
+                weekday: "long",
+
+                day: "2-digit",
+
+                month: "long",
+
+                year: "numeric"
+
+            }
+
+        );
+
+}
+/* ==========================================
+   Teil 2b
+   History-Einträge
+========================================== */
+
+let deletedAttack = null;
+
+let undoTimer = null;
+
+/* ==========================================
+   History Card
+========================================== */
+
+function createHistoryItem(attack){
+
+    const card =
+        document.createElement("div");
+
+    card.className = "history-item";
+
+    card.innerHTML = `
+
+        <div class="history-header">
+
+            <strong>
+
+                ${attack.time}
+
+            </strong>
+
+            <button
+                class="delete-btn"
+                title="Löschen">
+
+                🗑️
+
+            </button>
+
+        </div>
+
+        <div>
+
+            KIP ${attack.kip}
+
+        </div>
+
+        <div>
+
+            Dauer
+
+            ${formatDuration(
+                attack.duration
+            )}
+
+        </div>
+
+    `;
+
+    card
+        .querySelector(".delete-btn")
+        .addEventListener(
+            "click",
+            () => deleteHistoryItem(attack)
+        );
+
+    return card;
+
+}
+
+/* ==========================================
+   Löschen
+========================================== */
+
+async function deleteHistoryItem(attack){
+
+    deletedAttack = {
+
+        ...attack
+
+    };
+
+    await deleteAttack(attack.id);
+
+    await renderHistory();
+
+    await updateStatistics();
+
+    showUndoToast();
+
+}
+
+/* ==========================================
+   Toast
+========================================== */
+
+function showUndoToast(){
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.innerHTML = `
+
+        Eintrag gelöscht
+
+        <button
+            id="undoButton">
+
+            ↶ Rückgängig
+
+        </button>
+
+    `;
+
+    toast.classList.add("show");
+
+    document
+        .getElementById("undoButton")
+        .onclick = undoDelete;
+
+    clearTimeout(undoTimer);
+
+    undoTimer =
+        setTimeout(() => {
+
+            toast.classList.remove("show");
+
+            deletedAttack = null;
+
+        },5000);
+
+}
+
+/* ==========================================
+   Rückgängig
+========================================== */
+
+async function undoDelete(){
+
+    if(!deletedAttack){
+
+        return;
+
+    }
+
+    const restore = {
+
+        ...deletedAttack
+
+    };
+
+    delete restore.id;
+
+    await saveAttack(restore);
+
+    deletedAttack = null;
+
+    document
+        .getElementById("toast")
+        .classList
+        .remove("show");
+
+    await renderHistory();
+
+    await updateStatistics();
+
+}
