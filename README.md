@@ -32,3 +32,5 @@ ClusterLog ist eine Progressive Web App (PWA) zum schnellen Erfassen von Cluster
 - Offline
 - Finales Design
 - Einstellungen
+
+Release: v0.3.5 Stable
