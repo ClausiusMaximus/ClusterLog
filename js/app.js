@@ -184,8 +184,8 @@ function setupDurationButtons() {
 
 function changeDuration(value) {
 
-    // Buttons arbeiten in Minuten
-    duration += value * 60;
+    // Buttons arbeiten in Sekunden
+    duration += value;
 
     if (duration < 0) {
         duration = 0;
