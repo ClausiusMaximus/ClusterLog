@@ -1,6 +1,3 @@
-let calendarDate = new Date();
-let selectedDate = null;
-
 import {
     initDatabase,
     saveAttack,
@@ -9,13 +6,24 @@ import {
 } from "./storage.js";
 
 /* =========================================
-   Status
+   Konstanten
 ========================================= */
 
-let duration = 0;
-let selectedKip = null;
+const Views = {
+    CAPTURE: "capture",
+    HISTORY: "history",
+    STATISTICS: "statistics"
+};
 
-let currentView = "capture";
+/* =========================================
+   App-Status
+========================================= */
+
+const state = {
+    duration: 0,
+    selectedKip: null,
+    currentView: Views.CAPTURE
+};
 
 /* =========================================
    Start
@@ -30,21 +38,15 @@ async function init() {
     await initDatabase();
 
     setupNavigation();
-
     setupNowButton();
-
     setupDurationButtons();
-
     setupKipButtons();
-
     setupSaveButton();
 
     setCurrentDateTime();
-
     updateDurationDisplay();
 
     await renderHistory();
-
     await updateStatistics();
 
 }
@@ -55,98 +57,92 @@ async function init() {
 
 function setupNavigation() {
 
-    document
-        .getElementById("navCapture")
-        .addEventListener("click", () => showView("capture"));
+    const navigation = [
 
-    document
-        .getElementById("navHistory")
-        .addEventListener("click", async () => {
+        {
+            button: "navCapture",
+            view: Views.CAPTURE
+        },
 
-            showView("history");
+        {
+            button: "navHistory",
+            view: Views.HISTORY
+        },
 
-            await renderHistory();
+        {
+            button: "navStatistics",
+            view: Views.STATISTICS
+        }
 
-        });
+    ];
 
-    document
-        .getElementById("navStatistics")
-        .addEventListener("click", async () => {
+    navigation.forEach(item => {
 
-            showView("statistics");
+        document
+            .getElementById(item.button)
+            .addEventListener("click", async () => {
 
-            await updateStatistics();
+                showView(item.view);
 
-        });
+                switch (item.view) {
+
+                    case Views.HISTORY:
+                        await renderHistory();
+                        break;
+
+                    case Views.STATISTICS:
+                        await updateStatistics();
+                        break;
+
+                }
+
+            });
+
+    });
+
+    updateNavigation();
 
 }
 
 function showView(view) {
 
-    currentView = view;
+    state.currentView = view;
 
-    document
-        .getElementById("captureView")
-        .hidden = view !== "capture";
+    document.getElementById("captureView").hidden =
+        view !== Views.CAPTURE;
 
-    document
-        .getElementById("historyView")
-        .hidden = view !== "history";
+    document.getElementById("historyView").hidden =
+        view !== Views.HISTORY;
 
-    document
-        .getElementById("statisticsView")
-        .hidden = view !== "statistics";
+    document.getElementById("statisticsView").hidden =
+        view !== Views.STATISTICS;
 
-}
-
-/* =========================================
-   Jetzt
-========================================= */
-
-function setupNowButton() {
-
-    document
-        .getElementById("nowButton")
-        .addEventListener("click", setCurrentDateTime);
+    updateNavigation();
 
 }
 
-function setCurrentDateTime() {
+function updateNavigation() {
 
-    const now = new Date();
+    const buttons = {
 
-    const year =
-        now.getFullYear();
+        [Views.CAPTURE]:
+            document.getElementById("navCapture"),
 
-    const month =
-        String(now.getMonth() + 1)
-            .padStart(2, "0");
+        [Views.HISTORY]:
+            document.getElementById("navHistory"),
 
-    const day =
-        String(now.getDate())
-            .padStart(2, "0");
+        [Views.STATISTICS]:
+            document.getElementById("navStatistics")
 
-    const hours =
-        String(now.getHours())
-            .padStart(2, "0");
+    };
 
-    const minutes =
-        String(now.getMinutes())
-            .padStart(2, "0");
+    Object.values(buttons)
+        .forEach(button =>
+            button.classList.remove("active")
+        );
 
-    const seconds =
-        String(now.getSeconds())
-            .padStart(2, "0");
-
-    document
-        .getElementById("attackDate")
-        .value =
-        `${year}-${month}-${day}`;
-
-    document
-        .getElementById("attackTime")
-        .value =
-        `${hours}:${minutes}:${seconds}`;
+    buttons[state.currentView]
+        .classList.add("active");
 
 }
 
@@ -156,39 +152,40 @@ function setCurrentDateTime() {
 
 function setupDurationButtons() {
 
-    document
-        .getElementById("minus60")
-        .onclick = () => changeDuration(-60);
+    const buttons = {
 
-    document
-        .getElementById("minus10")
-        .onclick = () => changeDuration(-10);
+        minus60: -60,
+        minus10: -10,
+        minus1: -1,
 
-    document
-        .getElementById("minus1")
-        .onclick = () => changeDuration(-1);
+        plus1: 1,
+        plus10: 10,
+        plus60: 60
 
-    document
-        .getElementById("plus1")
-        .onclick = () => changeDuration(1);
+    };
 
-    document
-        .getElementById("plus10")
-        .onclick = () => changeDuration(10);
+    Object.entries(buttons).forEach(([id, value]) => {
 
-    document
-        .getElementById("plus60")
-        .onclick = () => changeDuration(60);
+        document
+            .getElementById(id)
+            .addEventListener("click", () => {
+
+                changeDuration(value);
+
+            });
+
+    });
 
 }
 
-function changeDuration(value) {
+function changeDuration(seconds) {
 
-    // Buttons arbeiten in Sekunden
-    duration += value;
+    state.duration += seconds;
 
-    if (duration < 0) {
-        duration = 0;
+    if (state.duration < 0) {
+
+        state.duration = 0;
+
     }
 
     updateDurationDisplay();
@@ -200,29 +197,31 @@ function updateDurationDisplay() {
     const display =
         document.getElementById("durationValue");
 
+    display.textContent =
+        formatDuration(state.duration);
+
+}
+
+function formatDuration(totalSeconds) {
+
     const hours =
-        Math.floor(duration / 3600);
+        Math.floor(totalSeconds / 3600);
 
     const minutes =
-        Math.floor((duration % 3600) / 60);
+        Math.floor((totalSeconds % 3600) / 60);
 
     const seconds =
-        duration % 60;
+        totalSeconds % 60;
 
-    if (hours > 0) {
+    return [
 
-        display.textContent =
-            `${String(hours).padStart(2, "0")}:` +
-            `${String(minutes).padStart(2, "0")}:` +
-            `${String(seconds).padStart(2, "0")}`;
+        hours,
+        minutes,
+        seconds
 
-    } else {
-
-        display.textContent =
-            `${String(minutes).padStart(2, "0")}:` +
-            `${String(seconds).padStart(2, "0")}`;
-
-    }
+    ].map(value =>
+        String(value).padStart(2, "0")
+    ).join(":");
 
 }
 
@@ -237,7 +236,7 @@ function setupKipButtons() {
 
     buttons.forEach(button => {
 
-        button.onclick = () => {
+        button.addEventListener("click", () => {
 
             buttons.forEach(btn =>
                 btn.classList.remove("active")
@@ -245,10 +244,10 @@ function setupKipButtons() {
 
             button.classList.add("active");
 
-            selectedKip =
+            state.selectedKip =
                 Number(button.dataset.kip);
 
-        };
+        });
 
     });
 
@@ -268,7 +267,7 @@ function setupSaveButton() {
 
 async function saveCurrentAttack() {
 
-    if (selectedKip === null) {
+    if (state.selectedKip === null) {
 
         alert("Bitte KIP auswählen.");
 
@@ -284,10 +283,11 @@ async function saveCurrentAttack() {
         time:
             document.getElementById("attackTime").value,
 
-        duration,
+        duration:
+            state.duration,
 
         kip:
-            selectedKip,
+            state.selectedKip,
 
         side: null,
 
@@ -301,15 +301,26 @@ async function saveCurrentAttack() {
 
     };
 
-    await saveAttack(attack);
+    try {
 
-    alert("Angriff gespeichert.");
+        await saveAttack(attack);
 
-    resetForm();
+        resetForm();
 
-    await renderHistory();
+        await renderHistory();
 
-    await updateStatistics();
+        await updateStatistics();
+
+        alert("Angriff gespeichert.");
+
+    }
+    catch (error) {
+
+        console.error(error);
+
+        alert("Fehler beim Speichern.");
+
+    }
 
 }
 
@@ -319,9 +330,9 @@ async function saveCurrentAttack() {
 
 function resetForm() {
 
-    duration = 0;
+    state.duration = 0;
 
-    selectedKip = null;
+    state.selectedKip = null;
 
     updateDurationDisplay();
 
@@ -329,8 +340,8 @@ function resetForm() {
 
     document
         .querySelectorAll(".kip-btn")
-        .forEach(btn =>
-            btn.classList.remove("active")
+        .forEach(button =>
+            button.classList.remove("active")
         );
 
 }
@@ -347,7 +358,7 @@ async function renderHistory() {
     const attacks =
         await getAttacks();
 
-    if (!attacks.length) {
+    if (attacks.length === 0) {
 
         historyList.innerHTML = `
             <div class="empty-state">
@@ -359,15 +370,32 @@ async function renderHistory() {
 
     }
 
+    historyList.innerHTML = "";
+
+    const grouped =
+        groupAttacksByDate(attacks);
+
+    Object.keys(grouped).forEach(date => {
+
+        historyList.appendChild(
+
+            createHistoryDay(
+                date,
+                grouped[date]
+            )
+
+        );
+
+    });
+
+}
+
+function groupAttacksByDate(attacks) {
+
     attacks.sort((a, b) => {
 
-        const first =
-            new Date(`${a.date}T${a.time}`);
-
-        const second =
-            new Date(`${b.date}T${b.time}`);
-
-        return second - first;
+        return new Date(`${b.date}T${b.time}`) -
+               new Date(`${a.date}T${a.time}`);
 
     });
 
@@ -385,100 +413,101 @@ async function renderHistory() {
 
     });
 
-    historyList.innerHTML = "";
-
-    Object.keys(groups)
-        .sort((a, b) => new Date(b) - new Date(a))
-        .forEach(date => {
-
-            const day =
-                document.createElement("div");
-
-            day.className =
-                "history-day";
-
-            day.innerHTML =
-                `<h3>${formatDate(date)}</h3>`;
-
-            groups[date].forEach(attack => {
-
-                const item =
-                    document.createElement("div");
-
-                item.className =
-                    "history-item";
-
-                item.innerHTML = `
-
-                    <div class="history-header">
-
-                        <strong>${attack.time}</strong>
-
-                        <button
-                            class="delete-btn"
-                            data-id="${attack.id}">
-                            🗑️
-                        </button>
-
-                    </div>
-
-                    <div>
-                        KIP ${attack.kip}
-                    </div>
-
-                    <div>
-                        Dauer:
-                        ${formatDuration(attack.duration)}
-                    </div>
-
-                `;
-
-                item
-                    .querySelector(".delete-btn")
-                    .onclick = async () => {
-
-                        if (!confirm("Eintrag löschen?")) {
-
-                            return;
-
-                        }
-
-                        await deleteAttack(attack.id);
-
-                        await renderHistory();
-
-                        await updateStatistics();
-
-                    };
-
-                day.appendChild(item);
-
-            });
-
-            historyList.appendChild(day);
-
-        });
+    return groups;
 
 }
 
-/* =========================================
-   Hilfsfunktionen
-========================================= */
+function createHistoryDay(date, attacks) {
 
-function formatDate(date) {
+    const day =
+        document.createElement("div");
 
-    return new Date(date)
-        .toLocaleDateString("de-DE", {
+    day.className = "history-day";
 
-            weekday: "long",
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric"
+    day.innerHTML =
+        `<h3>${formatDate(date)}</h3>`;
 
-        });
+    attacks.forEach(attack => {
+
+        day.appendChild(
+
+            createHistoryItem(attack)
+
+        );
+
+    });
+
+    return day;
 
 }
 
+function createHistoryItem(attack) {
+
+    const item =
+        document.createElement("div");
+
+    item.className =
+        "history-item";
+
+    item.innerHTML = `
+
+        <div class="history-header">
+
+            <strong>
+
+                ${attack.time}
+
+            </strong>
+
+            <button
+                class="delete-btn">
+
+                🗑️
+
+            </button>
+
+        </div>
+
+        <div>
+
+            KIP ${attack.kip}
+
+        </div>
+
+        <div>
+
+            Dauer:
+            ${formatDuration(attack.duration)}
+
+        </div>
+
+    `;
+
+    item
+        .querySelector(".delete-btn")
+        .addEventListener("click",
+            () => deleteHistoryItem(attack.id)
+        );
+
+    return item;
+
+}
+
+async function deleteHistoryItem(id) {
+
+    if (!confirm("Eintrag löschen?")) {
+
+        return;
+
+    }
+
+    await deleteAttack(id);
+
+    await renderHistory();
+
+    await updateStatistics();
+
+}
 
 /* =========================================
    Statistik
@@ -489,78 +518,115 @@ async function updateStatistics() {
     const attacks =
         await getAttacks();
 
+    updateTodayStatistic(attacks);
+
+    updateWeekStatistic(attacks);
+
+    updateMonthStatistic(attacks);
+
+    updateAverageDuration(attacks);
+
+}
+
+function updateTodayStatistic(attacks) {
+
+    const today =
+        new Date().toISOString().split("T")[0];
+
+    const count =
+        attacks.filter(a =>
+            a.date === today
+        ).length;
+
+    document
+        .getElementById("statToday")
+        .textContent = count;
+
+}
+
+function updateWeekStatistic(attacks) {
+
     const today =
         new Date();
 
-    const todayString =
-        today.toISOString().split("T")[0];
-
-    const currentMonth =
-        today.getMonth();
-
-    const currentYear =
-        today.getFullYear();
-
-    const startOfWeek =
+    const weekStart =
         new Date(today);
 
-    startOfWeek.setHours(0, 0, 0, 0);
+    weekStart.setHours(0,0,0,0);
 
-    startOfWeek.setDate(
+    weekStart.setDate(
         today.getDate() - today.getDay()
     );
 
-    let todayCount = 0;
-    let weekCount = 0;
-    let monthCount = 0;
+    const count =
+        attacks.filter(a => {
 
-    let totalDuration = 0;
+            const date =
+                new Date(`${a.date}T${a.time}`);
 
-    attacks.forEach(attack => {
+            return date >= weekStart;
 
-        if (attack.date === todayString) {
+        }).length;
 
-            todayCount++;
+    document
+        .getElementById("statWeek")
+        .textContent = count;
 
-        }
+}
 
-        const attackDate =
-            new Date(`${attack.date}T${attack.time}`);
+function updateMonthStatistic(attacks) {
 
-        if (attackDate >= startOfWeek) {
+    const today =
+        new Date();
 
-            weekCount++;
+    const count =
+        attacks.filter(a => {
 
-        }
+            const date =
+                new Date(`${a.date}T${a.time}`);
 
-        if (
-            attackDate.getMonth() === currentMonth &&
-            attackDate.getFullYear() === currentYear
-        ) {
+            return date.getMonth() === today.getMonth()
+                && date.getFullYear() === today.getFullYear();
 
-            monthCount++;
+        }).length;
 
-        }
+    document
+        .getElementById("statMonth")
+        .textContent = count;
 
-        totalDuration += attack.duration;
+}
 
-    });
+function updateAverageDuration(attacks) {
+
+    if (attacks.length === 0) {
+
+        document
+            .getElementById("statAverage")
+            .textContent =
+            "00:00:00";
+
+        return;
+
+    }
+
+    const total =
+        attacks.reduce(
+
+            (sum, attack) =>
+                sum + attack.duration,
+
+            0
+
+        );
 
     const average =
-        attacks.length === 0
-            ? 0
-            : Math.round(totalDuration / attacks.length);
+        Math.round(
+            total / attacks.length
+        );
 
-    document.getElementById("statToday").textContent =
-        todayCount;
-
-    document.getElementById("statWeek").textContent =
-        weekCount;
-
-    document.getElementById("statMonth").textContent =
-        monthCount;
-
-    document.getElementById("statAverage").textContent =
+    document
+        .getElementById("statAverage")
+        .textContent =
         formatDuration(average);
 
 }
