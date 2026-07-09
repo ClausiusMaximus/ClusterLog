@@ -46,3 +46,53 @@ opacity:.7;
 from{opacity:0;transform:translateY(6px);}
 to{opacity:1;transform:translateY(0);}
 }
+
+/* ==========================================
+   Undo Toast
+========================================== */
+
+.toast button{
+
+    margin-left:16px;
+
+    padding:6px 10px;
+
+    border:none;
+
+    border-radius:8px;
+
+    background:#ffffff22;
+
+    color:#fff;
+
+    cursor:pointer;
+
+    font-size:.9rem;
+
+}
+
+.toast button:hover{
+
+    background:#ffffff33;
+
+}
+
+.delete-btn{
+
+    width:40px;
+
+    height:40px;
+
+    border-radius:50%;
+
+    background:transparent;
+
+    font-size:1.1rem;
+
+}
+
+.delete-btn:hover{
+
+    background:rgba(255,255,255,.08);
+
+}
