@@ -46,8 +46,7 @@ async function init() {
     setCurrentDateTime();
     updateDurationDisplay();
 
-    await renderHistory();
-    await updateStatistics();
+    showView(Views.CAPTURE);
 
 }
 
@@ -57,50 +56,33 @@ async function init() {
 
 function setupNavigation() {
 
-    const navigation = [
+    document
+        .getElementById("navCapture")
+        .addEventListener("click", () => {
 
-        {
-            button: "navCapture",
-            view: Views.CAPTURE
-        },
+            showView(Views.CAPTURE);
 
-        {
-            button: "navHistory",
-            view: Views.HISTORY
-        },
+        });
 
-        {
-            button: "navStatistics",
-            view: Views.STATISTICS
-        }
+    document
+        .getElementById("navHistory")
+        .addEventListener("click", async () => {
 
-    ];
+            await renderHistory();
 
-    navigation.forEach(item => {
+            showView(Views.HISTORY);
 
-        document
-            .getElementById(item.button)
-            .addEventListener("click", async () => {
+        });
 
-                showView(item.view);
+    document
+        .getElementById("navStatistics")
+        .addEventListener("click", async () => {
 
-                switch (item.view) {
+            await updateStatistics();
 
-                    case Views.HISTORY:
-                        await renderHistory();
-                        break;
+            showView(Views.STATISTICS);
 
-                    case Views.STATISTICS:
-                        await updateStatistics();
-                        break;
-
-                }
-
-            });
-
-    });
-
-    updateNavigation();
+        });
 
 }
 
@@ -108,14 +90,14 @@ function showView(view) {
 
     state.currentView = view;
 
-    document.getElementById("captureView").hidden =
-        view !== Views.CAPTURE;
+    document.getElementById("captureView").style.display =
+        view === Views.CAPTURE ? "block" : "none";
 
-    document.getElementById("historyView").hidden =
-        view !== Views.HISTORY;
+    document.getElementById("historyView").style.display =
+        view === Views.HISTORY ? "block" : "none";
 
-    document.getElementById("statisticsView").hidden =
-        view !== Views.STATISTICS;
+    document.getElementById("statisticsView").style.display =
+        view === Views.STATISTICS ? "block" : "none";
 
     updateNavigation();
 
@@ -123,26 +105,76 @@ function showView(view) {
 
 function updateNavigation() {
 
-    const buttons = {
-
-        [Views.CAPTURE]:
-            document.getElementById("navCapture"),
-
-        [Views.HISTORY]:
-            document.getElementById("navHistory"),
-
-        [Views.STATISTICS]:
-            document.getElementById("navStatistics")
-
-    };
-
-    Object.values(buttons)
+    document
+        .querySelectorAll("nav button")
         .forEach(button =>
             button.classList.remove("active")
         );
 
-    buttons[state.currentView]
-        .classList.add("active");
+    switch (state.currentView) {
+
+        case Views.CAPTURE:
+
+            document
+                .getElementById("navCapture")
+                .classList.add("active");
+
+            break;
+
+        case Views.HISTORY:
+
+            document
+                .getElementById("navHistory")
+                .classList.add("active");
+
+            break;
+
+        case Views.STATISTICS:
+
+            document
+                .getElementById("navStatistics")
+                .classList.add("active");
+
+            break;
+
+    }
+
+}
+
+/* =========================================
+   Datum / Uhrzeit
+========================================= */
+
+function setupNowButton() {
+
+    document
+        .getElementById("nowButton")
+        .addEventListener("click", setCurrentDateTime);
+
+}
+
+function setCurrentDateTime() {
+
+    const now = new Date();
+
+    const date =
+        now.toISOString().split("T")[0];
+
+    const time =
+        now.toLocaleTimeString(
+            "de-DE",
+            {
+                hour12: false
+            }
+        );
+
+    document
+        .getElementById("attackDate")
+        .value = date;
+
+    document
+        .getElementById("attackTime")
+        .value = time;
 
 }
 
@@ -194,34 +226,35 @@ function changeDuration(seconds) {
 
 function updateDurationDisplay() {
 
-    const display =
-        document.getElementById("durationValue");
-
-    display.textContent =
+    document
+        .getElementById("durationValue")
+        .textContent =
         formatDuration(state.duration);
 
 }
 
 function formatDuration(totalSeconds) {
 
+    totalSeconds =
+        Math.max(
+            0,
+            Math.floor(totalSeconds)
+        );
+
     const hours =
         Math.floor(totalSeconds / 3600);
 
     const minutes =
-        Math.floor((totalSeconds % 3600) / 60);
+        Math.floor(
+            (totalSeconds % 3600) / 60
+        );
 
     const seconds =
         totalSeconds % 60;
 
-    return [
-
-        hours,
-        minutes,
-        seconds
-
-    ].map(value =>
-        String(value).padStart(2, "0")
-    ).join(":");
+    return `${String(hours).padStart(2, "0")}:` +
+           `${String(minutes).padStart(2, "0")}:` +
+           `${String(seconds).padStart(2, "0")}`;
 
 }
 
@@ -269,7 +302,7 @@ async function saveCurrentAttack() {
 
     if (state.selectedKip === null) {
 
-        alert("Bitte KIP auswÃ¤hlen.");
+        alert("Bitte KIP auswählen.");
 
         return;
 
@@ -307,9 +340,17 @@ async function saveCurrentAttack() {
 
         resetForm();
 
-        await renderHistory();
+        if (state.currentView === Views.HISTORY) {
 
-        await updateStatistics();
+            await renderHistory();
+
+        }
+
+        if (state.currentView === Views.STATISTICS) {
+
+            await updateStatistics();
+
+        }
 
         alert("Angriff gespeichert.");
 
@@ -375,18 +416,20 @@ async function renderHistory() {
     const grouped =
         groupAttacksByDate(attacks);
 
-    Object.keys(grouped).forEach(date => {
+    Object.keys(grouped)
+        .sort((a, b) => new Date(b) - new Date(a))
+        .forEach(date => {
 
-        historyList.appendChild(
+            historyList.appendChild(
 
-            createHistoryDay(
-                date,
-                grouped[date]
-            )
+                createHistoryDay(
+                    date,
+                    grouped[date]
+                )
 
-        );
+            );
 
-    });
+        });
 
 }
 
@@ -453,16 +496,12 @@ function createHistoryItem(attack) {
 
         <div class="history-header">
 
-            <strong>
-
-                ${attack.time}
-
-            </strong>
+            <strong>${attack.time}</strong>
 
             <button
                 class="delete-btn">
 
-                ðŸ—‘ï¸
+                🗑️
 
             </button>
 
@@ -485,7 +524,8 @@ function createHistoryItem(attack) {
 
     item
         .querySelector(".delete-btn")
-        .addEventListener("click",
+        .addEventListener(
+            "click",
             () => deleteHistoryItem(attack.id)
         );
 
@@ -495,7 +535,7 @@ function createHistoryItem(attack) {
 
 async function deleteHistoryItem(id) {
 
-    if (!confirm("Eintrag lÃ¶schen?")) {
+    if (!confirm("Eintrag löschen?")) {
 
         return;
 
@@ -509,6 +549,27 @@ async function deleteHistoryItem(id) {
 
 }
 
+function formatDate(date) {
+
+    return new Date(date)
+        .toLocaleDateString(
+            "de-DE",
+            {
+
+                weekday: "long",
+
+                day: "2-digit",
+
+                month: "2-digit",
+
+                year: "numeric"
+
+            }
+
+        );
+
+}
+
 /* =========================================
    Statistik
 ========================================= */
@@ -519,11 +580,8 @@ async function updateStatistics() {
         await getAttacks();
 
     updateTodayStatistic(attacks);
-
     updateWeekStatistic(attacks);
-
     updateMonthStatistic(attacks);
-
     updateAverageDuration(attacks);
 
 }
@@ -533,14 +591,12 @@ function updateTodayStatistic(attacks) {
     const today =
         new Date().toISOString().split("T")[0];
 
-    const count =
-        attacks.filter(a =>
-            a.date === today
-        ).length;
-
     document
         .getElementById("statToday")
-        .textContent = count;
+        .textContent =
+        attacks.filter(
+            attack => attack.date === today
+        ).length;
 
 }
 
@@ -552,19 +608,19 @@ function updateWeekStatistic(attacks) {
     const weekStart =
         new Date(today);
 
-    weekStart.setHours(0,0,0,0);
+    weekStart.setHours(0, 0, 0, 0);
 
     weekStart.setDate(
         today.getDate() - today.getDay()
     );
 
     const count =
-        attacks.filter(a => {
+        attacks.filter(attack => {
 
-            const date =
-                new Date(`${a.date}T${a.time}`);
+            const attackDate =
+                new Date(`${attack.date}T${attack.time}`);
 
-            return date >= weekStart;
+            return attackDate >= weekStart;
 
         }).length;
 
@@ -580,13 +636,15 @@ function updateMonthStatistic(attacks) {
         new Date();
 
     const count =
-        attacks.filter(a => {
+        attacks.filter(attack => {
 
-            const date =
-                new Date(`${a.date}T${a.time}`);
+            const attackDate =
+                new Date(`${attack.date}T${attack.time}`);
 
-            return date.getMonth() === today.getMonth()
-                && date.getFullYear() === today.getFullYear();
+            return (
+                attackDate.getMonth() === today.getMonth() &&
+                attackDate.getFullYear() === today.getFullYear()
+            );
 
         }).length;
 
@@ -630,3 +688,5 @@ function updateAverageDuration(attacks) {
         formatDuration(average);
 
 }
+
+/* =========================================
