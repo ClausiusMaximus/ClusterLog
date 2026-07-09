@@ -1,3 +1,9 @@
+/* ==========================================
+   ClusterLog v0.3.5 Stable
+   Teil 1c.1
+   App-Start & Navigation
+========================================== */
+
 import {
     initDatabase,
     saveAttack,
@@ -5,103 +11,110 @@ import {
     deleteAttack
 } from "./storage.js";
 
-/* =========================================
-   Konstanten
-========================================= */
+/* ==========================================
+   Ansichten
+========================================== */
 
 const Views = {
-    CAPTURE: "capture",
-    HISTORY: "history",
-    STATISTICS: "statistics"
+    CAPTURE: "captureView",
+    HISTORY: "historyView",
+    STATISTICS: "statisticsView"
 };
 
-/* =========================================
-   App-Status
-========================================= */
+/* ==========================================
+   Status
+========================================== */
 
 const state = {
+
+    currentView: Views.CAPTURE,
+
     duration: 0,
-    selectedKip: null,
-    currentView: Views.CAPTURE
+
+    selectedKip: null
+
 };
 
-/* =========================================
+/* ==========================================
    Start
-========================================= */
+========================================== */
 
-document.addEventListener("DOMContentLoaded", init);
+document.addEventListener(
+    "DOMContentLoaded",
+    init
+);
 
 async function init() {
-
-    console.log("ClusterLog gestartet");
 
     await initDatabase();
 
     setupNavigation();
-    setupNowButton();
-    setupDurationButtons();
-    setupKipButtons();
-    setupSaveButton();
-
-    setCurrentDateTime();
-    updateDurationDisplay();
 
     showView(Views.CAPTURE);
 
 }
 
-/* =========================================
+/* ==========================================
    Navigation
-========================================= */
+========================================== */
 
 function setupNavigation() {
 
     document
         .getElementById("navCapture")
-        .addEventListener("click", () => {
-
-            showView(Views.CAPTURE);
-
-        });
+        .addEventListener(
+            "click",
+            () => showView(Views.CAPTURE)
+        );
 
     document
         .getElementById("navHistory")
-        .addEventListener("click", async () => {
-
-            await renderHistory();
-
-            showView(Views.HISTORY);
-
-        });
+        .addEventListener(
+            "click",
+            () => showView(Views.HISTORY)
+        );
 
     document
         .getElementById("navStatistics")
-        .addEventListener("click", async () => {
-
-            await updateStatistics();
-
-            showView(Views.STATISTICS);
-
-        });
+        .addEventListener(
+            "click",
+            () => showView(Views.STATISTICS)
+        );
 
 }
+
+/* ==========================================
+   View wechseln
+========================================== */
 
 function showView(view) {
 
     state.currentView = view;
 
-    document.getElementById("captureView").style.display =
-        view === Views.CAPTURE ? "block" : "none";
+    document
+        .querySelectorAll(".view")
+        .forEach(section => {
 
-    document.getElementById("historyView").style.display =
-        view === Views.HISTORY ? "block" : "none";
+            section.classList.remove("active");
 
-    document.getElementById("statisticsView").style.display =
-        view === Views.STATISTICS ? "block" : "none";
+            section.classList.add("hidden");
+
+        });
+
+    const current =
+        document.getElementById(view);
+
+    current.classList.remove("hidden");
+
+    current.classList.add("active");
 
     updateNavigation();
 
 }
+
+/* ==========================================
+   Navigation markieren
+========================================== */
 
 function updateNavigation() {
 
@@ -111,7 +124,7 @@ function updateNavigation() {
             button.classList.remove("active")
         );
 
-    switch (state.currentView) {
+    switch(state.currentView){
 
         case Views.CAPTURE:
 
@@ -141,15 +154,70 @@ function updateNavigation() {
 
 }
 
-/* =========================================
-   Datum / Uhrzeit
-========================================= */
+/* ==========================================
+   Toast
+========================================== */
+
+function showToast(message) {
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.textContent = message;
+
+    toast.classList.add("show");
+
+    clearTimeout(toast.timer);
+
+    toast.timer = setTimeout(() => {
+
+        toast.classList.remove("show");
+
+    }, 2200);
+
+}
+
+/* ==========================================
+   Vibration
+========================================== */
+
+function vibrate(duration = 30){
+
+    if("vibrate" in navigator){
+
+        navigator.vibrate(duration);
+
+    }
+
+}
+/* ==========================================
+   Teil 1c.2
+   Datum, Uhrzeit, Dauer, KIP
+========================================== */
+
+/* ==========================================
+   Initialisierung
+========================================== */
+
+setupNowButton();
+setupDurationButtons();
+setupKipButtons();
+
+setCurrentDateTime();
+updateDurationDisplay();
+
+/* ==========================================
+   Jetzt-Button
+========================================== */
 
 function setupNowButton() {
 
     document
         .getElementById("nowButton")
-        .addEventListener("click", setCurrentDateTime);
+        .addEventListener(
+            "click",
+            setCurrentDateTime
+        );
 
 }
 
@@ -157,10 +225,14 @@ function setCurrentDateTime() {
 
     const now = new Date();
 
-    const date =
+    document
+        .getElementById("attackDate")
+        .value =
         now.toISOString().split("T")[0];
 
-    const time =
+    document
+        .getElementById("attackTime")
+        .value =
         now.toLocaleTimeString(
             "de-DE",
             {
@@ -168,19 +240,11 @@ function setCurrentDateTime() {
             }
         );
 
-    document
-        .getElementById("attackDate")
-        .value = date;
-
-    document
-        .getElementById("attackTime")
-        .value = time;
-
 }
 
-/* =========================================
+/* ==========================================
    Dauer
-========================================= */
+========================================== */
 
 function setupDurationButtons() {
 
@@ -200,11 +264,10 @@ function setupDurationButtons() {
 
         document
             .getElementById(id)
-            .addEventListener("click", () => {
-
-                changeDuration(value);
-
-            });
+            .addEventListener(
+                "click",
+                () => changeDuration(value)
+            );
 
     });
 
@@ -258,9 +321,9 @@ function formatDuration(totalSeconds) {
 
 }
 
-/* =========================================
+/* ==========================================
    KIP
-========================================= */
+========================================== */
 
 function setupKipButtons() {
 
@@ -269,32 +332,44 @@ function setupKipButtons() {
 
     buttons.forEach(button => {
 
-        button.addEventListener("click", () => {
+        button.addEventListener(
+            "click",
+            () => {
 
-            buttons.forEach(btn =>
-                btn.classList.remove("active")
-            );
+                buttons.forEach(btn =>
+                    btn.classList.remove("active")
+                );
 
-            button.classList.add("active");
+                button.classList.add("active");
 
-            state.selectedKip =
-                Number(button.dataset.kip);
+                state.selectedKip =
+                    Number(button.dataset.kip);
 
-        });
+            }
+        );
 
     });
 
 }
+/* ==========================================
+   Teil 1c.3
+   Speichern & Formular zurücksetzen
+========================================== */
 
-/* =========================================
+setupSaveButton();
+
+/* ==========================================
    Speichern
-========================================= */
+========================================== */
 
 function setupSaveButton() {
 
     document
         .getElementById("saveButton")
-        .addEventListener("click", saveCurrentAttack);
+        .addEventListener(
+            "click",
+            saveCurrentAttack
+        );
 
 }
 
@@ -302,7 +377,7 @@ async function saveCurrentAttack() {
 
     if (state.selectedKip === null) {
 
-        alert("Bitte KIP auswählen.");
+        showToast("Bitte KIP auswählen");
 
         return;
 
@@ -330,7 +405,8 @@ async function saveCurrentAttack() {
 
         notes: "",
 
-        createdAt: Date.now()
+        createdAt:
+            Date.now()
 
     };
 
@@ -338,38 +414,30 @@ async function saveCurrentAttack() {
 
         await saveAttack(attack);
 
+        vibrate(30);
+
+        showToast("✓ Angriff gespeichert");
+
         resetForm();
 
-        if (state.currentView === Views.HISTORY) {
-
-            await renderHistory();
-
-        }
-
-        if (state.currentView === Views.STATISTICS) {
-
-            await updateStatistics();
-
-        }
-
-        alert("Angriff gespeichert.");
+        refreshCurrentView();
 
     }
-    catch (error) {
+    catch(error){
 
         console.error(error);
 
-        alert("Fehler beim Speichern.");
+        showToast("Speichern fehlgeschlagen");
 
     }
 
 }
 
-/* =========================================
-   Reset
-========================================= */
+/* ==========================================
+   Formular zurücksetzen
+========================================== */
 
-function resetForm() {
+function resetForm(){
 
     state.duration = 0;
 
@@ -387,306 +455,34 @@ function resetForm() {
 
 }
 
-/* =========================================
-   Verlauf
-========================================= */
+/* ==========================================
+   Aktive Seite aktualisieren
+========================================== */
 
-async function renderHistory() {
+async function refreshCurrentView(){
 
-    const historyList =
-        document.getElementById("historyList");
+    switch(state.currentView){
 
-    const attacks =
-        await getAttacks();
+        case Views.HISTORY:
 
-    if (attacks.length === 0) {
+            if(typeof renderHistory === "function"){
 
-        historyList.innerHTML = `
-            <div class="empty-state">
-                Noch keine Angriffe gespeichert.
-            </div>
-        `;
-
-        return;
-
-    }
-
-    historyList.innerHTML = "";
-
-    const grouped =
-        groupAttacksByDate(attacks);
-
-    Object.keys(grouped)
-        .sort((a, b) => new Date(b) - new Date(a))
-        .forEach(date => {
-
-            historyList.appendChild(
-
-                createHistoryDay(
-                    date,
-                    grouped[date]
-                )
-
-            );
-
-        });
-
-}
-
-function groupAttacksByDate(attacks) {
-
-    attacks.sort((a, b) => {
-
-        return new Date(`${b.date}T${b.time}`) -
-               new Date(`${a.date}T${a.time}`);
-
-    });
-
-    const groups = {};
-
-    attacks.forEach(attack => {
-
-        if (!groups[attack.date]) {
-
-            groups[attack.date] = [];
-
-        }
-
-        groups[attack.date].push(attack);
-
-    });
-
-    return groups;
-
-}
-
-function createHistoryDay(date, attacks) {
-
-    const day =
-        document.createElement("div");
-
-    day.className = "history-day";
-
-    day.innerHTML =
-        `<h3>${formatDate(date)}</h3>`;
-
-    attacks.forEach(attack => {
-
-        day.appendChild(
-
-            createHistoryItem(attack)
-
-        );
-
-    });
-
-    return day;
-
-}
-
-function createHistoryItem(attack) {
-
-    const item =
-        document.createElement("div");
-
-    item.className =
-        "history-item";
-
-    item.innerHTML = `
-
-        <div class="history-header">
-
-            <strong>${attack.time}</strong>
-
-            <button
-                class="delete-btn">
-
-                🗑️
-
-            </button>
-
-        </div>
-
-        <div>
-
-            KIP ${attack.kip}
-
-        </div>
-
-        <div>
-
-            Dauer:
-            ${formatDuration(attack.duration)}
-
-        </div>
-
-    `;
-
-    item
-        .querySelector(".delete-btn")
-        .addEventListener(
-            "click",
-            () => deleteHistoryItem(attack.id)
-        );
-
-    return item;
-
-}
-
-async function deleteHistoryItem(id) {
-
-    if (!confirm("Eintrag löschen?")) {
-
-        return;
-
-    }
-
-    await deleteAttack(id);
-
-    await renderHistory();
-
-    await updateStatistics();
-
-}
-
-function formatDate(date) {
-
-    return new Date(date)
-        .toLocaleDateString(
-            "de-DE",
-            {
-
-                weekday: "long",
-
-                day: "2-digit",
-
-                month: "2-digit",
-
-                year: "numeric"
+                await renderHistory();
 
             }
 
-        );
+            break;
 
-}
+        case Views.STATISTICS:
 
-/* =========================================
-   Statistik
-========================================= */
+            if(typeof updateStatistics === "function"){
 
-async function updateStatistics() {
+                await updateStatistics();
 
-    const attacks =
-        await getAttacks();
+            }
 
-    updateTodayStatistic(attacks);
-    updateWeekStatistic(attacks);
-    updateMonthStatistic(attacks);
-    updateAverageDuration(attacks);
-
-}
-
-function updateTodayStatistic(attacks) {
-
-    const today =
-        new Date().toISOString().split("T")[0];
-
-    document
-        .getElementById("statToday")
-        .textContent =
-        attacks.filter(
-            attack => attack.date === today
-        ).length;
-
-}
-
-function updateWeekStatistic(attacks) {
-
-    const today =
-        new Date();
-
-    const weekStart =
-        new Date(today);
-
-    weekStart.setHours(0, 0, 0, 0);
-
-    weekStart.setDate(
-        today.getDate() - today.getDay()
-    );
-
-    const count =
-        attacks.filter(attack => {
-
-            const attackDate =
-                new Date(`${attack.date}T${attack.time}`);
-
-            return attackDate >= weekStart;
-
-        }).length;
-
-    document
-        .getElementById("statWeek")
-        .textContent = count;
-
-}
-
-function updateMonthStatistic(attacks) {
-
-    const today =
-        new Date();
-
-    const count =
-        attacks.filter(attack => {
-
-            const attackDate =
-                new Date(`${attack.date}T${attack.time}`);
-
-            return (
-                attackDate.getMonth() === today.getMonth() &&
-                attackDate.getFullYear() === today.getFullYear()
-            );
-
-        }).length;
-
-    document
-        .getElementById("statMonth")
-        .textContent = count;
-
-}
-
-function updateAverageDuration(attacks) {
-
-    if (attacks.length === 0) {
-
-        document
-            .getElementById("statAverage")
-            .textContent =
-            "00:00:00";
-
-        return;
+            break;
 
     }
 
-    const total =
-        attacks.reduce(
-
-            (sum, attack) =>
-                sum + attack.duration,
-
-            0
-
-        );
-
-    const average =
-        Math.round(
-            total / attacks.length
-        );
-
-    document
-        .getElementById("statAverage")
-        .textContent =
-        formatDuration(average);
-
 }
-
-/* =========================================
