@@ -487,13 +487,14 @@ function formatDuration(seconds) {
     const minutes =
         Math.floor((seconds % 3600) / 60);
 
-    if (hours > 0) {
+    const secs =
+        seconds % 60;
 
-        return `${hours} h ${minutes} min`;
-
-    }
-
-    return `${minutes} min`;
+    return (
+        `${String(hours).padStart(2, "0")}:` +
+        `${String(minutes).padStart(2, "0")}:` +
+        `${String(secs).padStart(2, "0")}`
+    );
 
 }
 
