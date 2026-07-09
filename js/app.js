@@ -795,3 +795,162 @@ async function undoDelete(){
     await updateStatistics();
 
 }
+/* ==========================================
+   Teil 2c
+   Statistik
+========================================== */
+
+async function updateStatistics() {
+
+    const attacks =
+        await getAttacks();
+
+    updateTodayStatistic(attacks);
+
+    updateWeekStatistic(attacks);
+
+    updateMonthStatistic(attacks);
+
+    updateAverageDuration(attacks);
+
+}
+
+/* ==========================================
+   Heute
+========================================== */
+
+function updateTodayStatistic(attacks) {
+
+    const today =
+        new Date()
+        .toISOString()
+        .split("T")[0];
+
+    const count =
+        attacks.filter(
+            attack =>
+                attack.date === today
+        ).length;
+
+    document
+        .getElementById("statToday")
+        .textContent = count;
+
+}
+
+/* ==========================================
+   Woche
+========================================== */
+
+function updateWeekStatistic(attacks) {
+
+    const now = new Date();
+
+    const start =
+        new Date(now);
+
+    start.setHours(0,0,0,0);
+
+    const day =
+        start.getDay() || 7;
+
+    start.setDate(
+        start.getDate() - day + 1
+    );
+
+    const count =
+        attacks.filter(attack => {
+
+            const date =
+                new Date(
+                    `${attack.date}T${attack.time}`
+                );
+
+            return date >= start;
+
+        }).length;
+
+    document
+        .getElementById("statWeek")
+        .textContent = count;
+
+}
+
+/* ==========================================
+   Monat
+========================================== */
+
+function updateMonthStatistic(attacks) {
+
+    const now =
+        new Date();
+
+    const month =
+        now.getMonth();
+
+    const year =
+        now.getFullYear();
+
+    const count =
+        attacks.filter(attack => {
+
+            const date =
+                new Date(
+                    `${attack.date}T${attack.time}`
+                );
+
+            return (
+
+                date.getMonth() === month &&
+
+                date.getFullYear() === year
+
+            );
+
+        }).length;
+
+    document
+        .getElementById("statMonth")
+        .textContent = count;
+
+}
+
+/* ==========================================
+   Durchschnitt
+========================================== */
+
+function updateAverageDuration(attacks) {
+
+    if (!attacks.length) {
+
+        document
+            .getElementById("statAverage")
+            .textContent =
+            "00:00:00";
+
+        return;
+
+    }
+
+    const total =
+        attacks.reduce(
+
+            (sum, attack) =>
+
+                sum + attack.duration,
+
+            0
+
+        );
+
+    const average =
+        Math.round(
+            total / attacks.length
+        );
+
+    document
+        .getElementById("statAverage")
+        .textContent =
+        formatDuration(average);
+
+}
