@@ -1,50 +1,20 @@
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+import { AppSelector } from "@/components/common";
 
-import { AppCard, NumberButton } from "@/components/common";
+import type { Side } from "../types/attack";
+import { SIDE_OPTIONS } from "../utils/options";
 
-export type Side = "left" | "both" | "right";
-
-type SideSelectorProps = {
+type Props = {
   value: Side;
   onChange: (side: Side) => void;
 };
 
-export default function SideSelector({
-  value,
-  onChange,
-}: SideSelectorProps) {
+export default function SideSelector(props: Props) {
   return (
-    <AppCard>
-      <Typography variant="h6" gutterBottom>
-        Kopfseite
-      </Typography>
-
-      <Box
-        sx={{
-          display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
-          gap: 1,
-        }}
-      >
-        <NumberButton
-          label="Links"
-          selected={value === "left"}
-          onClick={() => onChange("left")}
-        />
-
-        <NumberButton
-          label="Beid."
-          selected={value === "both"}
-          onClick={() => onChange("both")}
-        />
-
-        <NumberButton
-          label="Rechts"
-          selected={value === "right"}
-          onClick={() => onChange("right")}
-        />
-      </Box>
-    </AppCard>
+    <AppSelector
+      title="Kopfseite"
+      columns={3}
+      options={SIDE_OPTIONS}
+      {...props}
+    />
   );
 }

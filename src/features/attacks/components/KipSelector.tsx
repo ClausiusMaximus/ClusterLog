@@ -1,39 +1,19 @@
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+import { AppSelector } from "@/components/common";
 
-import { AppCard, NumberButton } from "@/components/common";
+import { KIP_OPTIONS } from "../utils/options";
 
-type KipSelectorProps = {
+type Props = {
   value: number;
-  onChange: (value: number) => void;
+  onChange: (kip: number) => void;
 };
 
-export default function KipSelector({
-  value,
-  onChange,
-}: KipSelectorProps) {
+export default function KipSelector(props: Props) {
   return (
-    <AppCard>
-      <Typography variant="h6" gutterBottom>
-        KIP-Skala
-      </Typography>
-
-      <Box
-        sx={{
-          display: "grid",
-          gridTemplateColumns: "repeat(4, 1fr)",
-          gap: 1,
-        }}
-      >
-        {Array.from({ length: 11 }, (_, i) => (
-          <NumberButton
-            key={i}
-            label={i}
-            selected={value === i}
-            onClick={() => onChange(i)}
-          />
-        ))}
-      </Box>
-    </AppCard>
+    <AppSelector
+      title="KIP-Skala"
+      columns={6}
+      options={KIP_OPTIONS}
+      {...props}
+    />
   );
 }

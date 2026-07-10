@@ -1,9 +1,15 @@
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
-import Box from "@mui/material/Box";
+
+import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
 import { AppButton, AppCard } from "@/components/common";
+
+import {
+  formatDate,
+  formatTime,
+} from "../utils/formatters";
 
 type StartTimePickerProps = {
   value: Date;
@@ -14,51 +20,45 @@ export default function StartTimePicker({
   value,
   onChange,
 }: StartTimePickerProps) {
+  const handleNow = () => {
+    onChange(new Date());
+  };
+
   return (
     <AppCard>
       <Typography variant="h6" gutterBottom>
         Beginn
       </Typography>
 
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          gap: 2,
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            gap: 1,
-          }}
+      <Stack spacing={2}>
+        <Stack
+          direction="row"
+          spacing={1}
+          sx={{ alignItems: "center" }}
         >
           <CalendarTodayIcon fontSize="small" />
 
           <Typography>
-            {value.toLocaleDateString("de-DE")}
+            {formatDate(value)}
           </Typography>
-        </Box>
+        </Stack>
 
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            gap: 1,
-          }}
+        <Stack
+          direction="row"
+          spacing={1}
+          sx={{ alignItems: "center" }}
         >
           <AccessTimeIcon fontSize="small" />
 
           <Typography>
-            {value.toLocaleTimeString("de-DE")}
+            {formatTime(value)}
           </Typography>
-        </Box>
+        </Stack>
 
-        <AppButton onClick={() => onChange(new Date())}>
+        <AppButton onClick={handleNow}>
           Jetzt übernehmen
         </AppButton>
-      </Box>
+      </Stack>
     </AppCard>
   );
 }

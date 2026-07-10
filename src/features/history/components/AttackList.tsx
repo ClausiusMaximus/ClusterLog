@@ -1,8 +1,14 @@
 import { useEffect, useState } from "react";
-import Typography from "@mui/material/Typography";
+
+import Stack from "@mui/material/Stack";
 
 import { AttackService } from "@/lib/services/AttackService";
 import type { Attack } from "@/features/attacks/types/attack";
+
+import AttackGroup from "./AttackGroup";
+import EmptyState from "./EmptyState";
+
+import { groupAttacks } from "../utils/groupAttacks";
 
 export default function AttackList() {
   const [attacks, setAttacks] = useState<Attack[]>([]);
@@ -17,16 +23,20 @@ export default function AttackList() {
   }, []);
 
   if (attacks.length === 0) {
-    return <Typography>Noch keine Attacken gespeichert.</Typography>;
+    return <EmptyState />;
   }
 
+  const groups = groupAttacks(attacks);
+
   return (
-    <>
-      {attacks.map((attack) => (
-        <Typography key={attack.id}>
-          {attack.start.toLocaleString("de-DE")} · KIP {attack.kip}
-        </Typography>
+    <Stack spacing={3}>
+      {groups.map((group) => (
+        <AttackGroup
+          key={group.title}
+          title={group.title}
+          attacks={group.attacks}
+        />
       ))}
-    </>
+    </Stack>
   );
 }
