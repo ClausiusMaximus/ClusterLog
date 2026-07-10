@@ -15,20 +15,23 @@ export function useAttackForm() {
   const [activity, setActivity] =
     useState<Activity>("other");
 
+  const save = () => {
+  console.log("Attacke speichern");
+  };
+
   return {
     start,
-    setStart,
-
     duration,
-    setDuration,
-
     kip,
-    setKip,
-
     side,
-    setSide,
-
     activity,
+
+    setStart,
+    setDuration,
+    setKip,
+    setSide,
     setActivity,
+
+    save,
   };
 }

@@ -1,34 +1,13 @@
-import { PageTitle } from "@/components/common/index";
+import { PageTitle } from "@/components/common";
 
-import { useAttackForm } from "./hooks/useAttackForm";
-
-import StartTimePicker from "./components/StartTimePicker";
-
-import DurationPicker from "./components/DurationPicker";
-
-import KipSelector from "./components/KipSelector";
+import AttackForm from "./components/AttackForm";
 
 export default function AttackPage() {
-  const attack = useAttackForm();
-
   return (
     <>
       <PageTitle>Neue Attacke</PageTitle>
 
-      <StartTimePicker
-        value={attack.start}
-        onChange={attack.setStart}
-      />
-
-      <DurationPicker
-        value={attack.duration}
-        onChange={attack.setDuration}
-      />
-
-      <KipSelector
-        value={attack.kip}
-        onChange={attack.setKip}
-      />
+      <AttackForm />
     </>
   );
 }
