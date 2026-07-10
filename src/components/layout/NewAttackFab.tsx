@@ -12,14 +12,16 @@ export default function NewAttackFab() {
   return (
     <Fab
       color="primary"
-      size="large"
-      aria-label="Neue Attacke erfassen"
+      aria-label="Neue Attacke"
       onClick={handleClick}
       sx={{
         position: "fixed",
-        bottom: 72,
-        right: 24,
-        zIndex: (theme) => theme.zIndex.drawer + 1,
+        left: "50%",
+        bottom: 28,
+        transform: "translateX(-50%)",
+        width: 72,
+        height: 72,
+        zIndex: (theme) => theme.zIndex.drawer + 2,
       }}
     >
       <AddIcon />

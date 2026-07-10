@@ -14,6 +14,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 const routes = [
   { label: "Home", path: "/", icon: <HomeIcon /> },
   { label: "Verlauf", path: "/history", icon: <HistoryIcon /> },
+
+  // Platzhalter für den FAB
+  { label: "", path: "", icon: <span /> },
+
   { label: "Statistik", path: "/statistics", icon: <BarChartIcon /> },
   { label: "Einstellungen", path: "/settings", icon: <SettingsIcon /> },
 ];
@@ -36,14 +40,23 @@ export default function AppBottomNavigation() {
         value={location.pathname}
         onChange={(_, value) => navigate(value)}
       >
-        {routes.map((route) => (
-          <BottomNavigationAction
-            key={route.path}
-            value={route.path}
-            label={route.label}
-            icon={route.icon}
-          />
-        ))}
+        {routes.map((route) =>
+          route.path ? (
+            <BottomNavigationAction
+              key={route.path}
+              value={route.path}
+              label={route.label}
+              icon={route.icon}
+            />
+        ) : (
+            <BottomNavigationAction
+              key="fab-space"
+              disabled
+              icon={<span />}
+              sx={{ pointerEvents: "none" }}
+            />
+  )
+)}
       </BottomNavigation>
     </Paper>
   );
