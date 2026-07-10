@@ -115,16 +115,20 @@ export default function AttackDrawer({
         <Button
             variant="contained"
             startIcon={<EditIcon />}
-            onClick={() => {if (attack) onEdit?.(attack)}}
+            onClick={() => {if (attack) onEdit(attack)}}
         >
             Bearbeiten
         </Button>
 
         <Button
-            variant="outlined"
             color="error"
+            variant="outlined"
             startIcon={<DeleteIcon />}
-            onClick={() => {if (attack) onDelete?.(attack)}}
+            onClick={() => {
+              if (attack) {
+              onDelete(attack);
+            }
+            }}
         >
             Löschen
         </Button>

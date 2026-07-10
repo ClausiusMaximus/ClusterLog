@@ -4,7 +4,7 @@ export function createEmptyAttack(): Attack {
   const now = new Date();
 
   return {
-    id: "",
+    id: crypto.randomUUID(),
 
     start: now,
 

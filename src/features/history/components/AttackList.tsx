@@ -1,7 +1,8 @@
 import { useState } from "react";
 
 import Stack from "@mui/material/Stack";
-
+import { ConfirmDialog } from "@/components/common";
+import { attackService } from "@/lib/services";
 import type { Attack } from "@/features/attacks/types/attack";
 import EditAttackDialog from "@/features/attacks/EditAttackDialog";
 import { useAttacks } from "@/features/attacks/hooks/useAttacks";
@@ -19,6 +20,9 @@ export default function AttackList() {
   const drawer = useSelectedAttack();
 
   const [editingAttack, setEditingAttack] =
+    useState<Attack | null>(null);
+
+  const [deletingAttack, setDeletingAttack] =
     useState<Attack | null>(null);
 
   if (loading) {
@@ -53,7 +57,8 @@ export default function AttackList() {
           setEditingAttack(attack);
         }}
         onDelete={(attack) => {
-          console.log("Delete", attack.id);
+          drawer.close();
+          setDeletingAttack(attack);
         }}
       />
 
@@ -61,6 +66,21 @@ export default function AttackList() {
         open={editingAttack !== null}
         attack={editingAttack}
         onClose={() => setEditingAttack(null)}
+      />
+      <ConfirmDialog
+        open={deletingAttack !== null}
+        title="Attacke löschen"
+        message="Diese Attacke wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden."
+        onCancel={() => setDeletingAttack(null)}
+        onConfirm={async () => {
+          if (!deletingAttack) {
+            return;
+          }
+
+          await attackService.delete(deletingAttack.id);
+
+          setDeletingAttack(null);
+        }}
       />
     </>
   );
