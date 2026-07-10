@@ -1,36 +1,75 @@
-# ClusterLog
+# React + TypeScript + Vite
 
-ClusterLog ist eine Progressive Web App (PWA) zum schnellen Erfassen von Clusterkopfschmerz-Attacken.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Funktionen
+Currently, two official plugins are available:
 
-- 📅 Datum & Uhrzeit automatisch
-- ⏱ Dauer im Format MM:SS bzw. HH:MM:SS
-- 🔥 KIP-Skala 0–10
-- 💾 Speicherung in IndexedDB
-- 📱 Installierbare PWA
-- 🌙 Dark Mode
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## Roadmap
+## React Compiler
 
-### Version 0.1
-- Angriff erfassen
-- Speicherung
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-### Version 0.2
-- Verlauf
-- Löschen
+## Expanding the ESLint configuration
 
-### Version 0.3
-- Statistik
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-### Version 0.4
-- CSV Export
-- JSON Backup
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
-### Version 1.0
-- Offline
-- Finales Design
-- Einstellungen
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
 
-Release: v0.3.5 Stable
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+
+```
+
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
+
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+
+```
