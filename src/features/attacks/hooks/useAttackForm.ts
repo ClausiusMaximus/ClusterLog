@@ -1,30 +1,71 @@
 import { useState } from "react";
 
-import type { Activity, Side } from "../types/attack";
+import { createAttack } from "../services/AttackService";
+
+import type { Activity, Side, Attack } from "../types/attack";
+import { createEmptyAttack } from "../utils/defaultAttack";
 
 export function useAttackForm() {
-  const [start, setStart] = useState(new Date());
+  const [attack, setAttack] = useState<Attack>(createEmptyAttack());
 
-  const [duration, setDuration] = useState(0);
+  const setStart = (start: Date) => {
+    setAttack((prev) => ({
+      ...prev,
+      start,
+    }));
+  };
 
-  const [kip, setKip] = useState(0);
+  const setDuration = (duration: number) => {
+    setAttack((prev) => ({
+      ...prev,
+      duration,
+    }));
+  };
 
-  const [side, setSide] =
-    useState<Side>("left");
+  const setKip = (kip: number) => {
+    setAttack((prev) => ({
+      ...prev,
+      kip,
+    }));
+  };
 
-  const [activity, setActivity] =
-    useState<Activity>("other");
+  const setSide = (side: Side) => {
+    setAttack((prev) => ({
+      ...prev,
+      side,
+    }));
+  };
 
-  const save = () => {
-  console.log("Attacke speichern");
+  const setActivity = (activity: Activity) => {
+    setAttack((prev) => ({
+      ...prev,
+      activity,
+    }));
+  };
+
+  const save = async () => {
+    const newAttack: Attack = {
+      ...attack,
+      id: crypto.randomUUID(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+
+    await createAttack(newAttack);
+
+    console.log("Attacke gespeichert");
+
+    setAttack(createEmptyAttack());
   };
 
   return {
-    start,
-    duration,
-    kip,
-    side,
-    activity,
+    attack,
+
+    start: attack.start,
+    duration: attack.duration,
+    kip: attack.kip,
+    side: attack.side,
+    activity: attack.activity,
 
     setStart,
     setDuration,
