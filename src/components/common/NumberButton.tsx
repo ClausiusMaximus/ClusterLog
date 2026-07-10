@@ -18,19 +18,22 @@ export default function NumberButton({
       sx={{
             minWidth: 72,
             minHeight: 72,
-            fontSize: "1.25rem",
+            px: 2,
+            py: 1,
+            fontSize: "1.1rem",
             fontWeight: 700,
             borderRadius: 3,
+            textTransform: "none",
+            whiteSpace: "nowrap",
+            //transition: "all .15s ease",
 
-            transition: "all .15s ease",
+            //"&:hover": {
+              //  transform: "scale(1.05)",
+            //},
 
-            "&:hover": {
-                transform: "scale(1.05)",
-            },
-
-            "&:active": {
-                transform: "scale(.96)",
-            },
+            //"&:active": {
+              //  transform: "scale(.96)",
+            //},
         }}
     >
       {label}

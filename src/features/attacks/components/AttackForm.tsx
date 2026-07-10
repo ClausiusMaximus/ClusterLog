@@ -28,8 +28,8 @@ export default function AttackForm() {
       />
 
       <SideSelector
-        //value={attack.side}
-        //onChange={attack.setSide}
+        value={attack.side}
+        onChange={attack.setSide}
       />
 
       <ActivitySelector
