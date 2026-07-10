@@ -4,7 +4,6 @@ import { Outlet } from "react-router-dom";
 
 import Header from "@/components/layout/Header";
 import AppBottomNavigation from "@/components/layout/AppBottomNavigation";
-import NewAttackFab from "@/components/layout/NewAttackFab";
 
 export default function MainLayout() {
   return (
@@ -15,7 +14,6 @@ export default function MainLayout() {
         <Outlet />
       </Container>
 
-      <NewAttackFab />
 
       <AppBottomNavigation />
     </Box>

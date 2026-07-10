@@ -1,26 +1,51 @@
 import { createTheme } from "@mui/material/styles";
 
-export const theme = createTheme({
+const theme = createTheme({
   palette: {
-    mode: "light",
+    mode: "dark",
+
     primary: {
       main: "#1976d2",
     },
-    secondary: {
-      main: "#26a69a",
-    },
+
     background: {
-      default: "#f5f7fa",
-      paper: "#ffffff",
+      default: "#121212",
+      paper: "#1E1E1E",
     },
   },
+
   shape: {
-    borderRadius: 12,
+    borderRadius: 16,
   },
-  typography: {
-    fontFamily: "Inter, Roboto, Arial, sans-serif",
-    h4: {
-      fontWeight: 700,
+
+  components: {
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          borderRadius: 16,
+        },
+      },
+    },
+
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: 999,
+          textTransform: "none",
+          minHeight: 52,
+          fontWeight: 600,
+        },
+      },
+    },
+
+    MuiBottomNavigation: {
+      styleOverrides: {
+        root: {
+          height: 72,
+        },
+      },
     },
   },
 });
+
+export default theme;

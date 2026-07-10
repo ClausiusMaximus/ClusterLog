@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 
 export default function Header() {
   return (
-    <AppBar position="static">
+    <AppBar position="sticky">
       <Toolbar>
         <Typography variant="h6">
           ClusterLog

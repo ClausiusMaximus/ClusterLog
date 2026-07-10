@@ -5,7 +5,6 @@ import MainLayout from "@/components/layout/MainLayout";
 import AttackPage from "@/features/attacks/components";
 import HistoryPage from "@/features/history/History";
 import StatisticsPage from "@/features/statistics/Statistics";
-import SettingsPage from "@/features/settings/Settings";
 
 export const router = createBrowserRouter([
   {
@@ -22,10 +21,6 @@ export const router = createBrowserRouter([
       {
         path: "/statistics",
         element: <StatisticsPage />,
-      },
-      {
-        path: "/settings",
-        element: <SettingsPage />,
       },
     ],
   },
