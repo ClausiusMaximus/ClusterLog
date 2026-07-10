@@ -1,34 +1,29 @@
-import { useEffect, useState } from "react";
-import EditAttackDialog from "@/features/attacks/EditAttackDialog";
+import { useState } from "react";
+
 import Stack from "@mui/material/Stack";
 
-import { attackService } from "@/lib/services/";
-
 import type { Attack } from "@/features/attacks/types/attack";
+import EditAttackDialog from "@/features/attacks/EditAttackDialog";
+import { useAttacks } from "@/features/attacks/hooks/useAttacks";
 
+import AttackDrawer from "./AttackDrawer";
 import AttackGroup from "./AttackGroup";
 import EmptyState from "./EmptyState";
 
+import { useSelectedAttack } from "../hooks/useSelectedAttack";
 import { groupAttacks } from "../utils/groupAttacks";
 
-import AttackDrawer from "./AttackDrawer";
-import { useSelectedAttack } from "../hooks/useSelectedAttack";
-
 export default function AttackList() {
-  const [attacks, setAttacks] = useState<Attack[]>([]);
+  const { attacks, loading } = useAttacks();
 
   const drawer = useSelectedAttack();
+
   const [editingAttack, setEditingAttack] =
-  useState<Attack | null>(null);
+    useState<Attack | null>(null);
 
-  useEffect(() => {
-    async function load() {
-      const result = await attackService.getAll();
-      setAttacks(result);
-    }
-
-    load();
-  }, []);
+  if (loading) {
+    return <>Lade Attacken…</>;
+  }
 
   if (attacks.length === 0) {
     return <EmptyState />;
@@ -37,7 +32,7 @@ export default function AttackList() {
   const groups = groupAttacks(attacks);
 
   return (
-        <>
+    <>
       <Stack spacing={3}>
         {groups.map((group) => (
           <AttackGroup
@@ -61,6 +56,7 @@ export default function AttackList() {
           console.log("Delete", attack.id);
         }}
       />
+
       <EditAttackDialog
         open={editingAttack !== null}
         attack={editingAttack}

@@ -1,6 +1,6 @@
 import type { Attack } from "@/features/attacks/types/attack";
 
-type AttackGroup = {
+export type AttackGroup = {
   title: string;
   attacks: Attack[];
 };
@@ -15,25 +15,25 @@ export function groupAttacks(
   const yesterday = new Date();
   yesterday.setDate(today.getDate() - 1);
 
-  attacks.forEach((attack) => {
+  for (const attack of attacks) {
     const date = new Date(attack.start);
 
-    let key = date.toLocaleDateString("de-DE");
+    let title = date.toLocaleDateString("de-DE");
 
     if (date.toDateString() === today.toDateString()) {
-      key = "Heute";
+      title = "Heute";
     } else if (
       date.toDateString() === yesterday.toDateString()
     ) {
-      key = "Gestern";
+      title = "Gestern";
     }
 
-    const current = groups.get(key) ?? [];
+    const current = groups.get(title) ?? [];
 
     current.push(attack);
 
-    groups.set(key, current);
-  });
+    groups.set(title, current);
+  }
 
   return Array.from(groups.entries()).map(
     ([title, attacks]) => ({
