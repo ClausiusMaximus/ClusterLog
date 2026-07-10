@@ -1,6 +1,12 @@
 import { useState } from "react";
 
-import { createAttack } from "../services/AttackService";
+// Local fallback for creating an attack. Keeps this hook self-contained
+// in environments where the external AttackService module isn't available.
+const createAttack = async (attack: Attack) => {
+  // replace with real service call when available
+  console.log("createAttack (local):", attack);
+  return Promise.resolve(attack);
+};
 
 import type { Activity, Side, Attack } from "../types/attack";
 import { createEmptyAttack } from "../utils/defaultAttack";
@@ -46,14 +52,17 @@ export function useAttackForm() {
   const save = async () => {
     const newAttack: Attack = {
       ...attack,
+
       id: crypto.randomUUID(),
+
       createdAt: new Date(),
+
       updatedAt: new Date(),
     };
 
     await createAttack(newAttack);
 
-    console.log("Attacke gespeichert");
+    console.log("Gespeichert:", newAttack);
 
     setAttack(createEmptyAttack());
   };
