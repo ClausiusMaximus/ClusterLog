@@ -6,6 +6,7 @@ import DashboardPage from "../features/dashboard/Dashboard";
 import HistoryPage from "../features/history/History";
 import StatisticsPage from "../features/statistics/Statistics";
 import SettingsPage from "../features/settings/Settings";
+import AttackPage from "@/features/attacks";
 
 export const router = createBrowserRouter([
   {
@@ -29,7 +30,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/attack/new",
-        element: <div>Neue Attacke</div>,
+        element: <AttackPage />,
       },
     ],
   },
