@@ -16,4 +16,8 @@ export class AttackService {
   static async delete(id: string) {
     return repository.delete(id);
   }
+  
+  static async getById(id: string) {
+    return repository.getById(id);
+  }
 }

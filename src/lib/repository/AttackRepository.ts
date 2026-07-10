@@ -13,4 +13,8 @@ export class AttackRepository {
   async delete(id: string): Promise<void> {
     await db.attacks.delete(id);
   }
+
+  async getById(id: string) {
+    return db.attacks.get(id);
+  }
 }
