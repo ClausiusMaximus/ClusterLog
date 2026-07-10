@@ -1,4 +1,4 @@
-import { PageTitle } from "@/components/common";
+import { PageTitle } from "@/components/common/index";
 
 import { useAttackForm } from "./hooks/useAttackForm";
 

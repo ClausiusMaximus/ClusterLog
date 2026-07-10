@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 
-import { AppCard, NumberButton } from "@/components/common";
+import { AppCard, NumberButton } from "@/components/common/Index";
 
 type DurationPickerProps = {
   value: number;

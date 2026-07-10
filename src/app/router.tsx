@@ -1,12 +1,11 @@
 import { createBrowserRouter } from "react-router-dom";
 
-import MainLayout from "../components/layout/MainLayout";
+import MainLayout from "@/components/layout/MainLayout";
 
-import DashboardPage from "../features/dashboard/Dashboard";
-import HistoryPage from "../features/history/History";
-import StatisticsPage from "../features/statistics/Statistics";
-import SettingsPage from "../features/settings/Settings";
-import AttackPage from "@/features/attacks";
+import AttackPage from "@/features/attacks/components";
+import HistoryPage from "@/features/history/History";
+import StatisticsPage from "@/features/statistics/Statistics";
+import SettingsPage from "@/features/settings/Settings";
 
 export const router = createBrowserRouter([
   {
@@ -14,7 +13,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <DashboardPage />,
+        element: <AttackPage />,
       },
       {
         path: "/history",
@@ -27,10 +26,6 @@ export const router = createBrowserRouter([
       {
         path: "/settings",
         element: <SettingsPage />,
-      },
-      {
-        path: "/attack/new",
-        element: <AttackPage />,
       },
     ],
   },

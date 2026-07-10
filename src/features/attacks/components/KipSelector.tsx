@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
-import { AppCard, NumberButton } from "@/components/common";
+import { AppCard, NumberButton } from "@/components/common/Index";
 
 type KipSelectorProps = {
   value: number;

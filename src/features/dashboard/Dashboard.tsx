@@ -5,7 +5,7 @@ import {
   AppCard,
   PageTitle,
   Section,
-} from "@/components/common";
+} from "@/components/common/Index";
 
 export default function Dashboard() {
   return (
