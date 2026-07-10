@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 
 import MainLayout from "@/components/layout/MainLayout";
 
-import AttackPage from "@/features/attacks/components";
+import AttackPage from "@/features/attacks/AttackPage";
 import HistoryPage from "@/features/history/History";
 import StatisticsPage from "@/features/statistics/Statistics";
 
