@@ -13,12 +13,14 @@ type EditAttackDialogProps = {
   open: boolean;
   attack: Attack | null;
   onClose: () => void;
+  onSaved?: (mode: "created" | "updated") => void;
 };
 
 export default function EditAttackDialog({
   open,
   attack,
   onClose,
+  onSaved,
 }: EditAttackDialogProps) {
   const form = useAttackForm();
 
@@ -31,7 +33,8 @@ export default function EditAttackDialog({
   }, [attack]);
 
   async function handleSubmit() {
-    await form.save();
+    const result = await form.save();
+    onSaved?.(result);
     onClose();
   }
 

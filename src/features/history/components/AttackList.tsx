@@ -14,6 +14,8 @@ import EmptyState from "./EmptyState";
 import { useSelectedAttack } from "../hooks/useSelectedAttack";
 import { groupAttacks } from "../utils/groupAttacks";
 
+import { AppSnackbar } from "@/components/common";
+
 export default function AttackList() {
   const { attacks, loading } = useAttacks();
 
@@ -24,6 +26,16 @@ export default function AttackList() {
 
   const [deletingAttack, setDeletingAttack] =
     useState<Attack | null>(null);
+
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success" as
+      | "success"
+      | "error"
+      | "warning"
+      | "info",
+  });
 
   if (loading) {
     return <>Lade Attacken…</>;
@@ -66,6 +78,16 @@ export default function AttackList() {
         open={editingAttack !== null}
         attack={editingAttack}
         onClose={() => setEditingAttack(null)}
+        onSaved={(result) => {
+            setSnackbar({
+            open: true,
+            severity: "success", 
+            message:            
+              result === "created"
+                ? "✅ Attacke erstellt"
+                : "✅ Attacke aktualisiert",
+          });
+        }}
       />
       <ConfirmDialog
         open={deletingAttack !== null}
@@ -80,7 +102,18 @@ export default function AttackList() {
           await attackService.delete(deletingAttack.id);
 
           setDeletingAttack(null);
+          setSnackbar({
+            open: true,
+            message: "🗑️ Attacke gelöscht",
+            severity: "success",
+          });
         }}
+      />
+      <AppSnackbar
+        open={snackbar.open}
+        message={snackbar.message}
+        severity={snackbar.severity}
+        onClose={() => setSnackbar({ ...snackbar, open: false })}
       />
     </>
   );

@@ -1,10 +1,20 @@
+import { useState } from "react";
 import { PageTitle } from "@/components/common";
-
+import { AppSnackbar } from "@/components/common";
 import AttackForm from "./components/AttackForm";
 import { useAttackForm } from "./hooks/useAttackForm";
 
 export default function AttackPage() {
   const form = useAttackForm();
+  const [snackbar, setSnackbar] = useState({
+      open: false,
+      message: "",
+      severity: "success" as
+        | "success"
+        | "error"
+        | "warning"
+        | "info",
+  });
 
   return (
     <>
@@ -13,7 +23,24 @@ export default function AttackPage() {
       <AttackForm
         attack={form.attack}
         update={form.update}
-        onSubmit={form.save}
+        onSubmit={async () => {
+          const result = await form.save();
+
+          setSnackbar({
+            open: true,
+            severity: "success",
+            message:
+              result === "created"
+                ? "✓ Attacke gespeichert"
+                : "✏️ Attacke aktualisiert",
+          });
+        }}
+      />
+      <AppSnackbar
+        open={snackbar.open}
+        message={snackbar.message}
+        severity={snackbar.severity}
+        onClose={() => setSnackbar({ ...snackbar, open: false })}
       />
     </>
   );

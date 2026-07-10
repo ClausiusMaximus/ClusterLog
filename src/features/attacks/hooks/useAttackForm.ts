@@ -50,17 +50,25 @@ export function useAttackForm() {
   /**
    * Speichern
    */
-  async function save() {
-    console.log("save", attack);  
-    const attackToSave = {...attack, updatedAt: new Date() };
-    
+  async function save(): Promise<"created" | "updated"> {
+    const attackToSave: Attack = {
+      ...attack,
+      updatedAt: new Date(),
+    };
+
     if (mode === "create") {
       await attackService.create(attackToSave);
-    } else {
-      await attackService.update(attackToSave);
+
+      reset();
+
+      return "created";
     }
 
-    reset();
+      await attackService.update(attackToSave);
+
+      reset();
+
+      return "updated";
   }
 
   return {
