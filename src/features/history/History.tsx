@@ -1,5 +1,12 @@
-import { Typography } from "@mui/material";
+import { PageTitle } from "@/components/common";
+import AttackList from "./components/AttackList";
 
 export default function HistoryPage() {
-  return <Typography variant="h4">Verlauf</Typography>;
+  return (
+    <>
+      <PageTitle>Verlauf</PageTitle>
+
+      <AttackList />
+    </>
+  );
 }
