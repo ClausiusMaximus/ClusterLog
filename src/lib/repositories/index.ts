@@ -1,0 +1,1 @@
+export { attackRepository } from "./AttackRepository";

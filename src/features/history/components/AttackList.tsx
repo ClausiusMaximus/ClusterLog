@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import EditAttackDialog from "@/features/attacks/EditAttackDialog";
 import Stack from "@mui/material/Stack";
 
-import { AttackService } from "@/lib/services/AttackService";
+import { attackService } from "@/lib/services/";
 
 import type { Attack } from "@/features/attacks/types/attack";
 
@@ -23,7 +23,7 @@ export default function AttackList() {
 
   useEffect(() => {
     async function load() {
-      const result = await AttackService.getAll();
+      const result = await attackService.getAll();
       setAttacks(result);
     }
 

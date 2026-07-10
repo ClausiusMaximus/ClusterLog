@@ -2,7 +2,7 @@ import { db } from "../db";
 
 import type { Attack } from "@/features/attacks/types/attack";
 
-export class AttackRepository {
+class AttackRepository {
   async getAll(): Promise<Attack[]> {
     return db.attacks
       .orderBy("start")
@@ -30,4 +30,15 @@ export class AttackRepository {
   async clear(): Promise<void> {
     await db.attacks.clear();
   }
+
+  async count(): Promise<number> {
+    return db.attacks.count();
+  }
+
+  async exists(id: string): Promise<boolean> {
+    const attack = await db.attacks.get(id);
+    return attack !== undefined;
+  }
 }
+
+export const attackRepository = new AttackRepository();

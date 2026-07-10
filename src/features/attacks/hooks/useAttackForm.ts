@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { attackService } from "@/lib/services/AttackService";
+import { attackService } from "@/lib/services/";
 
 import type { Attack } from "../types/attack";
 import { createEmptyAttack } from "../utils/defaultAttack";
