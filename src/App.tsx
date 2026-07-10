@@ -1,21 +1,8 @@
-import { Box, Container, Paper, Typography } from "@mui/material";
+import { RouterProvider } from "react-router-dom";
+import { router } from "./app/router";
 
 function App() {
-  return (
-    <Box sx={{ minHeight: "100vh", py: 4 }}>
-      <Container maxWidth="sm">
-        <Paper elevation={3} sx={{ p: 4 }}>
-          <Typography variant="h4" gutterBottom>
-            ClusterLog
-          </Typography>
-
-          <Typography>
-            Willkommen zum Neuaufbau der ClusterLog PWA.
-          </Typography>
-        </Paper>
-      </Container>
-    </Box>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
