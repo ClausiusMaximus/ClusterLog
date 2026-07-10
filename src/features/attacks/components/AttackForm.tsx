@@ -1,4 +1,6 @@
-import { useAttackForm } from "../hooks/useAttackForm";
+import Stack from "@mui/material/Stack";
+
+import type { Attack } from "../types/attack";
 
 import StartTimePicker from "./StartTimePicker";
 import DurationPicker from "./DurationPicker";
@@ -7,39 +9,58 @@ import SideSelector from "./SideSelector";
 import ActivitySelector from "./ActivitySelector";
 import SaveButton from "./SaveButton";
 
-export default function AttackForm() {
-  const attack = useAttackForm();
+type AttackFormProps = {
+  attack: Attack;
 
+  update: <K extends keyof Attack>(
+    key: K,
+    value: Attack[K],
+  ) => void;
+
+  onSubmit: () => void;
+};
+
+export default function AttackForm({
+  attack,
+  update,
+  onSubmit,
+}: AttackFormProps) {
   return (
-    <>
+    <Stack spacing={3}>
       <StartTimePicker
         value={attack.start}
-        onChange={attack.setStart}
+        onChange={(date) => update("start", date)}
       />
 
       <DurationPicker
         value={attack.duration}
-        onChange={attack.setDuration}
+        onChange={(duration) =>
+          update("duration", duration)
+        }
       />
 
       <KipSelector
         value={attack.kip}
-        onChange={attack.setKip}
+        onChange={(kip) =>
+          update("kip", kip)
+        }
       />
 
       <SideSelector
         value={attack.side}
-        onChange={attack.setSide}
+        onChange={(side) =>
+          update("side", side)
+        }
       />
 
       <ActivitySelector
         value={attack.activity}
-        onChange={attack.setActivity}
+        onChange={(activity) =>
+          update("activity", activity)
+        }
       />
 
-      <SaveButton
-        onClick={attack.save}
-      />
-    </>
+      <SaveButton onClick={onSubmit} />
+    </Stack>
   );
 }

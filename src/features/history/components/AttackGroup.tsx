@@ -8,11 +8,13 @@ import AttackCard from "./AttackCard";
 type Props = {
   title: string;
   attacks: Attack[];
+  onSelect: (attack: Attack) => void;
 };
 
 export default function AttackGroup({
   title,
   attacks,
+  onSelect,
 }: Props) {
   return (
     <Stack spacing={2}>
@@ -31,7 +33,9 @@ export default function AttackGroup({
         <AttackCard
           key={attack.id}
           attack={attack}
-        />
+          onClick={onSelect}
+
+        />     
       ))}
     </Stack>
   );

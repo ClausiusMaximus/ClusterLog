@@ -22,11 +22,17 @@ import {
 
 type Props = {
   attack: Attack;
+  onClick: (attack: Attack) => void;
 };
 
-export default function AttackCard({ attack }: Props) {
+export default function AttackCard({ attack, onClick }: Props) {
   return (
-    <Card elevation={2}>
+    <Card elevation={2}
+      onClick={() => onClick(attack)}
+      sx={{
+        cursor: "pointer",
+      }}
+    >
       <CardContent>
         <Stack spacing={2}>
           <Typography

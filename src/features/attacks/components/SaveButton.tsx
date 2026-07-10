@@ -1,15 +1,18 @@
 import { AppButton } from "@/components/common";
 
-type SaveButtonProps = {
+type Props = {
   onClick: () => void;
 };
 
 export default function SaveButton({
   onClick,
-}: SaveButtonProps) {
+}: Props) {
   return (
-    <AppButton onClick={onClick}>
-      Speichern
+    <AppButton
+      fullWidth
+      onClick={onClick}
+    >
+      Attacke speichern
     </AppButton>
   );
 }

@@ -1,87 +1,74 @@
 import { useState } from "react";
 
-// Local fallback for creating an attack. Keeps this hook self-contained
-// in environments where the external AttackService module isn't available.
-const createAttack = async (attack: Attack) => {
-  // replace with real service call when available
-  console.log("createAttack (local):", attack);
-  return Promise.resolve(attack);
-};
+import { attackService } from "@/lib/services/AttackService";
 
-import type { Activity, Side, Attack } from "../types/attack";
+import type { Attack } from "../types/attack";
 import { createEmptyAttack } from "../utils/defaultAttack";
 
+type Mode = "create" | "edit";
+
 export function useAttackForm() {
-  const [attack, setAttack] = useState<Attack>(createEmptyAttack());
+  const [mode, setMode] = useState<Mode>("create");
 
-  const setStart = (start: Date) => {
+  const [attack, setAttack] = useState<Attack>(
+    createEmptyAttack(),
+  );
+
+  /**
+   * Einzelnes Feld aktualisieren
+   */
+  function update<K extends keyof Attack>(
+    key: K,
+    value: Attack[K],
+  ) {
     setAttack((prev) => ({
       ...prev,
-      start,
+      [key]: value,
     }));
-  };
+  }
 
-  const setDuration = (duration: number) => {
-    setAttack((prev) => ({
-      ...prev,
-      duration,
-    }));
-  };
+  /**
+   * Formular mit bestehender Attacke befüllen
+   */
+  function load(existingAttack: Attack) {
+    setAttack({
+      ...existingAttack,
+      start: new Date(existingAttack.start),
+    });
 
-  const setKip = (kip: number) => {
-    setAttack((prev) => ({
-      ...prev,
-      kip,
-    }));
-  };
+    setMode("edit");
+  }
 
-  const setSide = (side: Side) => {
-    setAttack((prev) => ({
-      ...prev,
-      side,
-    }));
-  };
-
-  const setActivity = (activity: Activity) => {
-    setAttack((prev) => ({
-      ...prev,
-      activity,
-    }));
-  };
-
-  const save = async () => {
-    const newAttack: Attack = {
-      ...attack,
-
-      id: crypto.randomUUID(),
-
-      createdAt: new Date(),
-
-      updatedAt: new Date(),
-    };
-
-    await createAttack(newAttack);
-
-    console.log("Gespeichert:", newAttack);
-
+  /**
+   * Formular zurücksetzen
+   */
+  function reset() {
     setAttack(createEmptyAttack());
-  };
+    setMode("create");
+  }
+
+  /**
+   * Speichern
+   */
+  async function save() {
+    if (mode === "create") {
+      await attackService.create(attack);
+    } else {
+      await attackService.update(attack);
+    }
+
+    reset();
+  }
 
   return {
+    // Zustand
+    mode,
     attack,
 
-    start: attack.start,
-    duration: attack.duration,
-    kip: attack.kip,
-    side: attack.side,
-    activity: attack.activity,
-
-    setStart,
-    setDuration,
-    setKip,
-    setSide,
-    setActivity,
-
+    // Aktionen
+    update,
+    load,
     save,
+    reset,
   };
 }

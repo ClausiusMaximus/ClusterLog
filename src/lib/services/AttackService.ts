@@ -1,23 +1,35 @@
-import { AttackRepository } from "../repository/AttackRepository";
-
 import type { Attack } from "@/features/attacks/types/attack";
 
-const repository = new AttackRepository();
+import { AttackRepository } from "../repositories/AttackRepository";
 
-export class AttackService {
-  static async create(attack: Attack) {
-    await repository.save(attack);
+class AttackService {
+  private readonly repository = new AttackRepository();
+
+  async getAll(): Promise<Attack[]> {
+    return this.repository.getAll();
   }
 
-  static async getAll() {
-    return repository.getAll();
+  async getById(
+    id: string,
+  ): Promise<Attack | undefined> {
+    return this.repository.getById(id);
   }
 
-  static async delete(id: string) {
-    return repository.delete(id);
+  async create(attack: Attack): Promise<string> {
+    return this.repository.create(attack);
   }
-  
-  static async getById(id: string) {
-    return repository.getById(id);
+
+  async update(attack: Attack): Promise<void> {
+    return this.repository.update(attack);
+  }
+
+  async delete(id: string): Promise<void> {
+    return this.repository.delete(id);
+  }
+
+  async clear(): Promise<void> {
+    return this.repository.clear();
   }
 }
+
+export const attackService = new AttackService();
