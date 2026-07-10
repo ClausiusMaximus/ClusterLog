@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import type { Activity, AttackSide } from "../types/attack";
+import type { Activity, Side } from "../types/attack";
 
 export function useAttackForm() {
   const [start, setStart] = useState(new Date());
@@ -10,7 +10,7 @@ export function useAttackForm() {
   const [kip, setKip] = useState(0);
 
   const [side, setSide] =
-    useState<AttackSide>("left");
+    useState<Side>("left");
 
   const [activity, setActivity] =
     useState<Activity>("other");

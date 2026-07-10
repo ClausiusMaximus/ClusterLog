@@ -1,17 +1,16 @@
-export type AttackSide = "left" | "right" | "both";
+export type Side = "left" | "both" | "right";
 
 export type Activity =
   | "sleep"
   | "work"
+  | "household"
+  | "leisure"
   | "driving"
-  | "meal"
-  | "walking"
-  | "exercise"
-  | "relaxing"
+  | "eating"
+  | "sport"
   | "other";
 
 export interface Attack {
-
   id: string;
 
   start: Date;
@@ -20,7 +19,7 @@ export interface Attack {
 
   kip: number;
 
-  side: AttackSide;
+  side: Side;
 
   activity: Activity;
 

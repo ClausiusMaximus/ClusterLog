@@ -33,8 +33,8 @@ export default function AttackForm() {
       />
 
       <ActivitySelector
-        //value={attack.activity}
-        //onChange={attack.setActivity}
+        value={attack.activity}
+        onChange={attack.setActivity}
       />
 
       <SaveButton

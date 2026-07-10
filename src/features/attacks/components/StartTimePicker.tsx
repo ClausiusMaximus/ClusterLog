@@ -3,7 +3,7 @@ import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
-import { AppButton, AppCard } from "@/components/common/Index";
+import { AppButton, AppCard } from "@/components/common";
 
 type StartTimePickerProps = {
   value: Date;
