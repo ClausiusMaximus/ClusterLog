@@ -3,7 +3,8 @@ import Container from "@mui/material/Container";
 import { Outlet } from "react-router-dom";
 
 import Header from "@/components/layout/Header";
-import BottomNav from "./BottomNav";
+import AppBottomNavigation from "@/components/layout/AppBottomNavigation";
+import NewAttackFab from "@/components/layout/NewAttackFab";
 
 export default function MainLayout() {
   return (
@@ -14,7 +15,9 @@ export default function MainLayout() {
         <Outlet />
       </Container>
 
-      <BottomNav />
+      <NewAttackFab />
+
+      <AppBottomNavigation />
     </Box>
   );
 }

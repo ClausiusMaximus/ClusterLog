@@ -1,15 +1,28 @@
 import { Typography } from "@mui/material";
 
-export default function DashboardPage() {
+import {
+  AppButton,
+  AppCard,
+  PageTitle,
+  Section,
+} from "@/components/common";
+
+export default function Dashboard() {
   return (
     <>
-      <Typography variant="h4" gutterBottom>
-        Dashboard
-      </Typography>
+      <PageTitle>Dashboard</PageTitle>
 
-      <Typography>
-        Willkommen bei ClusterLog.
-      </Typography>
+      <Section>
+        <AppCard>
+          <Typography gutterBottom>
+            Willkommen bei ClusterLog.
+          </Typography>
+
+          <AppButton>
+            Neue Attacke erfassen
+          </AppButton>
+        </AppCard>
+      </Section>
     </>
   );
 }

@@ -27,6 +27,10 @@ export const router = createBrowserRouter([
         path: "/settings",
         element: <SettingsPage />,
       },
+      {
+        path: "/attack/new",
+        element: <div>Neue Attacke</div>,
+      },
     ],
   },
 ]);
