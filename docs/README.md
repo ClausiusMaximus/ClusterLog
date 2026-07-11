@@ -1,19 +1,14 @@
-ClusterLog
+# ClusterLog
 
-Offline PWA für Clusterkopfschmerz.
+## Purpose
+Offline-first PWA for documenting and analysing cluster headache attacks.
 
-Technologien
+## Tech Stack
+- React 19
+- TypeScript
+- Vite
+- Material UI
+- Dexie
+- Recharts
 
-• React
-• TypeScript
-• MUI
-• Dexie
-• Recharts
-
-Aktueller Stand
-
-→ PROJECT_STATUS.md
-
-Roadmap
-
-→ ROADMAP.md
+See PROJECT_STATUS.md to continue development quickly.

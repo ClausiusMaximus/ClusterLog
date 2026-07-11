@@ -1,27 +1,32 @@
-PROJEKTSTRUKTUR    
-    features
+# Architecture
 
-    attacks
+## Layers
 
-    history
+UI
+↓
+Feature Components
+↓
+Hooks
+↓
+Services
+↓
+Repositories
+↓
+Dexie
 
-    statistics
+## Rules
 
-DATENFLUSS
-    UI
+Components
+- Presentation only
 
-    ↓
+Hooks
+- UI state
 
-    Hooks
+Services
+- Business logic
 
-    ↓
+Repositories
+- Persistence
 
-    Services
-
-    ↓
-
-    Repositories
-
-    ↓
-
-    Dexie
+Utils
+- Pure calculations

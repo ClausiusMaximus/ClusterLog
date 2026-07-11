@@ -1,25 +1,19 @@
-DATENMODELL
-    Attack
+# Database
 
-    id
+## attacks
 
-    start
+| Field | Type |
+|------|------|
+| id | string |
+| start | Date |
+| duration | number |
+| kip | number |
+| side | left/right/both |
+| activity | enum |
+| createdAt | Date |
+| updatedAt | Date |
 
-    duration
-
-    kip
-
-    side
-
-    activity
-
-    createdAt
-
-    updatedAt
-
-SPÄTER
-    Medication
-
-    Trigger
-
-    Settings
+Indexes:
+- id
+- start
+- createdAt

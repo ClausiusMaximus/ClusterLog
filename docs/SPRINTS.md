@@ -1,15 +1,8 @@
-# Sprint G3.6
+# Sprint History
 
-## Neu
+R - Repository / Service
+F - Attack workflow
+G - Statistics
+D - Documentation
 
-- DistributionChart
-- AttackTrendChart
-- StatisticsSummary
-
-## Refactoring
-
-- Statistics.tsx verkleinert
-
-## Status
-
-✅ abgeschlossen
+Keep this file updated after every sprint.

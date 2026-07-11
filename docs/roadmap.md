@@ -1,13 +1,22 @@
-G4 Filter
+# Roadmap
 
-G5 Export
+## G4
+Filtering
 
-G6 Dashboard
+## G5
+Export
 
-G7 Medikamente
+## G6
+Dashboard
 
-G8 Trigger
+## G7
+Medication
 
-G9 Kalender
+## G8
+Triggers
 
-G10 Cloud Sync
+## G9
+Calendar
+
+## G10
+Backup / Sync

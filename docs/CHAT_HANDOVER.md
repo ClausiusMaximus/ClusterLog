@@ -1,44 +1,30 @@
 # Chat Handover
 
-Projekt
+Project: ClusterLog
 
-ClusterLog
+Current Sprint:
+G4.0.1
 
-Stand
-
-Sprint G4.0.1
-
-Build
-
-🟢 erfolgreich
-
-Aktuelle Baustellen
-
-- DistributionSection auslagern
-- TrendSection auslagern
-
-Nächster Sprint
-
-G4.0.2
-
-Wichtige Architektur
-
+Architecture:
 React
-
 TypeScript
-
-MUI
-
+Material UI
 Dexie
-
 Repository Pattern
-
 Service Layer
-
 Hooks
-
 Utils
 
-Nicht vergessen
+Completed:
+Attack workflow
+History
+Statistics
 
-Statistics.tsx wird aktuell refaktoriert.
+Current Refactoring:
+Statistics page modularization.
+
+Immediate Next Steps:
+1. DistributionSection
+2. TrendSection
+3. useStatisticsView
+4. G4 Filters

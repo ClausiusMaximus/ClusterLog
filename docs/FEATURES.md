@@ -1,19 +1,25 @@
-Attacks
+# Features
 
-✔ Erfassen
+## Attacks
+✔ Create
+✔ Edit
+✔ Delete
 
-✔ Bearbeiten
-
-✔ Löschen
-
-History
-
-✔ Gruppierung
-
+## History
 ✔ Drawer
+✔ Grouping
 
-Statistics
+## Statistics
+✔ Summary
+✔ Daily trend
+✔ Weekly trend
+✔ Monthly trend
+✔ Side distribution
+✔ Activity distribution
 
-✔ Kennzahlen
-
-✔ Diagramme
+## Planned
+- Dashboard
+- Medication
+- Trigger
+- Calendar
+- Export

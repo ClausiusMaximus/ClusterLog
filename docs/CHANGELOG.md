@@ -1,13 +1,10 @@
-## 2026
+# Changelog
 
-### G4.0.1
+## D1
+Developer documentation created.
 
-- StatisticsSummary ausgelagert
+## G4.0.1
+StatisticsSummary extracted.
 
-### G3.6
-
-- Diagramme umgebaut
-
-### G3.5
-
-- AttackTrendChart eingeführt
+## G3
+Charts and statistics completed.
