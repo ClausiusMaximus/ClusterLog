@@ -1,5 +1,7 @@
 import { useMemo, useState } from "react";
 
+import { buildCalendar } from "../utils/buildCalendar";
+
 const MONTHS = [
   "Januar",
   "Februar",
@@ -17,11 +19,24 @@ const MONTHS = [
 
 export function useCalendar() {
   const [currentMonth, setCurrentMonth] =
-    useState(() => new Date());
+    useState(() => {
+      const today = new Date();
+
+      return new Date(
+        today.getFullYear(),
+        today.getMonth(),
+        1,
+      );
+    });
 
   const title = useMemo(() => {
     return `${MONTHS[currentMonth.getMonth()]} ${currentMonth.getFullYear()}`;
   }, [currentMonth]);
+
+  const days = useMemo(
+    () => buildCalendar(currentMonth),
+    [currentMonth],
+  );
 
   const previousMonth = () => {
     setCurrentMonth((prev) =>
@@ -46,6 +61,7 @@ export function useCalendar() {
   return {
     currentMonth,
     title,
+    days,
     previousMonth,
     nextMonth,
   };

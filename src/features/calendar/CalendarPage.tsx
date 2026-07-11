@@ -2,12 +2,14 @@ import Stack from "@mui/material/Stack";
 
 import { PageTitle } from "@/components/common";
 
+import CalendarGrid from "./components/CalendarGrid";
 import CalendarHeader from "./components/CalendarHeader";
 import { useCalendar } from "./hooks/useCalendar";
 
 export default function CalendarPage() {
   const {
     title,
+    days,
     previousMonth,
     nextMonth,
   } = useCalendar();
@@ -23,6 +25,8 @@ export default function CalendarPage() {
         onPrevious={previousMonth}
         onNext={nextMonth}
       />
+
+      <CalendarGrid days={days} />
     </Stack>
   );
 }
