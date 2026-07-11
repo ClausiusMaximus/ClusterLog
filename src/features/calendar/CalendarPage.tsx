@@ -12,6 +12,7 @@ export default function CalendarPage() {
     days,
     previousMonth,
     nextMonth,
+    selectDate,
   } = useCalendar();
 
   return (
@@ -26,7 +27,10 @@ export default function CalendarPage() {
         onNext={nextMonth}
       />
 
-      <CalendarGrid days={days} />
+      <CalendarGrid 
+          days={days}
+          onSelect={selectDate} 
+        />
     </Stack>
   );
 }

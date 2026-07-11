@@ -6,4 +6,6 @@ export type CalendarDay = {
 
     attackCount: number;
     hasAttack: boolean;
+
+    isSelected: boolean;
 };

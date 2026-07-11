@@ -7,6 +7,7 @@ import type { CalendarDay as CalendarDayType } from "../types/calendar";
 
 type Props = {
   days: CalendarDayType[];
+  onSelect: (date: Date) => void;
 };
 
 const WEEKDAYS = [
@@ -21,6 +22,7 @@ const WEEKDAYS = [
 
 export default function CalendarGrid({
   days,
+  onSelect,
 }: Props) {
   return (
     <>
@@ -49,7 +51,9 @@ export default function CalendarGrid({
             key={day.date.toISOString()}
             size={{ xs: 12 / 7 }}
           >
-            <CalendarDay day={day} />
+            <CalendarDay 
+              day={day} 
+              onClick={() => onSelect(day.date)} />
           </Grid>
         ))}
       </Grid>

@@ -33,6 +33,9 @@ export function useCalendar() {
       );
     });
 
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+
+
   const title = useMemo(() => {
     return `${MONTHS[currentMonth.getMonth()]} ${currentMonth.getFullYear()}`;
   }, [currentMonth]);
@@ -61,10 +64,19 @@ export function useCalendar() {
           ...day,
           attackCount,
           hasAttack: attackCount > 0,
+
+          isSelected:
+            selectedDate !== null &&
+            selectedDate.getFullYear() ===
+              day.date.getFullYear() &&
+            selectedDate.getMonth() ===
+              day.date.getMonth() &&
+            selectedDate.getDate() ===
+              day.date.getDate(),
         };
       },
     );
-  }, [currentMonth, attacks]);
+  }, [currentMonth, attacks, selectedDate]);
 
   const previousMonth = () => {
     setCurrentMonth((prev) =>
@@ -85,6 +97,9 @@ export function useCalendar() {
       ),
     );
   };
+  const selectDate = (date: Date) => {
+    setSelectedDate(date);
+  }
 
   return {
     currentMonth,
@@ -92,5 +107,8 @@ export function useCalendar() {
     days,
     previousMonth,
     nextMonth,
+    
+    selectedDate,
+    selectDate,
   };
 }
