@@ -1,6 +1,6 @@
 import type { Attack } from "@/features/attacks/types/attack";
 
-import { attackRepository } from "../repositories/AttackRepository";
+import { attackRepository } from "../repositories";
 
 class AttackService {
   async getAll(): Promise<Attack[]> {
