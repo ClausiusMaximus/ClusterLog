@@ -19,7 +19,6 @@ export type DistributionItem = {
 };
 
 type Props = {
-  title: string;
   type: "bar" | "pie";
   data: DistributionItem[];
 };
@@ -36,14 +35,10 @@ const COLORS = [
 ];
 
 export default function DistributionChart({
-  title,
   type,
   data,
 }: Props) {
   return (
-    <>
-      <h3>{title}</h3>
-
       <ResponsiveContainer
         width="100%"
         height={300}
@@ -85,6 +80,5 @@ export default function DistributionChart({
           </PieChart>
         )}
       </ResponsiveContainer>
-    </>
   );
 }

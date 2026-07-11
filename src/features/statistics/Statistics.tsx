@@ -112,7 +112,6 @@ export default function Statistics() {
         </ToggleButtonGroup>
 
         <DistributionChart
-          title=""
           type={
             distributionMode === "activity"
               ? "pie"
@@ -151,7 +150,6 @@ export default function Statistics() {
         </ToggleButtonGroup>
 
         <AttackTrendChart
-          title=""
           data={trendData}
         />
       </AppCard>

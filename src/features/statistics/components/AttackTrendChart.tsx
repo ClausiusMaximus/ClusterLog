@@ -17,12 +17,10 @@ export type TrendPoint = {
 };
 
 type Props = {
-  title: string;
   data: TrendPoint[];
 };
 
 export default function AttackTrendChart({
-  //title,
   data,
 }: Props) {
   return (
