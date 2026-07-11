@@ -1,19 +1,4 @@
 # Database
 
-## attacks
-
-| Field | Type |
-|------|------|
-| id | string |
-| start | Date |
-| duration | number |
-| kip | number |
-| side | left/right/both |
-| activity | enum |
-| createdAt | Date |
-| updatedAt | Date |
-
-Indexes:
-- id
-- start
-- createdAt
+Table attacks(id,start,duration,kip,side,activity,createdAt,updatedAt)
+Future: medications,triggers,settings.

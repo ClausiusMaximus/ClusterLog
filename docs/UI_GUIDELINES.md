@@ -1,15 +1,6 @@
 # UI Guidelines
 
-Material UI
-
-Reusable:
-- AppCard
-- AppButton
-- AppSnackbar
-- ConfirmDialog
-
-Charts:
+- Material UI
 - Recharts
-
-Responsive:
-- Mobile first
+- Reusable AppCard/AppButton
+- Responsive Grid

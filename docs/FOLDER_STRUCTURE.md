@@ -1,15 +1,5 @@
 # Folder Structure
 
-src/
- components/
- features/
-   attacks/
-   history/
-   statistics/
- lib/
-   db/
-   repositories/
-   services/
- routes/
-
-Documentation is stored in docs/.
+src/components
+src/features/{attacks,history,statistics}
+src/lib/{db,repositories,services}

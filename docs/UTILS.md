@@ -1,0 +1,10 @@
+# Utilities
+
+calculateStatistics
+calculateCounts
+calculateAverages
+calculateDailyCounts
+calculateWeeklyCounts
+calculateMonthlyCounts
+calculateSideDistribution
+calculateActivityDistribution
