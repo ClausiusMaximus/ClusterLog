@@ -1,11 +1,13 @@
-export type CalendarDay = {
-    date: Date;
-    day: number;
-    isCurrentMonth: boolean;
-    isToday: boolean;
+export type CalendarCell = {
+  date: Date;
+  day: number;
 
-    attackCount: number;
-    hasAttack: boolean;
+  isCurrentMonth: boolean;
+  isToday: boolean;
+};
 
-    isSelected: boolean;
+export type CalendarDay = CalendarCell & {
+  attackCount: number;
+  hasAttack: boolean;
+  isSelected: boolean;
 };

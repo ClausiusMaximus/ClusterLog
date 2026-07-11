@@ -33,8 +33,8 @@ export function useCalendar() {
       );
     });
 
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-
+  const [selectedDate, setSelectedDate] =
+    useState<Date | null>(new Date());
 
   const title = useMemo(() => {
     return `${MONTHS[currentMonth.getMonth()]} ${currentMonth.getFullYear()}`;
@@ -45,70 +45,81 @@ export function useCalendar() {
       (day) => {
         const attackCount = attacks.filter(
           (attack) => {
-            const date = new Date(
+            const attackDate = new Date(
               attack.start,
             );
 
             return (
-              date.getFullYear() ===
+              attackDate.getFullYear() ===
                 day.date.getFullYear() &&
-              date.getMonth() ===
+              attackDate.getMonth() ===
                 day.date.getMonth() &&
-              date.getDate() ===
+              attackDate.getDate() ===
                 day.date.getDate()
             );
           },
         ).length;
 
+        const isSelected =
+          selectedDate !== null &&
+          selectedDate.getFullYear() ===
+            day.date.getFullYear() &&
+          selectedDate.getMonth() ===
+            day.date.getMonth() &&
+          selectedDate.getDate() ===
+            day.date.getDate();
+
         return {
           ...day,
           attackCount,
           hasAttack: attackCount > 0,
-
-          isSelected:
-            selectedDate !== null &&
-            selectedDate.getFullYear() ===
-              day.date.getFullYear() &&
-            selectedDate.getMonth() ===
-              day.date.getMonth() &&
-            selectedDate.getDate() ===
-              day.date.getDate(),
+          isSelected,
         };
       },
     );
-  }, [currentMonth, attacks, selectedDate]);
+  }, [
+    currentMonth,
+    attacks,
+    selectedDate,
+  ]);
 
   const previousMonth = () => {
-    setCurrentMonth((prev) =>
-      new Date(
-        prev.getFullYear(),
-        prev.getMonth() - 1,
-        1,
-      ),
+    setCurrentMonth(
+      (prev) =>
+        new Date(
+          prev.getFullYear(),
+          prev.getMonth() - 1,
+          1,
+        ),
     );
   };
 
   const nextMonth = () => {
-    setCurrentMonth((prev) =>
-      new Date(
-        prev.getFullYear(),
-        prev.getMonth() + 1,
-        1,
-      ),
+    setCurrentMonth(
+      (prev) =>
+        new Date(
+          prev.getFullYear(),
+          prev.getMonth() + 1,
+          1,
+        ),
     );
   };
-  const selectDate = (date: Date) => {
+
+  const selectDate = (
+    date: Date,
+  ) => {
     setSelectedDate(date);
-  }
+  };
 
   return {
     currentMonth,
     title,
     days,
+
+    selectedDate,
+
     previousMonth,
     nextMonth,
-    
-    selectedDate,
     selectDate,
   };
 }

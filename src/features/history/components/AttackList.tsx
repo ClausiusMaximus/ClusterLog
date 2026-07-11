@@ -9,7 +9,6 @@ import {
 
 import type { Attack } from "@/features/attacks/types/attack";
 import EditAttackDialog from "@/features/attacks/EditAttackDialog";
-import { useAttacks } from "@/features/attacks/hooks/useAttacks";
 
 import { attackService } from "@/lib/services";
 
@@ -20,9 +19,17 @@ import EmptyState from "./EmptyState";
 import { useSelectedAttack } from "../hooks/useSelectedAttack";
 import { groupAttacks } from "../utils/groupAttacks";
 
-export default function AttackList() {
-  const { attacks, loading } = useAttacks();
+type AttackListProps = {
+  attacks: Attack[];
+  loading: boolean;
+  selectedDate?: Date | null;
+};
 
+export default function AttackList({
+  attacks,
+  loading,
+  selectedDate,
+}: AttackListProps) {
   const drawer = useSelectedAttack();
 
   const [editingAttack, setEditingAttack] =
@@ -40,6 +47,9 @@ export default function AttackList() {
       | "warning"
       | "info",
   });
+
+  // selectedDate wird im nächsten Commit verwendet.
+  void selectedDate;
 
   const handleEdit = (attack: Attack) => {
     drawer.close();

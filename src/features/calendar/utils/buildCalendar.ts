@@ -1,8 +1,8 @@
-import type { CalendarDay } from "../types/calendar";
+import type { CalendarCell } from "../types/calendar";
 
 export function buildCalendar(
   currentMonth: Date,
-): CalendarDay[] {
+): CalendarCell[] {
   const year = currentMonth.getFullYear();
   const month = currentMonth.getMonth();
 
