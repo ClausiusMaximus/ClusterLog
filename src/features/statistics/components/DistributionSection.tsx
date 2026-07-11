@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
-import { AppCard, PageTitle } from "@/components/common";
+import StatisticsSection from "./StatisticsSection";
 
 import type { Activity } from "@/features/attacks/types/attack";
 import { getActivityLabel } from "@/features/attacks/utils/labels";
@@ -58,30 +58,29 @@ export default function DistributionSection({
     }, [distributionMode, stats]);
 
   return (
-    <AppCard>
-      <PageTitle>
-        Verteilungen
-      </PageTitle>
+    <StatisticsSection
+      title="Verteilungen"
+      controls={
+        <ToggleButtonGroup
+            exclusive
+            value={distributionMode}
+            onChange={(_, value) => {
+              if (value) {
+                setDistributionMode(value);
+              }
+            }}
+            sx={{ mb: 3 }}
+        >
+          <ToggleButton value="activity">
+             Aktivitäten
+          </ToggleButton>
 
-      <ToggleButtonGroup
-        exclusive
-        value={distributionMode}
-        onChange={(_, value) => {
-          if (value) {
-            setDistributionMode(value);
-          }
-        }}
-        sx={{ mb: 3 }}
-      >
-        <ToggleButton value="activity">
-          Aktivitäten
-        </ToggleButton>
-
-        <ToggleButton value="side">
-          Seiten
-        </ToggleButton>
-      </ToggleButtonGroup>
-
+          <ToggleButton value="side">
+              Seiten
+          </ToggleButton>
+        </ToggleButtonGroup>
+      }
+    >
       <DistributionChart
         type={
           distributionMode === "activity"
@@ -90,6 +89,6 @@ export default function DistributionSection({
         }
         data={distributionData}
       />
-    </AppCard>
+    </StatisticsSection>
   );
 }
