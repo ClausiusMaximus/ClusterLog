@@ -38,6 +38,7 @@ export default function AppSelector<T extends string | number>({
           <NumberButton
             key={String(option.value)}
             label={option.label}
+            icon={typeof option.icon === "string" ? undefined : option.icon}
             color={option.color}
             selected={value === option.value}
             onClick={() => onChange(option.value)}

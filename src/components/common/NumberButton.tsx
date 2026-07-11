@@ -1,7 +1,11 @@
 import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import type { ElementType } from "react";
 
 type NumberButtonProps = {
   label: string | number;
+  icon?: ElementType;
   selected?: boolean;
   color?: string;
   onClick?: () => void;
@@ -9,6 +13,7 @@ type NumberButtonProps = {
 
 export default function NumberButton({
   label,
+  icon: Icon,
   selected = false,
   color = "#1976d2",
   onClick,
@@ -57,7 +62,32 @@ export default function NumberButton({
         },
       }}
     >
-      {label}
-    </Button>
+
+        <Stack
+          spacing={0.5}
+          sx={{
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          {Icon && (
+            <Icon
+              sx={{
+                fontSize: 28,
+              }}
+            />
+          )}
+
+          <Typography
+            variant="caption"
+            sx={{
+              fontWeight: 700,
+              lineHeight: 1.1,
+            }}
+          >
+            {label}
+          </Typography>
+        </Stack>
+      </Button>
   );
 }

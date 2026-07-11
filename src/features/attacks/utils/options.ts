@@ -1,9 +1,20 @@
+import type { ElementType } from "react";
+
+import BedtimeIcon from "@mui/icons-material/Bedtime";
+import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
+import DirectionsWalkIcon from "@mui/icons-material/DirectionsWalk";
+import HomeIcon from "@mui/icons-material/Home";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import RestaurantIcon from "@mui/icons-material/Restaurant";
+import SportsGymnasticsIcon from "@mui/icons-material/SportsGymnastics";
+import WorkIcon from "@mui/icons-material/Work";
+
 import type { Activity, Side } from "../types/attack";
 
 export type Option<T extends string | number> = {
   value: T;
   label: string;
-  icon?: string;
+  icon?: ElementType | string;
   color?: string;
 };
 
@@ -29,42 +40,42 @@ export const ACTIVITY_OPTIONS: ReadonlyArray<Option<Activity>> = [
   {
     value: "sleep",
     label: "Schlaf",
-    icon: "😴",
+    icon: BedtimeIcon,
   },
   {
     value: "work",
     label: "Arbeit",
-    icon: "💼",
+    icon: WorkIcon,
   },
   {
     value: "household",
     label: "Haushalt",
-    icon: "🏠",
+    icon: HomeIcon,
   },
   {
     value: "leisure",
     label: "Freizeit",
-    icon: "🚶",
+    icon: DirectionsWalkIcon,
   },
   {
     value: "driving",
     label: "Autofahren",
-    icon: "🚗",
+    icon: DirectionsCarIcon,
   },
   {
     value: "eating",
     label: "Essen",
-    icon: "🍽",
+    icon: RestaurantIcon,
   },
   {
     value: "sport",
     label: "Sport",
-    icon: "🏃",
+    icon: SportsGymnasticsIcon,
   },
   {
     value: "other",
     label: "Sonstiges",
-    icon: "❓",
+    icon: MoreHorizIcon,
   },
 ];
 
