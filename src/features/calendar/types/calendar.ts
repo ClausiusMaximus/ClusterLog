@@ -5,5 +5,5 @@ export type CalendarDay = {
     isToday: boolean;
 
     attackCount: number;
-    haasAttack: boolean;
+    hasAttack: boolean;
 };

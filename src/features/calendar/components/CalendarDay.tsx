@@ -1,3 +1,4 @@
+import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 
@@ -23,13 +24,14 @@ export default function CalendarDay({
           : "action.hover",
         opacity: day.isCurrentMonth ? 1 : 0.45,
         display: "flex",
-        justifyContent: "flex-end",
-        alignItems: "flex-start",
+        flexDirection: "column",
+        justifyContent: "space-between",
       }}
     >
       <Typography
         variant="body2"
         sx={{
+          alignSelf: "flex-end",
           fontWeight: day.isToday ? 700 : 400,
           color: day.isToday
             ? "primary.main"
@@ -38,6 +40,26 @@ export default function CalendarDay({
       >
         {day.day}
       </Typography>
+
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: 12,
+        }}
+      >
+        {day.hasAttack && (
+          <Box
+            sx={{
+              width: 8,
+              height: 8,
+              borderRadius: "50%",
+              bgcolor: "error.main",
+            }}
+          />
+        )}
+      </Box>
     </Paper>
   );
 }
