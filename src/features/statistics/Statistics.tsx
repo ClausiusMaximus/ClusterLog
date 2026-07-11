@@ -6,59 +6,16 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
 import { AppCard, PageTitle } from "@/components/common";
 
-import type { Activity } from "@/features/attacks/types/attack";
-import { getActivityLabel } from "@/features/attacks/utils/labels";
-
+import DistributionSection from "./components/DistributionSection";
 import AttackTrendChart from "./components/AttackTrendChart";
-import DistributionChart, {
-  type DistributionItem,
-} from "./components/DistributionChart";
 import StatisticsSummary from "./components/StatisticsSummary";
 import { useStatistics } from "./hooks/useStatistics";
 
 export default function Statistics() {
   const { loading, stats } = useStatistics();
 
-  const [distributionMode, setDistributionMode] =
-    useState<"activity" | "side">(
-      "activity",
-    );
-
   const [trendMode, setTrendMode] =
-    useState<"day" | "week" | "month">(
-      "day",
-    );
-
-  const distributionData =
-    useMemo<DistributionItem[]>(() => {
-      if (distributionMode === "side") {
-        return [
-          {
-            label: "Links",
-            value: stats.sideDistribution.left,
-          },
-          {
-            label: "Beidseitig",
-            value: stats.sideDistribution.both,
-          },
-          {
-            label: "Rechts",
-            value: stats.sideDistribution.right,
-          },
-        ];
-      }
-
-      return Object.entries(
-        stats.activityDistribution,
-      )
-        .filter(([, value]) => value > 0)
-        .map(([activity, value]) => ({
-          label: getActivityLabel(
-            activity as Activity,
-          ),
-          value,
-        }));
-    }, [distributionMode, stats]);
+    useState<"day" | "week" | "month">("day");
 
   const trendData = useMemo(() => {
     switch (trendMode) {
@@ -87,39 +44,9 @@ export default function Statistics() {
         stats={stats}
       />
 
-      <AppCard>
-        <PageTitle>
-          Verteilungen
-        </PageTitle>
-
-        <ToggleButtonGroup
-          exclusive
-          value={distributionMode}
-          onChange={(_, value) => {
-            if (value) {
-              setDistributionMode(value);
-            }
-          }}
-          sx={{ mb: 3 }}
-        >
-          <ToggleButton value="activity">
-            Aktivitäten
-          </ToggleButton>
-
-          <ToggleButton value="side">
-            Seiten
-          </ToggleButton>
-        </ToggleButtonGroup>
-
-        <DistributionChart
-          type={
-            distributionMode === "activity"
-              ? "pie"
-              : "bar"
-          }
-          data={distributionData}
-        />
-      </AppCard>
+      <DistributionSection
+        stats={stats}
+      />
 
       <AppCard>
         <PageTitle>
