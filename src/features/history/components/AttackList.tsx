@@ -1,11 +1,17 @@
 import { useState } from "react";
 
 import Stack from "@mui/material/Stack";
-import { ConfirmDialog } from "@/components/common";
-import { attackService } from "@/lib/services";
+
+import {
+  AppSnackbar,
+  ConfirmDialog,
+} from "@/components/common";
+
 import type { Attack } from "@/features/attacks/types/attack";
 import EditAttackDialog from "@/features/attacks/EditAttackDialog";
 import { useAttacks } from "@/features/attacks/hooks/useAttacks";
+
+import { attackService } from "@/lib/services";
 
 import AttackDrawer from "./AttackDrawer";
 import AttackGroup from "./AttackGroup";
@@ -13,8 +19,6 @@ import EmptyState from "./EmptyState";
 
 import { useSelectedAttack } from "../hooks/useSelectedAttack";
 import { groupAttacks } from "../utils/groupAttacks";
-
-import { AppSnackbar } from "@/components/common";
 
 export default function AttackList() {
   const { attacks, loading } = useAttacks();
@@ -36,6 +40,63 @@ export default function AttackList() {
       | "warning"
       | "info",
   });
+
+  const handleEdit = (attack: Attack) => {
+    drawer.close();
+    setEditingAttack(attack);
+  };
+
+  const handleDelete = (attack: Attack) => {
+    drawer.close();
+    setDeletingAttack(attack);
+  };
+
+  const handleEditClose = () => {
+    setEditingAttack(null);
+  };
+
+  const handleSaved = (
+    result: "created" | "updated",
+  ) => {
+    setSnackbar({
+      open: true,
+      severity: "success",
+      message:
+        result === "created"
+          ? "✅ Attacke erstellt"
+          : "✅ Attacke aktualisiert",
+    });
+  };
+
+  const handleDeleteCancel = () => {
+    setDeletingAttack(null);
+  };
+
+  const handleDeleteConfirm =
+    async () => {
+      if (!deletingAttack) {
+        return;
+      }
+
+      await attackService.delete(
+        deletingAttack.id,
+      );
+
+      setDeletingAttack(null);
+
+      setSnackbar({
+        open: true,
+        message: "🗑️ Attacke gelöscht",
+        severity: "success",
+      });
+    };
+
+  const handleSnackbarClose = () => {
+    setSnackbar((prev) => ({
+      ...prev,
+      open: false,
+    }));
+  };
 
   if (loading) {
     return <>Lade Attacken…</>;
@@ -64,56 +125,30 @@ export default function AttackList() {
         attack={drawer.selectedAttack}
         open={drawer.isOpen}
         onClose={drawer.close}
-        onEdit={(attack) => {
-          drawer.close();
-          setEditingAttack(attack);
-        }}
-        onDelete={(attack) => {
-          drawer.close();
-          setDeletingAttack(attack);
-        }}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
       />
 
       <EditAttackDialog
         open={editingAttack !== null}
         attack={editingAttack}
-        onClose={() => setEditingAttack(null)}
-        onSaved={(result) => {
-            setSnackbar({
-            open: true,
-            severity: "success", 
-            message:            
-              result === "created"
-                ? "✅ Attacke erstellt"
-                : "✅ Attacke aktualisiert",
-          });
-        }}
+        onClose={handleEditClose}
+        onSaved={handleSaved}
       />
+
       <ConfirmDialog
         open={deletingAttack !== null}
         title="Attacke löschen"
         message="Diese Attacke wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden."
-        onCancel={() => setDeletingAttack(null)}
-        onConfirm={async () => {
-          if (!deletingAttack) {
-            return;
-          }
-
-          await attackService.delete(deletingAttack.id);
-
-          setDeletingAttack(null);
-          setSnackbar({
-            open: true,
-            message: "🗑️ Attacke gelöscht",
-            severity: "success",
-          });
-        }}
+        onCancel={handleDeleteCancel}
+        onConfirm={handleDeleteConfirm}
       />
+
       <AppSnackbar
         open={snackbar.open}
         message={snackbar.message}
         severity={snackbar.severity}
-        onClose={() => setSnackbar({ ...snackbar, open: false })}
+        onClose={handleSnackbarClose}
       />
     </>
   );
