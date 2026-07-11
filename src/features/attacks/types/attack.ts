@@ -15,7 +15,7 @@ export interface Attack {
 
   start: Date;
 
-  duration: number;
+  duration: number; // seconds
 
   kip: number;
 
