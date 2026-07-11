@@ -3,4 +3,7 @@ export type CalendarDay = {
     day: number;
     isCurrentMonth: boolean;
     isToday: boolean;
+
+    attackCount: number;
+    haasAttack: boolean;
 };

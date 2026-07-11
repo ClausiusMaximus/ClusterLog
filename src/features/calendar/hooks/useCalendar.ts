@@ -1,5 +1,7 @@
 import { useMemo, useState } from "react";
 
+import { useAttacks } from "@/features/attacks/hooks/useAttacks";
+
 import { buildCalendar } from "../utils/buildCalendar";
 
 const MONTHS = [
@@ -18,6 +20,8 @@ const MONTHS = [
 ];
 
 export function useCalendar() {
+  const { attacks } = useAttacks();
+
   const [currentMonth, setCurrentMonth] =
     useState(() => {
       const today = new Date();
@@ -33,10 +37,34 @@ export function useCalendar() {
     return `${MONTHS[currentMonth.getMonth()]} ${currentMonth.getFullYear()}`;
   }, [currentMonth]);
 
-  const days = useMemo(
-    () => buildCalendar(currentMonth),
-    [currentMonth],
-  );
+  const days = useMemo(() => {
+    return buildCalendar(currentMonth).map(
+      (day) => {
+        const attackCount = attacks.filter(
+          (attack) => {
+            const date = new Date(
+              attack.start,
+            );
+
+            return (
+              date.getFullYear() ===
+                day.date.getFullYear() &&
+              date.getMonth() ===
+                day.date.getMonth() &&
+              date.getDate() ===
+                day.date.getDate()
+            );
+          },
+        ).length;
+
+        return {
+          ...day,
+          attackCount,
+          hasAttack: attackCount > 0,
+        };
+      },
+    );
+  }, [currentMonth, attacks]);
 
   const previousMonth = () => {
     setCurrentMonth((prev) =>
