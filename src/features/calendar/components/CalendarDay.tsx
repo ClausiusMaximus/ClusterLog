@@ -11,73 +11,124 @@ type Props = {
 
 export default function CalendarDay({
   day,
-  onClick
+  onClick,
 }: Props) {
+  const getSeverityColor = () => {
+    const count = day.attackCount;
+
+    if (count >= 10) return "secondary.main";
+    if (count >= 7) return "error.main";
+    if (count >= 5) return "warning.dark";
+    if (count >= 3) return "warning.main";
+
+    return "success.main";
+  };
+
+  const severityColor = getSeverityColor();
+
   return (
-      <Paper
-        onClick={onClick}
-        elevation={0}
-        sx={{
-          height: 72,
-          p: 1,
-          cursor: "pointer",
+    <Paper
+      onClick={onClick}
+      elevation={0}
+      sx={{
+        position: "relative",
 
-          border: "1px solid",
-          borderColor: day.isSelected
-            ? "primary.main"
-            : "divider",
-          borderWidth: day.isSelected ? 2 : 1,
+        height: 72,
+        p: 1,
 
-          bgcolor: day.isCurrentMonth
+        cursor: "pointer",
+
+        border: "2px solid",
+        borderColor: day.isSelected
+          ? "primary.main"
+          : "divider",
+
+        bgcolor: day.isToday
+          ? "action.selected"
+          : day.isCurrentMonth
             ? "background.paper"
             : "action.hover",
 
-          opacity: day.isCurrentMonth ? 1 : 0.45,
+        opacity: day.isCurrentMonth ? 1 : 0.45,
 
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
 
-          transition:
-            "all 0.2s ease-in-out",
+        overflow: "hidden",
 
-          "&:hover": {
-            bgcolor: "action.selected",
-          },
+        transition:
+          "transform .15s ease, box-shadow .15s ease, border-color .15s ease",
+
+        "&:hover": {
+          transform: "scale(1.03)",
+          boxShadow: 3,
+          borderColor: "primary.main",
+        },
+      }}
+    >
+      <Typography
+        variant="body2"
+        sx={{
+          alignSelf: "flex-end",
+          fontWeight: day.isToday ? 700 : 400,
+          color: day.isToday
+            ? "primary.main"
+            : "text.primary",
         }}
       >
-        <Typography
-          variant="body2"
-          sx={{
-            alignSelf: "flex-end",
-            fontWeight: day.isToday ? 700 : 400,
-            color: day.isToday
-              ? "primary.main"
-              : "text.primary",
-          }}
-        >
-          {day.day}
-        </Typography>
+        {day.day}
+      </Typography>
 
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: 22,
+        }}
+      >
+        {day.attackCount > 0 && (
+          <Box
+            sx={{
+              minWidth: 20,
+              height: 20,
+
+              px: 0.75,
+
+              borderRadius: 999,
+
+              bgcolor: severityColor,
+              color: "common.white",
+
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+
+              fontSize: "0.70rem",
+              fontWeight: 700,
+            }}
+          >
+            {day.attackCount}
+          </Box>
+        )}
+      </Box>
+
+      {day.attackCount > 0 && (
         <Box
           sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            minHeight: 12,
+            position: "absolute",
+
+            left: 0,
+            bottom: 0,
+
+            width: "100%",
+            height: 5,
+
+            bgcolor: severityColor,
           }}
-        >
-          {day.hasAttack && (
-            <Box
-              sx={{
-                width: 8,
-                height: 8,
-                borderRadius: "50%",
-                bgcolor: "error.main",
-              }}
-            />
-          )}
-        </Box>
-      </Paper>
+        />
+      )}
+    </Paper>
   );
 }
