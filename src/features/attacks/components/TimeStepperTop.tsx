@@ -2,6 +2,7 @@ import AddIcon from "@mui/icons-material/Add";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import { useLongPress } from "@/hooks/useLongPress";
 
 type Props = {
   label: string;
@@ -15,6 +16,11 @@ export default function TimeStepperTop({
   onPlusOne,
   onPlusTen,
 }: Props) {
+
+  const plusOneEvents = useLongPress(onPlusOne);
+
+  const plusTenEvents = useLongPress(onPlusTen);
+
   return (
     <Stack
       spacing={0.5}
@@ -34,27 +40,34 @@ export default function TimeStepperTop({
       </Typography>
 
       <Button
+        {...plusTenEvents}
         variant="text"
-        onClick={onPlusTen}
+        
         sx={{
           width: 72,
           height: 40,
           textTransform: "none",
           fontWeight: 600,
+          borderRadius: 2,
+
+          "&:hover": {bgcolor: "action.hover",},
         }}
       >
         +10
       </Button>
 
       <Button
+        {...plusOneEvents}
         variant="text"
         startIcon={<AddIcon />}
-        onClick={onPlusOne}
         sx={{
           width: 72,
           height: 40,
           textTransform: "none",
           fontWeight: 600,
+          borderRadius: 2,
+
+          "&:hover": {bgcolor: "action.hover",},
         }}
       >
         1

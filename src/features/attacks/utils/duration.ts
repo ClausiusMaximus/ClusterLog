@@ -1,34 +1,36 @@
+export function durationToSeconds(
+  hours: number,
+  minutes: number,
+  seconds: number,
+): number {
+  return (
+    hours * 3600 +
+    minutes * 60 +
+    seconds
+  );
+}
+
 export function secondsToDuration(
   totalSeconds: number,
 ) {
+  const safeSeconds = Math.max(0, totalSeconds);
+
   const hours = Math.floor(
-    totalSeconds / 3600,
+    safeSeconds / 3600,
   );
 
   const minutes = Math.floor(
-    (totalSeconds % 3600) / 60,
+    (safeSeconds % 3600) / 60,
   );
 
   const seconds =
-    totalSeconds % 60;
+    safeSeconds % 60;
 
   return {
     hours,
     minutes,
     seconds,
   };
-}
-
-export function durationToSeconds(
-  hours: number,
-  minutes: number,
-  seconds: number,
-) {
-  return (
-    hours * 3600 +
-    minutes * 60 +
-    seconds
-  );
 }
 
 export function pad(
