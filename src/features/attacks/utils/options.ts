@@ -70,11 +70,6 @@ export const ACTIVITY_OPTIONS: ReadonlyArray<Option<Activity>> = [
 
 export const KIP_OPTIONS: ReadonlyArray<Option<number>> = [
   {
-    value: 0,
-    label: "0",
-    color: "#4caf50",
-  },
-  {
     value: 1,
     label: "1",
     color: "#4caf50",
