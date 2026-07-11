@@ -1,57 +1,13 @@
-# Roadmap
+G4 Filter
 
-## Version 0.1
+G5 Export
 
-- Projektstruktur
-- React
-- Material UI
-- Routing
-- PWA
+G6 Dashboard
 
----
+G7 Medikamente
 
-## Version 0.2
+G8 Trigger
 
-- Angriff erfassen
-- KIP-Skala
-- Sauerstoff
-- Medikamente
-- Notizen
+G9 Kalender
 
----
-
-## Version 0.3
-
-- Verlauf
-- Filter
-- Suche
-
----
-
-## Version 0.4
-
-- Statistik
-- Diagramme
-- Monatsübersicht
-
----
-
-## Version 0.5
-
-- Kalender
-- Heatmap
-
----
-
-## Version 0.6
-
-- CSV Export
-- PDF Export
-
----
-
-## Version 1.0
-
-- Installierbare PWA
-- Backup
-- Synchronisation
+G10 Cloud Sync
