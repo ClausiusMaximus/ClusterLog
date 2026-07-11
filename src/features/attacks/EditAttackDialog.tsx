@@ -13,7 +13,9 @@ type EditAttackDialogProps = {
   open: boolean;
   attack: Attack | null;
   onClose: () => void;
-  onSaved?: (mode: "created" | "updated") => void;
+  onSaved?: (
+    mode: "created" | "updated",
+  ) => void;
 };
 
 export default function EditAttackDialog({
@@ -22,19 +24,27 @@ export default function EditAttackDialog({
   onClose,
   onSaved,
 }: EditAttackDialogProps) {
-  const form = useAttackForm();
+  const {
+    attack: formAttack,
+    update,
+    load,
+    reset,
+    save,
+  } = useAttackForm();
 
   useEffect(() => {
     if (attack) {
-      form.load(attack);
+      load(attack);
     } else {
-      form.reset();
+      reset();
     }
-  }, [attack]);
+  }, [attack, load, reset]);
 
   async function handleSubmit() {
-    const result = await form.save();
+    const result = await save();
+
     onSaved?.(result);
+
     onClose();
   }
 
@@ -51,8 +61,8 @@ export default function EditAttackDialog({
 
       <DialogContent sx={{ pt: 2 }}>
         <AttackForm
-          attack={form.attack}
-          update={form.update}
+          attack={formAttack}
+          update={update}
           onSubmit={handleSubmit}
         />
       </DialogContent>

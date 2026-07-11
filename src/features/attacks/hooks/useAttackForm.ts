@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
-import { attackService } from "@/lib/services/";
+import { attackService } from "@/lib/services";
 
 import type { Attack } from "../types/attack";
 import { createEmptyAttack } from "../utils/defaultAttack";
@@ -8,75 +8,83 @@ import { createEmptyAttack } from "../utils/defaultAttack";
 type Mode = "create" | "edit";
 
 export function useAttackForm() {
-  const [mode, setMode] = useState<Mode>("create");
+  const [mode, setMode] =
+    useState<Mode>("create");
 
-  const [attack, setAttack] = useState<Attack>(
-    createEmptyAttack(),
-  );
+  const [attack, setAttack] =
+    useState<Attack>(
+      createEmptyAttack(),
+    );
 
   /**
    * Einzelnes Feld aktualisieren
    */
-  function update<K extends keyof Attack>(
+  const update = <K extends keyof Attack>(
     key: K,
     value: Attack[K],
-  ) {
+  ) => {
     setAttack((prev) => ({
       ...prev,
       [key]: value,
     }));
-  }
+  };
 
   /**
    * Formular mit bestehender Attacke befüllen
    */
-  function load(existingAttack: Attack) {
-    setAttack({
-      ...existingAttack,
-      start: new Date(existingAttack.start),
-    });
+  const load = useCallback(
+    (existingAttack: Attack) => {
+      setAttack({
+        ...existingAttack,
+        start: new Date(existingAttack.start),
+      });
 
-    setMode("edit");
-  }
+      setMode("edit");
+    },
+    [],
+  );
 
   /**
    * Formular zurücksetzen
    */
-  function reset() {
+  const reset = useCallback(() => {
     setAttack(createEmptyAttack());
     setMode("create");
-  }
+  }, []);
 
   /**
    * Speichern
    */
-  async function save(): Promise<"created" | "updated"> {
+  async function save(): Promise<
+    "created" | "updated"
+  > {
     const attackToSave: Attack = {
       ...attack,
       updatedAt: new Date(),
     };
 
     if (mode === "create") {
-      await attackService.create(attackToSave);
+      await attackService.create(
+        attackToSave,
+      );
 
       reset();
 
       return "created";
     }
 
-      await attackService.update(attackToSave);
+    await attackService.update(
+      attackToSave,
+    );
 
-      reset();
+    reset();
 
-      return "updated";
+    return "updated";
   }
 
   return {
-    // Zustand
     mode,
     attack,
-
-    // Aktionen
     update,
     load,
     save,
