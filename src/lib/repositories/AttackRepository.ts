@@ -4,15 +4,46 @@ import type { Attack } from "@/features/attacks/types/attack";
 
 class AttackRepository {
   async getAll(): Promise<Attack[]> {
-    return db.attacks
-      .orderBy("start")
-      .reverse()
-      .toArray();
+  const attacks = await db.attacks
+    .orderBy("start")
+    .reverse()
+    .toArray();
+
+  return attacks.map((attack) => ({
+    ...attack,
+
+    start: new Date(attack.start),
+
+    createdAt: new Date(attack.createdAt),
+
+    updatedAt: new Date(attack.updatedAt),
+
+    triggers: attack.triggers ?? [],
+
+    notes: attack.notes ?? "",
+  }));
+}
+  async getById(id: string): Promise<Attack | undefined> {
+  const attack = await db.attacks.get(id);
+
+  if (!attack) {
+    return undefined;
   }
 
-  async getById(id: string): Promise<Attack | undefined> {
-    return db.attacks.get(id);
-  }
+  return {
+    ...attack,
+
+    start: new Date(attack.start),
+
+    createdAt: new Date(attack.createdAt),
+
+    updatedAt: new Date(attack.updatedAt),
+
+    triggers: attack.triggers ?? [],
+
+    notes: attack.notes ?? "",
+  };
+}
 
   async create(attack: Attack): Promise<string> {
     await db.attacks.add(attack);

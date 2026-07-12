@@ -45,14 +45,13 @@ export default function AttackDrawer({
   if (!attack) {
     return null;
   }
+  console.log(attack);
 
-  const activity = getActivityOption(
-  attack.activity,
-);
+  const activity = getActivityOption(attack.activity,);
 
-const side = getSideOption(
-  attack.side,
-);
+  const side = getSideOption(attack.side,);
+  const triggers = attack.triggers ?? [];
+  const notes = attack.notes ?? "";
 
   return (
     <Drawer
@@ -259,7 +258,7 @@ const side = getSideOption(
               </CardContent>
             </Card>
 
-            {(attack.triggers.length > 0 ||
+            {(triggers.length > 0 ||
               attack.notes) && (
               <Card
                 elevation={0}
@@ -271,7 +270,7 @@ const side = getSideOption(
               >
                 <CardContent>
                   <Stack spacing={2}>
-                    {attack.triggers.length >
+                    {triggers.length >
                       0 && (
                       <>
                         <Typography
@@ -287,7 +286,7 @@ const side = getSideOption(
                           useFlexGap
                           sx={{ flexWrap: "wrap" }}
                         >
-                          {attack.triggers.map(
+                          {triggers.map(
                             (
                               trigger,
                             ) => (
@@ -304,13 +303,13 @@ const side = getSideOption(
                           )}
                         </Stack>
 
-                        {attack.notes && (
+                        {notes && (
                           <Divider />
                         )}
                       </>
                     )}
 
-                    {attack.notes && (
+                    {notes && (
                       <>
                         <Stack
                           direction="row"
@@ -336,7 +335,7 @@ const side = getSideOption(
                               "pre-wrap",
                           }}
                         >
-                          {attack.notes}
+                          {notes}
                         </Typography>
                       </>
                     )}
