@@ -4,17 +4,19 @@ import { useAttacks } from "@/features/attacks/hooks/useAttacks";
 
 import { calculateStatistics } from "../utils";
 
-export function useStatistics() {
-  const { attacks, loading } = useAttacks();
+export const useStatistics = (attacksOverride?: any[]) => {
+  const {
+    attacks: repositoryAttacks,
+    loading,
+  } = useAttacks();
 
-  const stats = useMemo(
-    () => calculateStatistics(attacks),
-    [attacks],
-  );
+  const attacks = attacksOverride ?? repositoryAttacks;
+
+  const stats = useMemo(() => calculateStatistics(attacks), [attacks]);
 
   return {
     loading,
     attacks,
     stats,
   };
-}
+};
