@@ -36,49 +36,64 @@ export default function DistributionSection({
 
   const distributionData =
     useMemo<DistributionItem[]>(() => {
-      if (distributionMode === "side") {
-        return sideOptions
-          .map((side, index) => ({
-            label: side.label,
-            value:
-              stats.sideDistribution[
-                side.value
-              ],
-            icon: side.icon,
-            color:
-              CHART_COLORS[
-                index % CHART_COLORS.length
-              ],
-          }))
-          .filter(
-            (item) => item.value > 0,
-          )
-          .sort(
-            (a, b) =>
-              b.value - a.value,
-          );
-      }
+      const items: DistributionItem[] =
+        distributionMode === "activity"
+          ? activityOptions
+              .map((activity, index) => ({
+                label: activity.label,
+                value:
+                  stats.activityDistribution[
+                    activity.value
+                  ],
+                icon: activity.icon,
+                color:
+                  CHART_COLORS[
+                    index %
+                      CHART_COLORS.length
+                  ],
+              }))
+              .filter(
+                (item) =>
+                  item.value > 0,
+              )
+          : sideOptions
+              .map((side, index) => ({
+                label: side.label,
+                value:
+                  stats.sideDistribution[
+                    side.value
+                  ],
+                icon: side.icon,
+                color:
+                  CHART_COLORS[
+                    index %
+                      CHART_COLORS.length
+                  ],
+              }))
+              .filter(
+                (item) =>
+                  item.value > 0,
+              );
 
-      return activityOptions
-        .map((activity, index) => ({
-          label: activity.label,
-          value:
-            stats.activityDistribution[
-              activity.value
-            ],
-          icon: activity.icon,
-          color:
-            CHART_COLORS[
-              index % CHART_COLORS.length
-            ],
-        }))
-        .filter(
-          (item) => item.value > 0,
-        )
-        .sort(
-          (a, b) =>
-            b.value - a.value,
-        );
+      items.sort(
+        (a, b) =>
+          b.value - a.value,
+      );
+
+      const total = items.reduce(
+        (sum, item) =>
+          sum + item.value,
+        0,
+      );
+
+      return items.map((item) => ({
+        ...item,
+        percent:
+          total === 0
+            ? 0
+            : (item.value / total) *
+              100,
+      }));
     }, [distributionMode, stats]);
 
   return (
@@ -90,11 +105,10 @@ export default function DistributionSection({
           value={distributionMode}
           onChange={(_, value) => {
             if (value) {
-              setDistributionMode(value);
+              setDistributionMode(
+                value,
+              );
             }
-          }}
-          sx={{
-            mb: 3,
           }}
         >
           <ToggleButton value="activity">
@@ -109,7 +123,8 @@ export default function DistributionSection({
     >
       <DistributionChart
         type={
-          distributionMode === "activity"
+          distributionMode ===
+          "activity"
             ? "pie"
             : "bar"
         }

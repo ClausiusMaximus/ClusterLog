@@ -14,12 +14,14 @@ import {
 import type { ElementType } from "react";
 
 import { CHART_COLORS } from "./constants/chartColors";
+import DistributionTooltip from "./DistributionTooltip";
 
 export type DistributionItem = {
   label: string;
   value: number;
   icon?: ElementType;
   color?: string;
+  percent?: number;
 };
 
 type Props = {
@@ -63,7 +65,9 @@ export default function DistributionChart({
             axisLine={false}
           />
 
-          <Tooltip />
+          <Tooltip
+             content={<DistributionTooltip />}
+          />
 
           <Bar
             dataKey="value"
