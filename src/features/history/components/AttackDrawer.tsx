@@ -52,7 +52,7 @@ export default function AttackDrawer({
   const side = getSideOption(attack.side,);
   const triggers = attack.triggers ?? [];
   const notes = attack.notes ?? "";
-
+  const ActivityIcon = activity.icon;
   return (
     <Drawer
       anchor="bottom"
@@ -230,7 +230,21 @@ export default function AttackDrawer({
                         fontWeight: 600,
                       }}
                     >
-                      {activity.emoji} {activity.label}
+                      
+
+                        <Stack
+                            direction="row"
+                            spacing={1}
+                            sx={{
+                                alignItems: "center",
+                            }}
+                        >
+                            <ActivityIcon fontSize="small" />
+
+                            <Typography>
+                                {activity.label}
+                            </Typography>
+                        </Stack>
 
                     </Typography>
                   </Box>

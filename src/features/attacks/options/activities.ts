@@ -1,3 +1,14 @@
+import BedtimeIcon from "@mui/icons-material/Bedtime";
+import WorkIcon from "@mui/icons-material/Work";
+import HomeIcon from "@mui/icons-material/Home";
+import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
+import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
+import RestaurantIcon from "@mui/icons-material/Restaurant";
+import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
+import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
+
+import type { SvgIconComponent } from "@mui/icons-material";
+
 export type Activity =
   | "sleep"
   | "work"
@@ -11,49 +22,49 @@ export type Activity =
 export type ActivityOption = {
   value: Activity;
   label: string;
-  emoji: string;
+  icon: SvgIconComponent;
 };
 
 export const activityOptions: readonly ActivityOption[] = [
   {
     value: "sleep",
     label: "Schlaf",
-    emoji: "😴",
+    icon: BedtimeIcon,
   },
   {
     value: "work",
     label: "Arbeit",
-    emoji: "💼",
+    icon: WorkIcon,
   },
   {
     value: "household",
     label: "Haushalt",
-    emoji: "🏠",
+    icon: HomeIcon,
   },
   {
     value: "leisure",
     label: "Freizeit",
-    emoji: "🎮",
+    icon: SportsEsportsIcon,
   },
   {
     value: "driving",
     label: "Autofahrt",
-    emoji: "🚗",
+    icon: DirectionsCarIcon,
   },
   {
     value: "eating",
     label: "Essen",
-    emoji: "🍽️",
+    icon: RestaurantIcon,
   },
   {
     value: "sport",
     label: "Sport",
-    emoji: "🏃",
+    icon: FitnessCenterIcon,
   },
   {
     value: "other",
     label: "Sonstiges",
-    emoji: "❓",
+    icon: QuestionMarkIcon,
   },
 ] as const;
 
