@@ -3,15 +3,22 @@ import { useMemo, useState } from "react";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
-import StatisticsSection from "./StatisticsSection";
+import {
+  activityOptions,
+} from "@/features/attacks/options/activities";
 
-import type { Activity } from "@/features/attacks/options/activities";import { getActivityLabel } from "@/features/attacks/utils/labels";
+import {
+  sideOptions,
+} from "@/features/attacks/options/sides";
+
+import { CHART_COLORS } from "./constants/chartColors";
+import type { Statistics } from "../utils";
 
 import DistributionChart, {
   type DistributionItem,
 } from "./DistributionChart";
-
-import type { Statistics } from "../utils";
+import DistributionLegend from "./DistributionLegend";
+import StatisticsSection from "./StatisticsSection";
 
 type Props = {
   stats: Statistics;
@@ -20,40 +27,58 @@ type Props = {
 export default function DistributionSection({
   stats,
 }: Props) {
-  const [distributionMode, setDistributionMode] =
-    useState<"activity" | "side">(
-      "activity",
-    );
+  const [
+    distributionMode,
+    setDistributionMode,
+  ] = useState<"activity" | "side">(
+    "activity",
+  );
 
   const distributionData =
     useMemo<DistributionItem[]>(() => {
       if (distributionMode === "side") {
-        return [
-          {
-            label: "Links",
-            value: stats.sideDistribution.left,
-          },
-          {
-            label: "Beidseitig",
-            value: stats.sideDistribution.both,
-          },
-          {
-            label: "Rechts",
-            value: stats.sideDistribution.right,
-          },
-        ];
+        return sideOptions
+          .map((side, index) => ({
+            label: side.label,
+            value:
+              stats.sideDistribution[
+                side.value
+              ],
+            icon: side.icon,
+            color:
+              CHART_COLORS[
+                index % CHART_COLORS.length
+              ],
+          }))
+          .filter(
+            (item) => item.value > 0,
+          )
+          .sort(
+            (a, b) =>
+              b.value - a.value,
+          );
       }
 
-      return Object.entries(
-        stats.activityDistribution,
-      )
-        .filter(([, value]) => value > 0)
-        .map(([activity, value]) => ({
-          label: getActivityLabel(
-            activity as Activity,
-          ),
-          value,
-        }));
+      return activityOptions
+        .map((activity, index) => ({
+          label: activity.label,
+          value:
+            stats.activityDistribution[
+              activity.value
+            ],
+          icon: activity.icon,
+          color:
+            CHART_COLORS[
+              index % CHART_COLORS.length
+            ],
+        }))
+        .filter(
+          (item) => item.value > 0,
+        )
+        .sort(
+          (a, b) =>
+            b.value - a.value,
+        );
     }, [distributionMode, stats]);
 
   return (
@@ -61,21 +86,23 @@ export default function DistributionSection({
       title="Verteilungen"
       controls={
         <ToggleButtonGroup
-            exclusive
-            value={distributionMode}
-            onChange={(_, value) => {
-              if (value) {
-                setDistributionMode(value);
-              }
-            }}
-            sx={{ mb: 3 }}
+          exclusive
+          value={distributionMode}
+          onChange={(_, value) => {
+            if (value) {
+              setDistributionMode(value);
+            }
+          }}
+          sx={{
+            mb: 3,
+          }}
         >
           <ToggleButton value="activity">
-             Aktivitäten
+            Aktivitäten
           </ToggleButton>
 
           <ToggleButton value="side">
-              Seiten
+            Seiten
           </ToggleButton>
         </ToggleButtonGroup>
       }
@@ -86,6 +113,10 @@ export default function DistributionSection({
             ? "pie"
             : "bar"
         }
+        data={distributionData}
+      />
+
+      <DistributionLegend
         data={distributionData}
       />
     </StatisticsSection>
