@@ -1,13 +1,6 @@
-import BedtimeIcon from "@mui/icons-material/Bedtime";
-import WorkIcon from "@mui/icons-material/Work";
-import HomeIcon from "@mui/icons-material/Home";
-import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
-import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
-import RestaurantIcon from "@mui/icons-material/Restaurant";
-import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
-import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
+import type { ElementType } from "react";
 
-import type { SvgIconComponent } from "@mui/icons-material";
+import { Icons } from "@/shared/icons";
 
 export type Activity =
   | "sleep"
@@ -22,49 +15,49 @@ export type Activity =
 export type ActivityOption = {
   value: Activity;
   label: string;
-  icon: SvgIconComponent;
+  icon: ElementType;
 };
 
 export const activityOptions: readonly ActivityOption[] = [
   {
     value: "sleep",
     label: "Schlaf",
-    icon: BedtimeIcon,
+    icon: Icons.activity.sleep,
   },
   {
     value: "work",
     label: "Arbeit",
-    icon: WorkIcon,
+    icon: Icons.activity.work,
   },
   {
     value: "household",
     label: "Haushalt",
-    icon: HomeIcon,
+    icon: Icons.activity.household,
   },
   {
     value: "leisure",
     label: "Freizeit",
-    icon: SportsEsportsIcon,
+    icon: Icons.activity.leisure,
   },
   {
     value: "driving",
     label: "Autofahrt",
-    icon: DirectionsCarIcon,
+    icon: Icons.activity.driving,
   },
   {
     value: "eating",
     label: "Essen",
-    icon: RestaurantIcon,
+    icon: Icons.activity.eating,
   },
   {
     value: "sport",
     label: "Sport",
-    icon: FitnessCenterIcon,
+    icon: Icons.activity.sport,
   },
   {
     value: "other",
     label: "Sonstiges",
-    icon: QuestionMarkIcon,
+    icon: Icons.activity.other,
   },
 ] as const;
 
