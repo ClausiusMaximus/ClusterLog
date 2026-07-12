@@ -7,6 +7,7 @@ import StatisticsSummary from "./components/StatisticsSummary";
 import TrendSection from "./components/TrendSection";
 import { useStatistics } from "./hooks/useStatistics";
 import AttackTimeHeatmap from "./components/AttackTimeHeatmap";
+import KipDistribution from "./components/KipDistribution";
 
 export default function Statistics() {
   const { loading, stats, attacks } =
@@ -30,6 +31,10 @@ export default function Statistics() {
         stats={stats}
       />
       <AttackTimeHeatmap
+        attacks={attacks}
+      />
+
+      <KipDistribution
         attacks={attacks}
       />
 
