@@ -1,6 +1,5 @@
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 import TimerIcon from "@mui/icons-material/Timer";
 
 import Box from "@mui/material/Box";
@@ -10,71 +9,36 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
 import type { Attack } from "@/features/attacks/types/attack";
+
 import {
-  pad,
-  secondsToDuration,
-} from "@/features/attacks/utils/duration";
+  formatAttackTime,
+  getActivityOption,
+  getKipColor,
+  getSideOption,
+} from "@/features/attacks/utils/display";
+
+import { formatDuration } from "@/features/attacks/utils/formatters";
+
+import { Icons } from "@/shared/icons";
 
 type Props = {
   attack: Attack;
   onClick?: () => void;
 };
 
-function formatTime(date: Date) {
-  return new Intl.DateTimeFormat("de-DE", {
-    hour: "2-digit",
-    minute: "2-digit",
-  }).format(date);
-}
-
-function formatSide(side: Attack["side"]) {
-  switch (side) {
-    case "left":
-      return "⬅ Links";
-    case "right":
-      return "➡ Rechts";
-    case "both":
-      return "⬌ Beidseitig";
-  }
-}
-
-function formatActivity(activity: Attack["activity"]) {
-  switch (activity) {
-    case "sleep":
-      return "😴 Schlaf";
-    case "work":
-      return "💼 Arbeit";
-    case "household":
-      return "🏠 Haushalt";
-    case "leisure":
-      return "🎮 Freizeit";
-    case "driving":
-      return "🚗 Autofahrt";
-    case "eating":
-      return "🍽 Essen";
-    case "sport":
-      return "🏃 Sport";
-    default:
-      return "❓ Sonstiges";
-  }
-}
-
-function getKipColor(kip: number) {
-  if (kip <= 2) return "success.main";
-  if (kip <= 4) return "warning.light";
-  if (kip <= 6) return "warning.main";
-  if (kip <= 9) return "error.main";
-
-  return "error.dark";
-}
-
 export default function AttackCard({
   attack,
   onClick,
 }: Props) {
-  const duration = secondsToDuration(
-    attack.duration,
+  const activity = getActivityOption(
+    attack.activity,
   );
+
+  const side = getSideOption(
+    attack.side,
+  );
+
+  const ActivityIcon = activity.icon;
 
   return (
     <Card
@@ -95,7 +59,9 @@ export default function AttackCard({
           <Box
             sx={{
               width: 6,
-              bgcolor: getKipColor(attack.kip),
+              bgcolor: getKipColor(
+                attack.kip,
+              ),
             }}
           />
 
@@ -109,7 +75,8 @@ export default function AttackCard({
               <Stack
                 direction="row"
                 sx={{
-                  justifyContent: "space-between",
+                  justifyContent:
+                    "space-between",
                   alignItems: "center",
                 }}
               >
@@ -130,7 +97,9 @@ export default function AttackCard({
                       fontWeight: 600,
                     }}
                   >
-                    {formatTime(attack.start)}
+                    {formatAttackTime(
+                      attack.start,
+                    )}
                   </Typography>
                 </Stack>
 
@@ -140,7 +109,8 @@ export default function AttackCard({
               <Stack
                 direction="row"
                 sx={{
-                  justifyContent: "space-between",
+                  justifyContent:
+                    "space-between",
                 }}
               >
                 <Stack
@@ -150,7 +120,7 @@ export default function AttackCard({
                     alignItems: "center",
                   }}
                 >
-                  <LocalFireDepartmentIcon
+                  <Icons.attack
                     color="error"
                     fontSize="small"
                   />
@@ -158,7 +128,9 @@ export default function AttackCard({
                   <Typography
                     sx={{
                       fontWeight: 700,
-                      color: getKipColor(attack.kip),
+                      color: getKipColor(
+                        attack.kip,
+                      ),
                     }}
                   >
                     KIP {attack.kip}
@@ -178,25 +150,38 @@ export default function AttackCard({
                   />
 
                   <Typography>
-                    {pad(duration.hours)}:
-                    {pad(duration.minutes)}:
-                    {pad(duration.seconds)}
+                    {formatDuration(
+                      attack.duration,
+                    )}
                   </Typography>
                 </Stack>
+              </Stack>
+
+              <Stack
+                direction="row"
+                spacing={1}
+                sx={{
+                  alignItems: "center",
+                }}
+              >
+                <ActivityIcon
+                  fontSize="small"
+                  color="action"
+                />
+
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                >
+                  {activity.label}
+                </Typography>
               </Stack>
 
               <Typography
                 variant="body2"
                 color="text.secondary"
               >
-                {formatActivity(attack.activity)}
-              </Typography>
-
-              <Typography
-                variant="body2"
-                color="text.secondary"
-              >
-                {formatSide(attack.side)}
+                {side.emoji} {side.label}
               </Typography>
             </Stack>
           </Box>
