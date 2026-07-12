@@ -1,29 +1,30 @@
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import PsychologyIcon from "@mui/icons-material/Psychology";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
+import NotesIcon from "@mui/icons-material/Notes";
 
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-
-import Button from "@mui/material/Button";
-
 import type { Attack } from "@/features/attacks/types/attack";
 
-import {
-  formatDateTime,
-  formatDuration,
-  formatKip,
-} from "@/features/attacks/utils/formatters";
+import { formatDuration } from "@/features/attacks/utils/formatters";
 
 import {
-  getActivityLabel,
-  getSideLabel,
-} from "@/features/attacks/utils/labels";
+  formatAttackDate,
+  formatAttackTime,
+  getActivityOption,
+  getKipColor,
+  getSideOption,
+} from "@/features/attacks/utils/display";
 
 type Props = {
   attack: Attack | null;
@@ -39,11 +40,19 @@ export default function AttackDrawer({
   open,
   onClose,
   onEdit,
-  onDelete
+  onDelete,
 }: Props) {
   if (!attack) {
     return null;
   }
+
+  const activity = getActivityOption(
+  attack.activity,
+);
+
+const side = getSideOption(
+  attack.side,
+);
 
   return (
     <Drawer
@@ -56,78 +65,317 @@ export default function AttackDrawer({
           p: 3,
           borderTopLeftRadius: 24,
           borderTopRightRadius: 24,
-          minHeight: 320,
+          maxWidth: 640,
+          width: "100%",
+          mx: "auto",
         }}
       >
-        <Typography
-          variant="h5"
-          sx={{ mb: 3 }}
-        >
-          Attacke
-        </Typography>
+        <Stack spacing={3}>
+          {/* Header */}
 
-        <Stack spacing={2}>
-          <Typography>
-            {formatDateTime(attack.start)}
-          </Typography>
+          <Stack
+            spacing={0.5}
+            sx={{
+              alignItems: "center",
+            }}
+          >
+            <LocalFireDepartmentIcon
+              sx={{
+                fontSize: 42,
+                color: "error.main",
+              }}
+            />
+
+            <Typography
+              variant="h5"
+              sx={{
+                fontWeight: 700,
+              }}
+            >
+              Attacke
+            </Typography>
+
+            <Typography
+              variant="h3"
+              sx={{
+                fontWeight: 700,
+              }}
+            >
+              {formatAttackTime(attack.start)}
+            </Typography>
+
+            <Typography
+              variant="body2"
+              color="text.secondary"
+            >
+              {formatAttackDate(attack.start)}
+            </Typography>
+          </Stack>
+
+          {/* KIP */}
+
+          <Card
+            elevation={0}
+            sx={{
+              borderRadius: 3,
+              border: "1px solid",
+              borderColor: "divider",
+            }}
+          >
+            <CardContent>
+              <Stack
+                spacing={1}
+                sx={{
+                  alignItems: "center",
+                }}
+              >
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                >
+                  KIP-Skala
+                </Typography>
+
+                <Typography
+                  variant="h1"
+                  sx={{
+                    fontWeight: 700,
+                    lineHeight: 1,
+                    color: getKipColor(
+                      attack.kip,
+                    ),
+                  }}
+                >
+                  {attack.kip}
+                </Typography>
+
+                <Chip
+                  label={`KIP ${attack.kip}`}
+                  sx={{
+                    bgcolor: getKipColor(
+                      attack.kip,
+                    ),
+                    color: "#fff",
+                    fontWeight: 700,
+                  }}
+                />
+              </Stack>
+            </CardContent>
+          </Card>
 
           <Divider />
 
-          <Stack
-            direction="row"
-            spacing={1}
-            sx={{
-              alignItems: "center",
-            }}
-          >
-            <PsychologyIcon color="error" />
+          {/* Informationen */}
 
-            <Typography>
-              {formatKip(attack.kip)}
-            </Typography>
+          <Stack spacing={2}>
+            <Card
+              elevation={0}
+              sx={{
+                borderRadius: 3,
+                border: "1px solid",
+                borderColor: "divider",
+              }}
+            >
+              <CardContent>
+                <Stack spacing={2}>
+                  <Stack
+                    direction="row"
+                    spacing={1}
+                    sx={{
+                      alignItems: "center",
+                    }}
+                  >
+                    <AccessTimeIcon color="action" />
+
+                    <Typography
+                      variant="subtitle2"
+                    >
+                      Dauer
+                    </Typography>
+                  </Stack>
+
+                  <Typography
+                    variant="h5"
+                    sx={{
+                      fontWeight: 600,
+                    }}
+                  >
+                    {formatDuration(
+                      attack.duration,
+                    )}
+                  </Typography>
+                </Stack>
+              </CardContent>
+            </Card>
+
+            <Card
+              elevation={0}
+              sx={{
+                borderRadius: 3,
+                border: "1px solid",
+                borderColor: "divider",
+              }}
+            >
+              <CardContent>
+                <Stack spacing={2}>
+                  <Box>
+                    <Typography
+                      variant="subtitle2"
+                      color="text.secondary"
+                    >
+                      Aktivität
+                    </Typography>
+
+                    <Typography
+                      sx={{
+                        fontWeight: 600,
+                      }}
+                    >
+                      {activity.emoji} {activity.label}
+
+                    </Typography>
+                  </Box>
+
+                  <Divider />
+
+                  <Box>
+                    <Typography
+                      variant="subtitle2"
+                      color="text.secondary"
+                    >
+                      Seite
+                    </Typography>
+
+                    <Typography
+                      sx={{
+                        fontWeight: 600,
+                      }}
+                    >
+                      {side.emoji} {side.label}
+
+                    </Typography>
+                  </Box>
+                </Stack>
+              </CardContent>
+            </Card>
+
+            {(attack.triggers.length > 0 ||
+              attack.notes) && (
+              <Card
+                elevation={0}
+                sx={{
+                  borderRadius: 3,
+                  border: "1px solid",
+                  borderColor: "divider",
+                }}
+              >
+                <CardContent>
+                  <Stack spacing={2}>
+                    {attack.triggers.length >
+                      0 && (
+                      <>
+                        <Typography
+                          variant="subtitle2"
+                          color="text.secondary"
+                        >
+                          Auslöser
+                        </Typography>
+
+                        <Stack
+                          direction="row"
+                          spacing={1}
+                          useFlexGap
+                          sx={{ flexWrap: "wrap" }}
+                        >
+                          {attack.triggers.map(
+                            (
+                              trigger,
+                            ) => (
+                              <Chip
+                                key={
+                                  trigger
+                                }
+                                label={
+                                  trigger
+                                }
+                                size="small"
+                              />
+                            ),
+                          )}
+                        </Stack>
+
+                        {attack.notes && (
+                          <Divider />
+                        )}
+                      </>
+                    )}
+
+                    {attack.notes && (
+                      <>
+                        <Stack
+                          direction="row"
+                          spacing={1}
+                          sx={{
+                            alignItems:
+                              "center",
+                          }}
+                        >
+                          <NotesIcon color="action" />
+
+                          <Typography
+                            variant="subtitle2"
+                            color="text.secondary"
+                          >
+                            Notizen
+                          </Typography>
+                        </Stack>
+
+                        <Typography
+                          sx={{
+                            whiteSpace:
+                              "pre-wrap",
+                          }}
+                        >
+                          {attack.notes}
+                        </Typography>
+                      </>
+                    )}
+                  </Stack>
+                </CardContent>
+              </Card>
+            )}
           </Stack>
 
-          <Typography>
-            {getSideLabel(attack.side)}
-          </Typography>
+          <Divider />
 
-          <Typography>
-            {getActivityLabel(attack.activity)}
-          </Typography>
+          <Stack spacing={2}>
+            <Button
+              variant="contained"
+              size="large"
+              startIcon={<EditIcon />}
+              onClick={() => onEdit(attack)}
+            >
+              Bearbeiten
+            </Button>
 
-          <Stack
-            direction="row"
-            spacing={1}
-            sx={{
-              alignItems: "center",
-            }}
-          >
-            <AccessTimeIcon color="action" />
+            <Button
+              variant="outlined"
+              color="error"
+              size="large"
+              startIcon={<DeleteIcon />}
+              onClick={() => onDelete(attack)}
+            >
+              Löschen
+            </Button>
 
-            <Typography>
-              {formatDuration(attack.duration)}
-            </Typography>
+            <Button
+              variant="text"
+              size="large"
+              onClick={onClose}
+            >
+              Schließen
+            </Button>
           </Stack>
-        </Stack>
-        <Divider sx={{ my: 3 }} />
-
-        <Stack spacing={2}>
-        <Button
-            variant="contained"
-            startIcon={<EditIcon />}
-            onClick={() => onEdit(attack)}
-        >
-            Bearbeiten
-        </Button>
-
-        <Button
-            color="error"
-            variant="outlined"
-            startIcon={<DeleteIcon />}
-            onClick={( )=> onDelete(attack)}
-        >
-            Löschen
-        </Button>
         </Stack>
       </Box>
     </Drawer>

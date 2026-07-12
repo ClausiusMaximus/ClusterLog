@@ -7,7 +7,7 @@ import IconButtonCard from "@/components/common/IconButtonCard";
 
 import { ACTIVITY_OPTIONS } from "../utils/options";
 
-import type { Activity } from "../types/attack";
+import type { Activity } from "../options/activities";
 
 type Props = {
   value: Activity;

@@ -1,7 +1,5 @@
-import type {
-  Attack,
-  Side,
-} from "@/features/attacks/types/attack";
+import type {Attack,} from "@/features/attacks/types/attack";
+import type { Side } from "@/features/attacks/options/sides";
 
 export type SideDistribution = Record<
   Side,

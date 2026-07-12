@@ -1,7 +1,5 @@
-import type {
-  Activity,
-  Attack,
-} from "@/features/attacks/types/attack";
+import type { Attack,} from "@/features/attacks/types/attack";
+import type { Activity } from "@/features/attacks/options/activities";
 
 export type ActivityDistribution = Record<
   Activity,

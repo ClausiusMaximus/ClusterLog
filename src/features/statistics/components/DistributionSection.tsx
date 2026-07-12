@@ -5,8 +5,7 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
 import StatisticsSection from "./StatisticsSection";
 
-import type { Activity } from "@/features/attacks/types/attack";
-import { getActivityLabel } from "@/features/attacks/utils/labels";
+import type { Activity } from "@/features/attacks/options/activities";import { getActivityLabel } from "@/features/attacks/utils/labels";
 
 import DistributionChart, {
   type DistributionItem,

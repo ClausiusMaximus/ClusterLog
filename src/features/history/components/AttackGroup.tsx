@@ -33,7 +33,7 @@ export default function AttackGroup({
         <AttackCard
           key={attack.id}
           attack={attack}
-          onClick={onSelect}
+          onClick={() => onSelect?.(attack)}
 
         />     
       ))}

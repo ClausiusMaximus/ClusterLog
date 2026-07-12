@@ -1,4 +1,5 @@
-import type { Activity, Side } from "../types/attack";
+import type { Activity } from "../options/activities";
+import type { Side } from "../options/sides";
 
 import {
   ACTIVITY_OPTIONS,

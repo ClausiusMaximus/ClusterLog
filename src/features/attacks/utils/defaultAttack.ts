@@ -16,6 +16,10 @@ export function createEmptyAttack(): Attack {
 
     activity: "other",
 
+    triggers: [],
+
+    notes: "",
+
     createdAt: now,
 
     updatedAt: now,
