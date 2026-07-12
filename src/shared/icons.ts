@@ -12,6 +12,7 @@ import PsychologyIcon from "@mui/icons-material/Psychology";
 import RestaurantIcon from "@mui/icons-material/Restaurant";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import WorkIcon from "@mui/icons-material/Work";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 
 export const Icons = {
   attack: LocalFireDepartmentIcon,
@@ -19,6 +20,8 @@ export const Icons = {
   kip: PsychologyIcon,
 
   duration: AccessTimeIcon,
+
+  calendar: CalendarMonthIcon,
 
   notes: NotesIcon,
 
