@@ -14,6 +14,7 @@ export function useStatistics() {
 
   return {
     loading,
+    attacks,
     stats,
   };
 }

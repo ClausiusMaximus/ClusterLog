@@ -6,9 +6,10 @@ import DistributionSection from "./components/DistributionSection";
 import StatisticsSummary from "./components/StatisticsSummary";
 import TrendSection from "./components/TrendSection";
 import { useStatistics } from "./hooks/useStatistics";
+import AttackTimeHeatmap from "./components/AttackTimeHeatmap";
 
 export default function Statistics() {
-  const { loading, stats } =
+  const { loading, stats, attacks } =
     useStatistics();
 
   if (loading) {
@@ -27,6 +28,9 @@ export default function Statistics() {
 
       <DistributionSection
         stats={stats}
+      />
+      <AttackTimeHeatmap
+        attacks={attacks}
       />
 
       <TrendSection
