@@ -52,7 +52,6 @@ export function useLongPress(
   return {
     onPointerDown: start,
     onPointerUp: stop,
-    onPointerLeave: stop,
     onPointerCancel: stop,
   };
 }
