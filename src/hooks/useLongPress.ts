@@ -9,23 +9,35 @@ export function useLongPress(
   action: () => void,
   {
     delay = 500,
-    interval = 80,
+    interval = 100,
   }: LongPressOptions = {},
 ) {
-  const timeoutRef = useRef<number | undefined>(undefined);
-  const intervalRef = useRef<number | undefined>(undefined);
+  const timeoutRef = useRef<number | null>(null);
+  const intervalRef = useRef<number | null>(null);
+  const pressedRef = useRef(false);
 
   const stop = useCallback(() => {
-    if (timeoutRef.current !== undefined) {
+    pressedRef.current = false;
+
+    if (timeoutRef.current !== null) {
       window.clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
     }
 
-    if (intervalRef.current !== undefined) {
+    if (intervalRef.current !== null) {
       window.clearInterval(intervalRef.current);
+      intervalRef.current = null;
     }
   }, []);
 
   const start = useCallback(() => {
+    if (pressedRef.current) {
+      return;
+    }
+
+    pressedRef.current = true;
+
+    // Sofort einmal ausführen
     action();
 
     timeoutRef.current = window.setTimeout(() => {
@@ -35,17 +47,12 @@ export function useLongPress(
     }, delay);
   }, [action, delay, interval]);
 
-  useEffect(() => {
-    return stop;
-  }, [stop]);
+  useEffect(() => stop, [stop]);
 
   return {
-    onMouseDown: start,
-    onMouseUp: stop,
-    onMouseLeave: stop,
-
-    onTouchStart: start,
-    onTouchEnd: stop,
-    onTouchCancel: stop,
+    onPointerDown: start,
+    onPointerUp: stop,
+    onPointerLeave: stop,
+    onPointerCancel: stop,
   };
 }
