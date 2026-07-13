@@ -79,14 +79,19 @@ export function useLongPress(
   );
 
   useEffect(() => {
-    return () => {
-      stop();
-    };
+      const handlePointerUp = () => stop();
+
+      window.addEventListener("pointerup", handlePointerUp);
+      window.addEventListener("pointercancel", handlePointerUp);
+
+      return () => {
+        window.removeEventListener("pointerup", handlePointerUp);
+        window.removeEventListener("pointercancel", handlePointerUp);
+        stop();
+      };
   }, [stop]);
 
   return {
     onPointerDown: start,
-    onPointerUp: end,
-    onPointerCancel: end,
   };
 }
