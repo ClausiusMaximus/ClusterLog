@@ -13,18 +13,19 @@ export function useLongPress(
     interval = 100,
   }: LongPressOptions = {},
 ) {
+  const pressedRef = useRef(false);
+
   const timeoutRef = useRef<number | null>(null);
   const intervalRef = useRef<number | null>(null);
-  const pressedRef = useRef(false);
 
   const clearTimers = useCallback(() => {
     if (timeoutRef.current !== null) {
-      window.clearTimeout(timeoutRef.current);
+      clearTimeout(timeoutRef.current);
       timeoutRef.current = null;
     }
 
     if (intervalRef.current !== null) {
-      window.clearInterval(intervalRef.current);
+      clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
   }, []);
@@ -36,22 +37,18 @@ export function useLongPress(
 
   const start = useCallback(
     (event: ReactPointerEvent<HTMLElement>) => {
-      // Nur primäre Maustaste zulassen.
+      // Desktop: nur linke Maustaste
       if (event.pointerType === "mouse" && event.button !== 0) {
         return;
       }
 
-      // Doppelte PointerDowns verhindern.
       if (pressedRef.current) {
         return;
       }
 
       pressedRef.current = true;
 
-      // Pointer auch außerhalb des Buttons weiter verfolgen.
-      event.currentTarget.setPointerCapture?.(event.pointerId);
-
-      // Sofort einmal ausführen.
+      // einmal sofort
       action();
 
       timeoutRef.current = window.setTimeout(() => {
@@ -65,35 +62,18 @@ export function useLongPress(
     [action, delay, interval],
   );
 
-  const end = useCallback(
-    (event: ReactPointerEvent<HTMLElement>) => {
-      if (
-        event.currentTarget.hasPointerCapture?.(event.pointerId)
-      ) {
-        event.currentTarget.releasePointerCapture(event.pointerId);
-      }
-
-      stop();
-    },
-    [stop],
-  );
-
   useEffect(() => {
-      const handlePointerUp = () => stop();
+    window.addEventListener("pointerup", stop);
+    window.addEventListener("pointercancel", stop);
 
-      window.addEventListener("pointerup", handlePointerUp);
-      window.addEventListener("pointercancel", handlePointerUp);
-
-      return () => {
-        window.removeEventListener("pointerup", handlePointerUp);
-        window.removeEventListener("pointercancel", handlePointerUp);
-        stop();
-      };
+    return () => {
+      window.removeEventListener("pointerup", stop);
+      window.removeEventListener("pointercancel", stop);
+      stop();
+    };
   }, [stop]);
 
   return {
     onPointerDown: start,
-    onPointerUp: end,
-    onPointerCancel: end,
   };
 }
