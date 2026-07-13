@@ -30,22 +30,24 @@ export function useLongPress(
     }
   }, []);
 
-  const start = useCallback(() => {
-    if (pressedRef.current) {
-      return;
-    }
+  const start = useCallback(
+    (event?: React.PointerEvent) => {
+      event?.preventDefault();
 
-    pressedRef.current = true;
+      if (pressedRef.current) {
+        return;
+      }
 
-    // Sofort einmal ausführen
-    action();
+      pressedRef.current = true;
 
-    timeoutRef.current = window.setTimeout(() => {
-      intervalRef.current = window.setInterval(() => {
-        action();
-      }, interval);
-    }, delay);
-  }, [action, delay, interval]);
+      action();
+
+      timeoutRef.current = window.setTimeout(() => {
+        intervalRef.current = window.setInterval(action, interval);
+      }, delay);
+    },
+    [action, delay, interval],
+  );
 
   useEffect(() => stop, [stop]);
 
