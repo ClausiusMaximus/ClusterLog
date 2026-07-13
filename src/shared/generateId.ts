@@ -1,14 +1,13 @@
 export function generateId(): string {
-  if (
-    typeof globalThis.crypto !== "undefined" &&
-    typeof globalThis.crypto.randomUUID === "function"
-  ) {
-    return globalThis.crypto.randomUUID();
+  const cryptoApi = globalThis.crypto;
+
+  if (cryptoApi?.randomUUID) {
+    return cryptoApi.randomUUID();
   }
 
   return (
     Date.now().toString(36) +
     "-" +
-    Math.random().toString(36).slice(2, 11)
+    Math.random().toString(36).substring(2, 11)
   );
 }
