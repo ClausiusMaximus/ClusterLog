@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef } from "react";
+import type { PointerEvent as ReactPointerEvent } from "react";
 
 type LongPressOptions = {
   delay?: number;
@@ -16,9 +17,7 @@ export function useLongPress(
   const intervalRef = useRef<number | null>(null);
   const pressedRef = useRef(false);
 
-  const stop = useCallback(() => {
-    pressedRef.current = false;
-
+  const clearTimers = useCallback(() => {
     if (timeoutRef.current !== null) {
       window.clearTimeout(timeoutRef.current);
       timeoutRef.current = null;
@@ -30,30 +29,64 @@ export function useLongPress(
     }
   }, []);
 
-  const start = useCallback(
-    (event?: React.PointerEvent) => {
-      event?.preventDefault();
+  const stop = useCallback(() => {
+    pressedRef.current = false;
+    clearTimers();
+  }, [clearTimers]);
 
+  const start = useCallback(
+    (event: ReactPointerEvent<HTMLElement>) => {
+      // Nur primäre Maustaste zulassen.
+      if (event.pointerType === "mouse" && event.button !== 0) {
+        return;
+      }
+
+      // Doppelte PointerDowns verhindern.
       if (pressedRef.current) {
         return;
       }
 
       pressedRef.current = true;
 
+      // Pointer auch außerhalb des Buttons weiter verfolgen.
+      event.currentTarget.setPointerCapture?.(event.pointerId);
+
+      // Sofort einmal ausführen.
       action();
 
       timeoutRef.current = window.setTimeout(() => {
-        intervalRef.current = window.setInterval(action, interval);
+        intervalRef.current = window.setInterval(() => {
+          if (pressedRef.current) {
+            action();
+          }
+        }, interval);
       }, delay);
     },
     [action, delay, interval],
   );
 
-  useEffect(() => stop, [stop]);
+  const end = useCallback(
+    (event: ReactPointerEvent<HTMLElement>) => {
+      if (
+        event.currentTarget.hasPointerCapture?.(event.pointerId)
+      ) {
+        event.currentTarget.releasePointerCapture(event.pointerId);
+      }
+
+      stop();
+    },
+    [stop],
+  );
+
+  useEffect(() => {
+    return () => {
+      stop();
+    };
+  }, [stop]);
 
   return {
     onPointerDown: start,
-    onPointerUp: stop,
-    onPointerCancel: stop,
+    onPointerUp: end,
+    onPointerCancel: end,
   };
 }
