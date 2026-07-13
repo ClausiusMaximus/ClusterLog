@@ -42,6 +42,9 @@ export default function TimeStepperTop({
       <Button
         {...plusTenEvents}
         variant="text"
+        disableRipple
+        disableTouchRipple
+        disableFocusRipple
         
         sx={{
           width: 72,
@@ -59,6 +62,9 @@ export default function TimeStepperTop({
       <Button
         {...plusOneEvents}
         variant="text"
+        disableRipple
+        disableTouchRipple
+        disableFocusRipple
         startIcon={<AddIcon />}
         sx={{
           width: 72,
