@@ -93,5 +93,7 @@ export function useLongPress(
 
   return {
     onPointerDown: start,
+    onPointerUp: end,
+    onPointerCancel: end,
   };
 }
