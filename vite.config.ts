@@ -4,9 +4,9 @@ import { VitePWA } from "vite-plugin-pwa";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
-
   base: "/ClusterLog/",
-   plugins: [
+
+  plugins: [
     react(),
 
     tsconfigPaths(),
@@ -21,23 +21,20 @@ export default defineConfig({
 
       manifest: {
         name: "ClusterLog",
-
         short_name: "ClusterLog",
 
         description:
           "Offline-Tagebuch für Clusterkopfschmerz",
 
         theme_color: "#d32f2f",
-
         background_color: "#121212",
 
         display: "standalone",
-
         orientation: "portrait",
 
-        start_url: "/",
-
-        scope: "/",
+        // WICHTIG für GitHub Pages
+        start_url: "/ClusterLog/",
+        scope: "/ClusterLog/",
 
         icons: [
           {
@@ -61,8 +58,20 @@ export default defineConfig({
 
       workbox: {
         globPatterns: [
-          "**/*.{js,css,html,ico,png,svg}",
+          "**/*.{js,css,html,ico,png,svg,webmanifest}",
         ],
+
+        navigateFallback: "/ClusterLog/index.html",
+
+        cleanupOutdatedCaches: true,
+
+        clientsClaim: true,
+
+        skipWaiting: true,
+      },
+
+      devOptions: {
+        enabled: false,
       },
     }),
   ],
