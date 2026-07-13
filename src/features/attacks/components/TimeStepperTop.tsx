@@ -1,12 +1,11 @@
 import AddIcon from "@mui/icons-material/Add";
-import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { useLongPress } from "@/hooks/useLongPress";
+
+import RepeatButton from "@/components/common/RepeatButton";
 
 type Props = {
   label: string;
-
   onPlusOne: () => void;
   onPlusTen: () => void;
 };
@@ -16,11 +15,6 @@ export default function TimeStepperTop({
   onPlusOne,
   onPlusTen,
 }: Props) {
-
-  const plusOneEvents = useLongPress(onPlusOne);
-
-  const plusTenEvents = useLongPress(onPlusTen);
-
   return (
     <Stack
       spacing={0.5}
@@ -39,45 +33,26 @@ export default function TimeStepperTop({
         {label}
       </Typography>
 
-      <Button
-        {...plusTenEvents}
-        variant="text"
-        disableRipple
-        disableTouchRipple
-        disableFocusRipple
-        
-        sx={{
-          width: 72,
-          height: 40,
-          textTransform: "none",
-          fontWeight: 600,
-          borderRadius: 2,
+      <RepeatButton
+        label="+10"
+        onPress={onPlusTen}
+      />
 
-          "&:hover": {bgcolor: "action.hover",},
-        }}
-      >
-        +10
-      </Button>
-
-      <Button
-        {...plusOneEvents}
-        variant="text"
-        disableRipple
-        disableTouchRipple
-        disableFocusRipple
-        startIcon={<AddIcon />}
-        sx={{
-          width: 72,
-          height: 40,
-          textTransform: "none",
-          fontWeight: 600,
-          borderRadius: 2,
-
-          "&:hover": {bgcolor: "action.hover",},
-        }}
-      >
-        1
-      </Button>
+      <RepeatButton
+        onPress={onPlusOne}
+        label={
+          <span
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 4,
+            }}
+          >
+            <AddIcon fontSize="small" />
+            <span>1</span>
+          </span>
+        }
+      />
     </Stack>
   );
 }
