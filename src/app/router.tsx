@@ -7,26 +7,31 @@ import CalendarPage from "@/features/calendar/CalendarPage";
 import HistoryPage from "@/features/history/History";
 import StatisticsPage from "@/features/statistics/Statistics";
 
-export const router = createBrowserRouter([
+export const router = createBrowserRouter(
+  [
+    {
+      element: <MainLayout />,
+      children: [
+        {
+          path: "/",
+          element: <AttackPage />,
+        },
+        {
+          path: "/history",
+          element: <HistoryPage />,
+        },
+        {
+          path: "/calendar",
+          element: <CalendarPage />,
+        },
+        {
+          path: "/statistics",
+          element: <StatisticsPage />,
+        },
+      ],
+    },
+  ],
   {
-    element: <MainLayout />,
-    children: [
-      {
-        path: "/",
-        element: <AttackPage />,
-      },
-      {
-        path: "/history",
-        element: <HistoryPage />,
-      },
-      {
-        path: "/calendar",
-        element: <CalendarPage />,
-      },
-      {
-        path: "/statistics",
-        element: <StatisticsPage />,
-      },
-    ],
-  },
-]);
+    basename: import.meta.env.BASE_URL,
+  }
+);
