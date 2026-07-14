@@ -12,6 +12,7 @@ export default function KipSelector(props: Props) {
     <AppSelector
       title="KIP-Skala"
       columns={5}
+      fitOptionsToGrid
       options={KIP_OPTIONS}
       {...props}
     />

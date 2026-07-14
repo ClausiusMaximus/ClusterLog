@@ -8,6 +8,7 @@ type NumberButtonProps = {
   icon?: ElementType;
   selected?: boolean;
   color?: string;
+  fillGridCell?: boolean;
   onClick?: () => void;
 };
 
@@ -16,6 +17,7 @@ export default function NumberButton({
   icon: Icon,
   selected = false,
   color = "#1976d2",
+  fillGridCell = false,
   onClick,
 }: NumberButtonProps) {
   return (
@@ -23,11 +25,13 @@ export default function NumberButton({
       variant="outlined"
       onClick={onClick}
       sx={{
-        minWidth: 72,
-        minHeight: 72,
+        minWidth: fillGridCell ? 0 : 72,
+        minHeight: fillGridCell ? 0 : 72,
+        width: fillGridCell ? "100%" : undefined,
+        aspectRatio: fillGridCell ? "1 / 1" : undefined,
 
-        px: 2,
-        py: 1,
+        px: fillGridCell ? 0 : 2,
+        py: fillGridCell ? 0 : 1,
 
         fontSize: "1.1rem",
         fontWeight: 700,

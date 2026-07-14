@@ -13,6 +13,7 @@ type AppSelectorProps<T extends string | number> = {
   value: T;
   options: readonly Option<T>[];
   columns?: number;
+  fitOptionsToGrid?: boolean;
   onChange: (value: T) => void;
 };
 
@@ -21,6 +22,7 @@ export default function AppSelector<T extends string | number>({
   value,
   options,
   columns = DEFAULT_COLUMNS,
+  fitOptionsToGrid = false,
   onChange,
 }: AppSelectorProps<T>) {
   return (
@@ -32,8 +34,10 @@ export default function AppSelector<T extends string | number>({
       <Box
         sx={{
           display: "grid",
-          gridTemplateColumns: `repeat(${columns}, 1fr)`,
-          gap: 1,
+          gridTemplateColumns: fitOptionsToGrid
+            ? `repeat(${columns}, minmax(0, 1fr))`
+            : `repeat(${columns}, 1fr)`,
+          gap: fitOptionsToGrid ? { xs: 0.5, sm: 1 } : 1,
         }}
       >
         {options.map((option) => (
@@ -43,6 +47,7 @@ export default function AppSelector<T extends string | number>({
             icon={typeof option.icon === "string" ? undefined : option.icon}
             color={option.color}
             selected={value === option.value}
+            fillGridCell={fitOptionsToGrid}
             onClick={() => onChange(option.value)}
           />
         ))}
