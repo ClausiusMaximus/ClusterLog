@@ -28,8 +28,10 @@ export default function AttackForm({
   return (
     <Stack spacing={3}>
       <StartTimePicker
-        value={attack.start}
-        onChange={(date) => update("start", date)}
+        start={attack.start}
+        duration={attack.duration}
+        onStartChange={(date) => update("start", date)}
+        onDurationChange={(duration) => update("duration", duration)}
       />
 
       <DurationPicker
