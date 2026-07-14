@@ -131,13 +131,22 @@ export default function BackupRestore() {
   };
 
   return (
-    <AppCard>
-      <Typography variant="h6" gutterBottom>
+    <AppCard
+      sx={{
+        "& .MuiCardContent-root": {
+          p: 2,
+          "&:last-child": { pb: 2 },
+        },
+      }}
+    >
+      <Typography variant="subtitle1" sx={{ mb: 1 }}>
         Backup & Restore
       </Typography>
 
-      <Stack spacing={2}>
-        <AppButton onClick={handleExport}>Backup exportieren</AppButton>
+      <Stack spacing={1}>
+        <AppButton size="medium" sx={{ minHeight: 48 }} onClick={handleExport}>
+          Backup exportieren
+        </AppButton>
 
         <input
           ref={fileInputRef}
@@ -147,7 +156,9 @@ export default function BackupRestore() {
           onChange={handleFileChange}
         />
 
-        <AppButton onClick={handleImportClick}>Backup importieren</AppButton>
+        <AppButton size="medium" sx={{ minHeight: 48 }} onClick={handleImportClick}>
+          Backup importieren
+        </AppButton>
       </Stack>
 
       <AppSnackbar
