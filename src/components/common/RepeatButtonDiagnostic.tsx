@@ -26,10 +26,11 @@ export default function RepeatButtonDiagnostic({
   interval = 100,
   sx,
 }: RepeatButtonProps) {
-  const idRef = useRef<number>(() => {
+  const idRef = useRef<number>(0);
+  if (idRef.current === 0) {
     instanceCounter += 1;
-    return instanceCounter;
-  }) as React.MutableRefObject<number>;
+    idRef.current = instanceCounter;
+  }
 
   const timeoutRef = useRef<number | null>(null);
   const intervalRef = useRef<number | null>(null);
