@@ -27,8 +27,6 @@ export default function RepeatButton({
   const timeoutRef = useRef<number | null>(null);
   const intervalRef = useRef<number | null>(null);
   const pressedRef = useRef(false);
-  const pointerIdRef = useRef<number | null>(null);
-  const targetRef = useRef<HTMLElement | null>(null);
 
   const clearTimers = useCallback(() => {
     if (timeoutRef.current !== null) {
@@ -44,20 +42,6 @@ export default function RepeatButton({
 
   const stop = useCallback(() => {
     pressedRef.current = false;
-
-    if (targetRef.current && pointerIdRef.current !== null) {
-      if (typeof targetRef.current.releasePointerCapture === "function") {
-        try {
-          targetRef.current.releasePointerCapture(pointerIdRef.current);
-        } catch {
-          // ignore release failures
-        }
-      }
-
-      pointerIdRef.current = null;
-      targetRef.current = null;
-    }
-
     clearTimers();
   }, [clearTimers]);
 
@@ -85,21 +69,15 @@ export default function RepeatButton({
         return;
       }
 
-      event.preventDefault();
       event.stopPropagation();
-
       startTimers();
     },
     [startTimers],
   );
 
-  const startFromPointer = useCallback(
-    (event: React.PointerEvent<HTMLElement>) => {
-      if (event.pointerType === "touch") {
-        return;
-      }
-
-      if (event.pointerType === "mouse" && event.button !== 0) {
+  const startFromMouse = useCallback(
+    (event: React.MouseEvent<HTMLElement>) => {
+      if (event.button !== 0) {
         return;
       }
 
@@ -107,49 +85,36 @@ export default function RepeatButton({
         return;
       }
 
-      pressedRef.current = true;
-      pointerIdRef.current = event.pointerId;
-      targetRef.current = event.currentTarget;
-
-      if (typeof event.currentTarget.setPointerCapture === "function") {
-        try {
-          event.currentTarget.setPointerCapture(event.pointerId);
-        } catch {
-          // ignore capture failures
-        }
-      }
-
       event.preventDefault();
-
       startTimers();
     },
     [startTimers],
   );
 
   useEffect(() => {
-    const handlePointerUp = () => {
+    const handleMouseUp = () => {
       stop();
     };
 
-    window.addEventListener("pointerup", handlePointerUp);
-    window.addEventListener("pointercancel", handlePointerUp);
+    window.addEventListener("mouseup", handleMouseUp);
+    window.addEventListener("mouseleave", handleMouseUp);
 
     return () => {
-      window.removeEventListener("pointerup", handlePointerUp);
-      window.removeEventListener("pointercancel", handlePointerUp);
-
+      window.removeEventListener("mouseup", handleMouseUp);
+      window.removeEventListener("mouseleave", handleMouseUp);
       stop();
     };
   }, [stop]);
 
   return (
     <ButtonBase
-      onPointerDown={startFromPointer}
+      onMouseDown={startFromMouse}
+      onMouseUp={stop}
+      onMouseLeave={stop}
       onTouchStart={startFromTouch}
       onTouchEnd={stop}
       onTouchCancel={stop}
       onContextMenu={(event) => {
-        event.preventDefault();
         event.stopPropagation();
       }}
       sx={{
