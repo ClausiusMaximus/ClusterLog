@@ -1,7 +1,7 @@
 import RemoveIcon from "@mui/icons-material/Remove";
 import Stack from "@mui/material/Stack";
 
-import RepeatButton from "@/components/common/RepeatButtonDiagnostic";
+import RepeatButton from "@/components/common/RepeatButton";
 
 type Props = {
   onMinusOne: () => void;

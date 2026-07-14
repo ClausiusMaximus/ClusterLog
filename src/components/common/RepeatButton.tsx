@@ -27,9 +27,23 @@ export default function RepeatButton({
   const timeoutRef = useRef<number | null>(null);
   const intervalRef = useRef<number | null>(null);
   const pressedRef = useRef(false);
+  const pointerIdRef = useRef<number | null>(null);
+  const targetRef = useRef<HTMLElement | null>(null);
 
   const stop = useCallback(() => {
     pressedRef.current = false;
+
+    if (targetRef.current && pointerIdRef.current !== null) {
+      if (typeof targetRef.current.releasePointerCapture === "function") {
+        try {
+          targetRef.current.releasePointerCapture(pointerIdRef.current);
+        } catch {
+          // ignore release failures
+        }
+      }
+      pointerIdRef.current = null;
+      targetRef.current = null;
+    }
 
     if (timeoutRef.current !== null) {
       clearTimeout(timeoutRef.current);
@@ -42,21 +56,40 @@ export default function RepeatButton({
     }
   }, []);
 
-  const start = useCallback(() => {
-    if (pressedRef.current) return;
+  const start = useCallback(
+    (event: React.PointerEvent<HTMLElement>) => {
+      if (event.pointerType === "mouse" && event.button !== 0) {
+        return;
+      }
 
-    pressedRef.current = true;
+      if (pressedRef.current) return;
 
-    onPress();
+      pressedRef.current = true;
+      pointerIdRef.current = event.pointerId;
+      targetRef.current = event.currentTarget;
 
-    timeoutRef.current = window.setTimeout(() => {
-      intervalRef.current = window.setInterval(() => {
-        if (pressedRef.current) {
-          onPress();
+      if (typeof event.currentTarget.setPointerCapture === "function") {
+        try {
+          event.currentTarget.setPointerCapture(event.pointerId);
+        } catch {
+          // ignore capture failures
         }
-      }, interval);
-    }, delay);
-  }, [delay, interval, onPress]);
+      }
+
+      event.preventDefault();
+
+      onPress();
+
+      timeoutRef.current = window.setTimeout(() => {
+        intervalRef.current = window.setInterval(() => {
+          if (pressedRef.current) {
+            onPress();
+          }
+        }, interval);
+      }, delay);
+    },
+    [delay, interval, onPress],
+  );
 
   useEffect(() => {
     window.addEventListener("pointerup", stop);
@@ -81,7 +114,9 @@ export default function RepeatButton({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-
+        touchAction: "none",
+        userSelect: "none",
+        WebkitTouchCallout: "none",
         "&:hover": {
           bgcolor: "action.hover",
         },
