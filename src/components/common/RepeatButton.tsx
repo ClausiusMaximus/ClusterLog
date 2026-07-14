@@ -27,6 +27,7 @@ export default function RepeatButton({
   const timeoutRef = useRef<number | null>(null);
   const intervalRef = useRef<number | null>(null);
   const pressedRef = useRef(false);
+  const rootRef = useRef<HTMLButtonElement | null>(null);
 
   const clearTimers = useCallback(() => {
     if (timeoutRef.current !== null) {
@@ -63,18 +64,6 @@ export default function RepeatButton({
     }, delay);
   }, [delay, interval, onPress]);
 
-  const startFromTouch = useCallback(
-    (event: React.TouchEvent<HTMLElement>) => {
-      if (pressedRef.current) {
-        return;
-      }
-
-      event.stopPropagation();
-      startTimers();
-    },
-    [startTimers],
-  );
-
   const startFromMouse = useCallback(
     (event: React.MouseEvent<HTMLElement>) => {
       if (event.button !== 0) {
@@ -92,6 +81,46 @@ export default function RepeatButton({
   );
 
   useEffect(() => {
+    const element = rootRef.current;
+
+    if (!element) {
+      return;
+    }
+
+    const handleTouchStart = (event: TouchEvent) => {
+      if (pressedRef.current) {
+        return;
+      }
+
+      event.preventDefault();
+      event.stopPropagation();
+      startTimers();
+    };
+
+    const handleTouchMove = (event: TouchEvent) => {
+      event.preventDefault();
+    };
+
+    const handleTouchEnd = (event: TouchEvent) => {
+      event.preventDefault();
+      stop();
+    };
+
+    const handleTouchCancel = (event: TouchEvent) => {
+      event.preventDefault();
+      stop();
+    };
+
+    const handleContextMenu = (event: Event) => {
+      event.preventDefault();
+    };
+
+    element.addEventListener("touchstart", handleTouchStart, { passive: false });
+    element.addEventListener("touchmove", handleTouchMove, { passive: false });
+    element.addEventListener("touchend", handleTouchEnd, { passive: false });
+    element.addEventListener("touchcancel", handleTouchCancel, { passive: false });
+    element.addEventListener("contextmenu", handleContextMenu);
+
     const handleMouseUp = () => {
       stop();
     };
@@ -100,22 +129,27 @@ export default function RepeatButton({
     window.addEventListener("mouseleave", handleMouseUp);
 
     return () => {
+      element.removeEventListener("touchstart", handleTouchStart);
+      element.removeEventListener("touchmove", handleTouchMove);
+      element.removeEventListener("touchend", handleTouchEnd);
+      element.removeEventListener("touchcancel", handleTouchCancel);
+      element.removeEventListener("contextmenu", handleContextMenu);
+
       window.removeEventListener("mouseup", handleMouseUp);
       window.removeEventListener("mouseleave", handleMouseUp);
+
       stop();
     };
-  }, [stop]);
+  }, [startTimers, stop]);
 
   return (
     <ButtonBase
+      ref={rootRef}
       onMouseDown={startFromMouse}
       onMouseUp={stop}
       onMouseLeave={stop}
-      onTouchStart={startFromTouch}
-      onTouchEnd={stop}
-      onTouchCancel={stop}
       onContextMenu={(event) => {
-        event.stopPropagation();
+        event.preventDefault();
       }}
       sx={{
         width: 72,
