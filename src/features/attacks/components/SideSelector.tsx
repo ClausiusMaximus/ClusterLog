@@ -1,7 +1,7 @@
 import { AppSelector } from "@/components/common";
 
 import type { Side } from "../options/sides";
-import { SIDE_OPTIONS } from "../utils/options";
+import { SIDE_OPTIONS } from "../options/options";
 
 type Props = {
   value: Side;

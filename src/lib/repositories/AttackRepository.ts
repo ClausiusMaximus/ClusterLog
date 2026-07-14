@@ -2,48 +2,33 @@ import { db } from "../db";
 
 import type { Attack } from "@/features/attacks/types/attack";
 
-class AttackRepository {
-  async getAll(): Promise<Attack[]> {
-  const attacks = await db.attacks
-    .orderBy("start")
-    .reverse()
-    .toArray();
-
-  return attacks.map((attack) => ({
-    ...attack,
-
-    start: new Date(attack.start),
-
-    createdAt: new Date(attack.createdAt),
-
-    updatedAt: new Date(attack.updatedAt),
-
-    triggers: attack.triggers ?? [],
-
-    notes: attack.notes ?? "",
-  }));
-}
-  async getById(id: string): Promise<Attack | undefined> {
-  const attack = await db.attacks.get(id);
-
-  if (!attack) {
-    return undefined;
-  }
-
+function normalizeAttack(attack: Attack): Attack {
   return {
     ...attack,
-
     start: new Date(attack.start),
-
     createdAt: new Date(attack.createdAt),
-
     updatedAt: new Date(attack.updatedAt),
-
     triggers: attack.triggers ?? [],
-
     notes: attack.notes ?? "",
   };
 }
+
+class AttackRepository {
+  async getAll(): Promise<Attack[]> {
+    const attacks = await db.attacks.orderBy("start").reverse().toArray();
+
+    return attacks.map((attack) => normalizeAttack(attack));
+  }
+
+  async getById(id: string): Promise<Attack | undefined> {
+    const attack = await db.attacks.get(id);
+
+    if (!attack) {
+      return undefined;
+    }
+
+    return normalizeAttack(attack);
+  }
 
   async create(attack: Attack): Promise<string> {
     await db.attacks.add(attack);

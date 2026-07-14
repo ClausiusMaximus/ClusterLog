@@ -15,3 +15,9 @@
 - Fehler zuerst in einem `bugfix/*`-Branch behandeln
 - Nach Fix in `dev` testen und anschließend mergen
 - Bei stabilen Fehlerbehebungen kann ein Merge in `main` erfolgen
+## Refactoring verification
+
+- Build, ESLint, and TypeScript checks are required after each completed refactoring step.
+- The production build currently reports a large bundle warning. This is a performance follow-up for a separately approved optimization, not a functional defect.
+
+---

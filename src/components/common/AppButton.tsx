@@ -1,7 +1,7 @@
 import Button from "@mui/material/Button";
 import type { ButtonProps } from "@mui/material/Button";
 
-export default function AppButton(props: ButtonProps) {
+export default function AppButton({ sx, ...props }: ButtonProps) {
   return (
     <Button
       variant="contained"
@@ -10,6 +10,7 @@ export default function AppButton(props: ButtonProps) {
       sx={{
         borderRadius: 3,
         minHeight: 56,
+        ...sx,
       }}
       {...props}
     />

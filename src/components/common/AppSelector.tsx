@@ -1,10 +1,12 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
-import type { Option } from "@/features/attacks/utils/options";
+import type { Option } from "@/features/attacks/options/options";
 
 import AppCard from "./AppCard";
 import NumberButton from "./NumberButton";
+
+const DEFAULT_COLUMNS = 2;
 
 type AppSelectorProps<T extends string | number> = {
   title: string;
@@ -18,7 +20,7 @@ export default function AppSelector<T extends string | number>({
   title,
   value,
   options,
-  columns = 2,
+  columns = DEFAULT_COLUMNS,
   onChange,
 }: AppSelectorProps<T>) {
   return (

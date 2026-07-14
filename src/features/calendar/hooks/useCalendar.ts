@@ -19,69 +19,42 @@ const MONTHS = [
   "Dezember",
 ];
 
+function isSameDay(left: Date, right: Date) {
+  return (
+    left.getFullYear() === right.getFullYear() &&
+    left.getMonth() === right.getMonth() &&
+    left.getDate() === right.getDate()
+  );
+}
+
 export function useCalendar() {
   const { attacks } = useAttacks();
 
-  const [currentMonth, setCurrentMonth] =
-    useState(() => {
-      const today = new Date();
+  const [currentMonth, setCurrentMonth] = useState(() => {
+    const today = new Date();
+    return new Date(today.getFullYear(), today.getMonth(), 1);
+  });
 
-      return new Date(
-        today.getFullYear(),
-        today.getMonth(),
-        1,
-      );
-    });
-
-  const [selectedDate, setSelectedDate] =
-    useState<Date | null>(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
   const title = useMemo(() => {
     return `${MONTHS[currentMonth.getMonth()]} ${currentMonth.getFullYear()}`;
   }, [currentMonth]);
 
   const days = useMemo(() => {
-    return buildCalendar(currentMonth).map(
-      (day) => {
-        const attackCount = attacks.filter(
-          (attack) => {
-            const attackDate = new Date(
-              attack.start,
-            );
+    return buildCalendar(currentMonth).map((day) => {
+      const attackCount = attacks.filter((attack) => isSameDay(new Date(attack.start), day.date)).length;
 
-            return (
-              attackDate.getFullYear() ===
-                day.date.getFullYear() &&
-              attackDate.getMonth() ===
-                day.date.getMonth() &&
-              attackDate.getDate() ===
-                day.date.getDate()
-            );
-          },
-        ).length;
+      const isSelected = selectedDate !== null && isSameDay(selectedDate, day.date);
 
-        const isSelected =
-          selectedDate !== null &&
-          selectedDate.getFullYear() ===
-            day.date.getFullYear() &&
-          selectedDate.getMonth() ===
-            day.date.getMonth() &&
-          selectedDate.getDate() ===
-            day.date.getDate();
-
-        return {
-          ...day,
-          attackCount,
-          hasAttack: attackCount > 0,
-          isSelected,
-        };
-      },
-    );
-  }, [
-    currentMonth,
-    attacks,
-    selectedDate,
-  ]);
+      return {
+        ...day,
+        attackCount,
+        hasAttack: attackCount > 0,
+        isSelected,
+      };
+    });
+  }, [currentMonth, attacks, selectedDate]);
 
   const previousMonth = () => {
     setCurrentMonth(

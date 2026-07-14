@@ -1,14 +1,15 @@
-import { getSideOption } from "../options/sides";
 import { getActivityOption } from "../options/activities";
+import { getSideOption } from "../options/sides";
 
+export { getActivityOption, getSideOption };
 
-export { getActivityOption, getSideOption};
+const KIP_COLOR_THRESHOLDS = [2, 4, 6, 9] as const;
 
 export function getKipColor(kip: number) {
-  if (kip <= 2) return "success.main";
-  if (kip <= 4) return "warning.light";
-  if (kip <= 6) return "warning.main";
-  if (kip <= 9) return "error.main";
+  if (kip <= KIP_COLOR_THRESHOLDS[0]) return "success.main";
+  if (kip <= KIP_COLOR_THRESHOLDS[1]) return "warning.light";
+  if (kip <= KIP_COLOR_THRESHOLDS[2]) return "warning.main";
+  if (kip <= KIP_COLOR_THRESHOLDS[3]) return "error.main";
 
   return "error.dark";
 }

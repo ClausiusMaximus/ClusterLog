@@ -35,9 +35,10 @@ export default function EditAttackDialog({
   useEffect(() => {
     if (attack) {
       load(attack);
-    } else {
-      reset();
+      return;
     }
+
+    reset();
   }, [attack, load, reset]);
 
   async function handleSubmit() {

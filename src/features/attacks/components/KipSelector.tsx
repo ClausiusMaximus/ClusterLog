@@ -1,6 +1,6 @@
 import { AppSelector } from "@/components/common";
 
-import { KIP_OPTIONS } from "../utils/options";
+import { KIP_OPTIONS } from "../options/options";
 
 type Props = {
   value: number;

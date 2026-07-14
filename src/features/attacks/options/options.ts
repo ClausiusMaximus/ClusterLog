@@ -9,8 +9,8 @@ import RestaurantIcon from "@mui/icons-material/Restaurant";
 import SportsGymnasticsIcon from "@mui/icons-material/SportsGymnastics";
 import WorkIcon from "@mui/icons-material/Work";
 
-import type { Activity } from "../options/activities";
-import type { Side } from "../options/sides";
+import type { Activity } from "./activities";
+import type { Side } from "./sides";
 
 export type Option<T extends string | number> = {
   value: T;

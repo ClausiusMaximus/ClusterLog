@@ -10,7 +10,7 @@ import {
 import type { Attack } from "@/features/attacks/types/attack";
 import EditAttackDialog from "@/features/attacks/EditAttackDialog";
 
-import { attackService } from "@/lib/services";
+import { attackRepository } from "@/lib/repositories";
 
 import AttackDrawer from "./AttackDrawer";
 import AttackGroup from "./AttackGroup";
@@ -88,7 +88,7 @@ export default function AttackList({
         return;
       }
 
-      await attackService.delete(
+      await attackRepository.delete(
         deletingAttack.id,
       );
 

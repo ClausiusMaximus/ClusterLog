@@ -10,6 +10,12 @@ import { db } from "@/lib/db";
 
 const BACKUP_VERSION = "1.0";
 
+type BackupRecord = Record<string, unknown>;
+
+function isBackupRecord(value: unknown): value is BackupRecord {
+  return typeof value === "object" && value !== null;
+}
+
 export default function BackupRestore() {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -55,7 +61,7 @@ export default function BackupRestore() {
       URL.revokeObjectURL(url);
 
       setSnackbar({ open: true, message: "Backup gespeichert", severity: "success" });
-    } catch (err) {
+    } catch {
       setSnackbar({ open: true, message: "Backup fehlgeschlagen", severity: "error" });
     }
   };
@@ -70,9 +76,9 @@ export default function BackupRestore() {
 
     try {
       const text = await file.text();
-      const parsed = JSON.parse(text) as any;
+      const parsed: unknown = JSON.parse(text);
 
-      if (!parsed || typeof parsed !== "object") {
+      if (!isBackupRecord(parsed)) {
         throw new Error("Ungültiges Backup-Format");
       }
 
@@ -83,18 +89,30 @@ export default function BackupRestore() {
         throw new Error("Ungültige Attack-Daten");
       }
 
-      const attacks: Attack[] = parsed.attacks.map((a: any) => ({
-        id: String(a.id),
-        start: new Date(a.start),
-        duration: Number(a.duration) || 0,
-        kip: Number(a.kip) || 0,
-        side: a.side,
-        activity: a.activity,
-        triggers: Array.isArray(a.triggers) ? a.triggers : [],
-        notes: a.notes ?? "",
-        createdAt: a.createdAt ? new Date(a.createdAt) : new Date(),
-        updatedAt: a.updatedAt ? new Date(a.updatedAt) : new Date(),
-      }));
+      const attacks: Attack[] = parsed.attacks.map((value: unknown) => {
+        if (!isBackupRecord(value)) {
+          throw new Error("Invalid attack data");
+        }
+
+        return {
+          id: String(value.id),
+          start: new Date(String(value.start)),
+          duration: Number(value.duration) || 0,
+          kip: Number(value.kip) || 0,
+          side: value.side as Attack["side"],
+          activity: value.activity as Attack["activity"],
+          triggers: Array.isArray(value.triggers)
+            ? value.triggers as Attack["triggers"]
+            : [],
+          notes: (value.notes ?? "") as Attack["notes"],
+          createdAt: value.createdAt
+            ? new Date(String(value.createdAt))
+            : new Date(),
+          updatedAt: value.updatedAt
+            ? new Date(String(value.updatedAt))
+            : new Date(),
+        };
+      });
 
       await db.transaction("rw", db.attacks, async () => {
         await db.attacks.clear();
@@ -104,7 +122,7 @@ export default function BackupRestore() {
       });
 
       setSnackbar({ open: true, message: `Import erfolgreich (v${version})`, severity: "success" });
-    } catch (err) {
+    } catch {
       setSnackbar({ open: true, message: "Import fehlgeschlagen", severity: "error" });
     } finally {
       // reset input

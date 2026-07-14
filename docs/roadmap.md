@@ -21,3 +21,11 @@ Die Roadmap beschreibt geplante Features und deren Priorisierung für die Weiter
 - Neue Features zuerst im Branch `dev` testen
 - Nur stabile Änderungen in `main` aufnehmen
 - Jede größere Funktion wird vor dem Merge mit einem Issue und einem passenden Commit-Label begleitet
+# Refactoring roadmap toward 1.0
+
+1. Keep the current feature-first structure and remove only demonstrably unused code or pass-through abstractions.
+2. Replace remaining weakly typed boundaries with explicit types while retaining the existing attack data format.
+3. Keep build, lint, and typecheck green for every maintenance change.
+4. Treat route changes, Dexie migrations, and PWA changes as separate, explicitly reviewed work; they are out of scope for routine refactoring.
+
+---

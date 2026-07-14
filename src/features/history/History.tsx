@@ -1,34 +1,29 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import { useAttacks } from "@/features/attacks/hooks/useAttacks";
 
 import CalendarView from "./components/CalendarView";
 import DayHistory from "./components/DayHistory";
 
+function isSameDay(left: Date, right: Date) {
+  return (
+    left.getFullYear() === right.getFullYear() &&
+    left.getMonth() === right.getMonth() &&
+    left.getDate() === right.getDate()
+  );
+}
+
 export default function HistoryPage() {
-  const [selectedDate, setSelectedDate] =
-    useState<Date | null>(null);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const { attacks, loading } = useAttacks();
 
-  const { attacks, loading } =
-    useAttacks();
-  
-  const filteredAttacks =
-  selectedDate === null
-    ? []
-    : attacks.filter((attack) => {
-        const attackDate = new Date(
-          attack.start,
-        );
+  const filteredAttacks = useMemo(() => {
+    if (!selectedDate) {
+      return [];
+    }
 
-        return (
-          attackDate.getFullYear() ===
-            selectedDate.getFullYear() &&
-          attackDate.getMonth() ===
-            selectedDate.getMonth() &&
-          attackDate.getDate() ===
-            selectedDate.getDate()
-        );
-      });  
+    return attacks.filter((attack) => isSameDay(new Date(attack.start), selectedDate));
+  }, [attacks, selectedDate]);
 
   if (selectedDate) {
     return (
@@ -36,16 +31,10 @@ export default function HistoryPage() {
         date={selectedDate}
         attacks={filteredAttacks}
         loading={loading}
-        onBack={() =>
-          setSelectedDate(null)
-        }
+        onBack={() => setSelectedDate(null)}
       />
     );
   }
 
-  return (
-    <CalendarView
-      onSelect={setSelectedDate}
-    />
-  );
+  return <CalendarView onSelect={setSelectedDate} />;
 }

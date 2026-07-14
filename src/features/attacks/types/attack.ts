@@ -2,6 +2,8 @@ import type { Activity } from "../options/activities";
 import type { Side } from "../options/sides";
 import type { Trigger } from "../options/triggers";
 
+export type AttackTimestamp = Date;
+
 export interface Attack {
   /** Eindeutige ID */
   id: string;

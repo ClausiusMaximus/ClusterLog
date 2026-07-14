@@ -1,30 +1,16 @@
-export function durationToSeconds(
-  hours: number,
-  minutes: number,
-  seconds: number,
-): number {
-  return (
-    hours * 3600 +
-    minutes * 60 +
-    seconds
-  );
+const SECONDS_PER_HOUR = 3600;
+const SECONDS_PER_MINUTE = 60;
+
+export function durationToSeconds(hours: number, minutes: number, seconds: number): number {
+  return hours * SECONDS_PER_HOUR + minutes * SECONDS_PER_MINUTE + seconds;
 }
 
-export function secondsToDuration(
-  totalSeconds: number,
-) {
+export function secondsToDuration(totalSeconds: number) {
   const safeSeconds = Math.max(0, totalSeconds);
 
-  const hours = Math.floor(
-    safeSeconds / 3600,
-  );
-
-  const minutes = Math.floor(
-    (safeSeconds % 3600) / 60,
-  );
-
-  const seconds =
-    safeSeconds % 60;
+  const hours = Math.floor(safeSeconds / SECONDS_PER_HOUR);
+  const minutes = Math.floor((safeSeconds % SECONDS_PER_HOUR) / SECONDS_PER_MINUTE);
+  const seconds = safeSeconds % SECONDS_PER_MINUTE;
 
   return {
     hours,
@@ -33,10 +19,6 @@ export function secondsToDuration(
   };
 }
 
-export function pad(
-  value: number,
-) {
-  return value
-    .toString()
-    .padStart(2, "0");
+export function pad(value: number) {
+  return value.toString().padStart(2, "0");
 }

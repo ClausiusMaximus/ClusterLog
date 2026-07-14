@@ -4,7 +4,7 @@ import type { Side } from "../options/sides";
 import {
   ACTIVITY_OPTIONS,
   SIDE_OPTIONS,
-} from "./options";
+} from "../options/options";
 
 export function getSideLabel(side: Side): string {
   return (

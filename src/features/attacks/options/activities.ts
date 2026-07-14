@@ -18,48 +18,24 @@ export type ActivityOption = {
   icon: ElementType;
 };
 
-export const activityOptions: readonly ActivityOption[] = [
-  {
-    value: "sleep",
-    label: "Schlaf",
-    icon: Icons.activity.sleep,
-  },
-  {
-    value: "work",
-    label: "Arbeit",
-    icon: Icons.activity.work,
-  },
-  {
-    value: "household",
-    label: "Haushalt",
-    icon: Icons.activity.household,
-  },
-  {
-    value: "leisure",
-    label: "Freizeit",
-    icon: Icons.activity.leisure,
-  },
-  {
-    value: "driving",
-    label: "Autofahrt",
-    icon: Icons.activity.driving,
-  },
-  {
-    value: "eating",
-    label: "Essen",
-    icon: Icons.activity.eating,
-  },
-  {
-    value: "sport",
-    label: "Sport",
-    icon: Icons.activity.sport,
-  },
-  {
-    value: "other",
-    label: "Sonstiges",
-    icon: Icons.activity.other,
-  },
+const ACTIVITY_OPTION_VALUES = [
+  ["sleep", "Schlaf", Icons.activity.sleep],
+  ["work", "Arbeit", Icons.activity.work],
+  ["household", "Haushalt", Icons.activity.household],
+  ["leisure", "Freizeit", Icons.activity.leisure],
+  ["driving", "Autofahrt", Icons.activity.driving],
+  ["eating", "Essen", Icons.activity.eating],
+  ["sport", "Sport", Icons.activity.sport],
+  ["other", "Sonstiges", Icons.activity.other],
 ] as const;
+
+export const activityOptions: readonly ActivityOption[] = ACTIVITY_OPTION_VALUES.map(
+  ([value, label, icon]) => ({
+    value: value as Activity,
+    label,
+    icon,
+  }),
+);
 
 export function getActivityOption(
   activity: Activity,

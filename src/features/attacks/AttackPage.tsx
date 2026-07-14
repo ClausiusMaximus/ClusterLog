@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { PageTitle } from "@/components/common";
-import { AppSnackbar } from "@/components/common";
+import { AppSnackbar, PageTitle } from "@/components/common";
 import AttackForm from "./components/AttackForm";
 import { useAttackForm } from "./hooks/useAttackForm";
 import BackupRestore from "./components/BackupRestore";
@@ -8,13 +7,9 @@ import BackupRestore from "./components/BackupRestore";
 export default function AttackPage() {
   const form = useAttackForm();
   const [snackbar, setSnackbar] = useState({
-      open: false,
-      message: "",
-      severity: "success" as
-        | "success"
-        | "error"
-        | "warning"
-        | "info",
+    open: false,
+    message: "",
+    severity: "success" as "success" | "error" | "warning" | "info",
   });
 
   return (

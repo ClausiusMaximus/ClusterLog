@@ -8,6 +8,8 @@ type Props = {
   onClose: () => void;
 };
 
+const SNACKBAR_AUTO_HIDE_DURATION = 3000;
+
 export default function AppSnackbar({
   open,
   message,
@@ -17,7 +19,7 @@ export default function AppSnackbar({
   return (
     <Snackbar
       open={open}
-      autoHideDuration={3000}
+      autoHideDuration={SNACKBAR_AUTO_HIDE_DURATION}
       onClose={onClose}
       anchorOrigin={{
         vertical: "bottom",

@@ -1,20 +1,22 @@
 import { useCallback, useState } from "react";
 
-import { attackService } from "@/lib/services";
+import { attackRepository } from "@/lib/repositories";
 
 import type { Attack } from "../types/attack";
 import { createEmptyAttack } from "../utils/defaultAttack";
 
 type Mode = "create" | "edit";
 
-export function useAttackForm() {
-  const [mode, setMode] =
-    useState<Mode>("create");
+function buildLoadedAttack(existingAttack: Attack): Attack {
+  return {
+    ...existingAttack,
+    start: new Date(existingAttack.start),
+  };
+}
 
-  const [attack, setAttack] =
-    useState<Attack>(
-      createEmptyAttack(),
-    );
+export function useAttackForm() {
+  const [mode, setMode] = useState<Mode>("create");
+  const [attack, setAttack] = useState<Attack>(createEmptyAttack());
 
   /**
    * Einzelnes Feld aktualisieren
@@ -32,17 +34,10 @@ export function useAttackForm() {
   /**
    * Formular mit bestehender Attacke befüllen
    */
-  const load = useCallback(
-    (existingAttack: Attack) => {
-      setAttack({
-        ...existingAttack,
-        start: new Date(existingAttack.start),
-      });
-
-      setMode("edit");
-    },
-    [],
-  );
+  const load = useCallback((existingAttack: Attack) => {
+    setAttack(buildLoadedAttack(existingAttack));
+    setMode("edit");
+  }, []);
 
   /**
    * Formular zurücksetzen
@@ -64,7 +59,7 @@ export function useAttackForm() {
     };
 
     if (mode === "create") {
-      await attackService.create(
+      await attackRepository.create(
         attackToSave,
       );
 
@@ -73,7 +68,7 @@ export function useAttackForm() {
       return "created";
     }
 
-    await attackService.update(
+    await attackRepository.update(
       attackToSave,
     );
 

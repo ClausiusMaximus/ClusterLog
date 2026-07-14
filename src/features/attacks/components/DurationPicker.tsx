@@ -32,112 +32,67 @@ export default function DurationPicker({
     newMinutes: number,
     newSeconds: number,
   ) => {
-    onChange(
-        Math.max(
-          0,
-          durationToSeconds(
-            newHours,
-            newMinutes,
-            newSeconds,
-          ),
-        )
-    );
+    onChange(Math.max(0, durationToSeconds(newHours, newMinutes, newSeconds)));
   };
 
   const changeHours = (delta: number) => {
-      updateDuration(
-        hours + delta,
-        minutes,
-        seconds,
-      );
+    updateDuration(hours + delta, minutes, seconds);
   };
 
   const changeMinutes = (delta: number) => {
-      updateDuration(
-        hours,
-        minutes + delta,
-        seconds,
-      );
-   };
+    updateDuration(hours, minutes + delta, seconds);
+  };
 
-   const changeSeconds = (delta: number) => {
-      updateDuration(
-        hours,
-        minutes,
-        seconds + delta,
-      );
-   };
+  const changeSeconds = (delta: number) => {
+    updateDuration(hours, minutes, seconds + delta);
+  };
 
-    return (
-      <AppCard>
-        <Typography
-          variant="h6"
-          gutterBottom
-        >
-          Dauer
-        </Typography>
+  return (
+    <AppCard>
+      <Typography variant="h6" gutterBottom>
+        Dauer
+      </Typography>
 
-        {/* obere Buttons */}
+      <Stack direction="row" spacing={5} sx={{ justifyContent: "center" }}>
+        <TimeStepperTop
+          label="Std"
+          onPlusTen={() => changeHours(10)}
+          onPlusOne={() => changeHours(1)}
+        />
 
-        <Stack
-          direction="row"
-          spacing={5}
-          sx={{ justifyContent: "center" }}
-        >
-          <TimeStepperTop
-            label="Std"
-            onPlusTen={() => changeHours(10)}
-            onPlusOne={() => changeHours(1)}
-          />
+        <TimeStepperTop
+          label="Min"
+          onPlusTen={() => changeMinutes(10)}
+          onPlusOne={() => changeMinutes(1)}
+        />
 
-          <TimeStepperTop
-            label="Min"
-            onPlusTen={() => changeMinutes(10)}
-            onPlusOne={() => changeMinutes(1)}
-          />
+        <TimeStepperTop
+          label="Sek"
+          onPlusTen={() => changeSeconds(10)}
+          onPlusOne={() => changeSeconds(1)}
+        />
+      </Stack>
 
-          <TimeStepperTop
-            label="Sek"
-            onPlusTen={() => changeSeconds(10)}
-            onPlusOne={() => changeSeconds(1)}
-          />
-        </Stack>
+      <Stack sx={{ my: 3, alignItems: "center" }}>
+        <TimeDisplay seconds={value} />
+      </Stack>
 
-        {/* Display */}
+      <Stack direction="row" spacing={5} sx={{ justifyContent: "center" }}>
+        <TimeStepperBottom
+          onMinusOne={() => changeHours(-1)}
+          onMinusTen={() => changeHours(-10)}
+        />
 
-        <Stack
-          sx={{
-            my: 3,
-            alignItems: "center",
-          }}
-        >
-          <TimeDisplay
-            seconds={value}
-          />
-        </Stack>
+        <TimeStepperBottom
+          onMinusOne={() => changeMinutes(-1)}
+          onMinusTen={() => changeMinutes(-10)}
+        />
 
-        {/* untere Buttons */}
-
-        <Stack
-          direction="row"
-          spacing={5}
-          sx={{ justifyContent: "center" }}
-        >
-          <TimeStepperBottom
-            onMinusOne={() => changeHours(-1)}
-            onMinusTen={() => changeHours(-10)}
-          />
-
-          <TimeStepperBottom
-            onMinusOne={() => changeMinutes(-1)}
-            onMinusTen={() => changeMinutes(-10)}
-          />
-
-          <TimeStepperBottom
-            onMinusOne={() => changeSeconds(-1)}
-            onMinusTen={() => changeSeconds(-10)}
-          />
-        </Stack>
-      </AppCard>
-    );
+        <TimeStepperBottom
+          onMinusOne={() => changeSeconds(-1)}
+          onMinusTen={() => changeSeconds(-10)}
+        />
+      </Stack>
+    </AppCard>
+  );
 }

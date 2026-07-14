@@ -14,26 +14,20 @@ export type SideOption = {
   icon: ElementType;
 };
 
-export const sideOptions: readonly SideOption[] = [
-  {
-    value: "left",
-    label: "Links",
-    emoji: "⬅",
-    icon: Icons.side.left,
-  },
-  {
-    value: "right",
-    label: "Rechts",
-    emoji: "➡",
-    icon: Icons.side.right,
-  },
-  {
-    value: "both",
-    label: "Beidseitig",
-    emoji: "⬌",
-    icon: Icons.side.both,
-  },
+const SIDE_OPTION_VALUES = [
+  ["left", "Links", "⬅", Icons.side.left],
+  ["right", "Rechts", "➡", Icons.side.right],
+  ["both", "Beidseitig", "⬌", Icons.side.both],
 ] as const;
+
+export const sideOptions: readonly SideOption[] = SIDE_OPTION_VALUES.map(
+  ([value, label, emoji, icon]) => ({
+    value: value as Side,
+    label,
+    emoji,
+    icon,
+  }),
+);
 
 export function getSideOption(
   side: Side,

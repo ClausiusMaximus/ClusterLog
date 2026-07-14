@@ -45,11 +45,10 @@ export default function AttackDrawer({
   if (!attack) {
     return null;
   }
-  console.log(attack);
 
-  const activity = getActivityOption(attack.activity,);
+  const activity = getActivityOption(attack.activity);
 
-  const side = getSideOption(attack.side,);
+  const side = getSideOption(attack.side);
   const triggers = attack.triggers ?? [];
   const notes = attack.notes ?? "";
   const ActivityIcon = activity.icon;
