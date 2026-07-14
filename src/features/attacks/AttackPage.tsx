@@ -3,6 +3,7 @@ import { PageTitle } from "@/components/common";
 import { AppSnackbar } from "@/components/common";
 import AttackForm from "./components/AttackForm";
 import { useAttackForm } from "./hooks/useAttackForm";
+import BackupRestore from "./components/BackupRestore";
 
 export default function AttackPage() {
   const form = useAttackForm();
@@ -36,6 +37,8 @@ export default function AttackPage() {
           });
         }}
       />
+
+      <BackupRestore />
       <AppSnackbar
         open={snackbar.open}
         message={snackbar.message}
