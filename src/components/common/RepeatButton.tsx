@@ -106,6 +106,14 @@ export default function RepeatButton({
   return (
     <ButtonBase
       onPointerDown={start}
+      onContextMenu={(e) => {
+        console.log("contextmenu");
+        e.preventDefault();
+      }}
+      onTouchStart={() => console.log("touchstart")}
+      onTouchMove={() => console.log("touchmove")}
+      onTouchEnd={() => console.log("touchend")}
+      onTouchCancel={() => console.log("touchcancel")}
       sx={{
         width: 72,
         height: 40,
@@ -116,6 +124,7 @@ export default function RepeatButton({
         alignItems: "center",
         touchAction: "none",
         userSelect: "none",
+        WebkitUserSelect: "none",
         WebkitTouchCallout: "none",
         "&:hover": {
           bgcolor: "action.hover",
