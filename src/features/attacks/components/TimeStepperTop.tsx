@@ -2,7 +2,7 @@ import AddIcon from "@mui/icons-material/Add";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
-import RepeatButton from "@/components/common/RepeatButton";
+import RepeatButton from "@/components/common/RepeatButtonDiagnostic";
 
 type Props = {
   label: string;
