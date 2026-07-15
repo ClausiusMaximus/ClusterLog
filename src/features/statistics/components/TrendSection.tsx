@@ -1,7 +1,8 @@
 import { useMemo, useState } from "react";
 
-import ToggleButton from "@mui/material/ToggleButton";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import Stack from "@mui/material/Stack";
+
+import { SelectableButton } from "@/components/common";
 
 import StatisticsSection from "./StatisticsSection";
 
@@ -38,28 +39,32 @@ export default function TrendSection({
     <StatisticsSection
         title="Attackenverlauf"
         controls={
-          <ToggleButtonGroup
-            exclusive
-            value={trendMode}
-            onChange={(_, value) => {
-              if (value) {
-                setTrendMode(value);
-              }
-            }}
+          <Stack
+            direction="row"
+            spacing={1}
             sx={{ mb: 3 }}
           >
-            <ToggleButton value="day">
+            <SelectableButton
+              selected={trendMode === "day"}
+              onClick={() => setTrendMode("day")}
+            >
               Tag
-            </ToggleButton>
+            </SelectableButton>
 
-            <ToggleButton value="week">
+            <SelectableButton
+              selected={trendMode === "week"}
+              onClick={() => setTrendMode("week")}
+            >
               Woche
-            </ToggleButton>
+            </SelectableButton>
 
-            <ToggleButton value="month">
+            <SelectableButton
+              selected={trendMode === "month"}
+              onClick={() => setTrendMode("month")}
+            >
               Monat
-            </ToggleButton>
-          </ToggleButtonGroup>
+            </SelectableButton>
+          </Stack>
         }
           >
         <AttackTrendChart
