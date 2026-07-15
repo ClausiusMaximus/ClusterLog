@@ -4,5 +4,6 @@ export { default as AppSnackbar } from "./AppSnackbar";
 export { default as AppSelector } from "./AppSelector";
 export { default as ConfirmDialog } from "./ConfirmDialog";
 export { default as NumberButton } from "./NumberButton";
+export { default as SelectableButton } from "./SelectableButton";
 export { default as PageTitle } from "./layout/PageTitle";
 export { default as Section } from "./layout/Section";

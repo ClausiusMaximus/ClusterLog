@@ -195,6 +195,7 @@ export default function StatisticsFilterPanel({
                         activity.label
                       }
                       clickable
+                      variant={selected ? "filled" : "outlined"}
                       color={
                         selected
                           ? "primary"
@@ -258,6 +259,7 @@ export default function StatisticsFilterPanel({
                       }
                       label={side.label}
                       clickable
+                      variant={selected ? "filled" : "outlined"}
                       color={
                         selected
                           ? "primary"

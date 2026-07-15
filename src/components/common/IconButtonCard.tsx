@@ -1,7 +1,8 @@
-import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import type { ElementType } from "react";
+
+import SelectableButton from "./SelectableButton";
 
 type Props = {
   icon: ElementType;
@@ -21,27 +22,20 @@ export default function IconButtonCard({
       spacing={1}
       sx={{ alignItems: "center" }}
     >
-      <IconButton
+      <SelectableButton
+        selected={selected}
         onClick={onClick}
         sx={{
           width: 64,
           height: 64,
+          minWidth: 64,
+          minHeight: 64,
+          p: 0,
+          borderRadius: "50%",
 
           transition: "all .2s ease",
 
-          bgcolor: selected
-            ? "primary.main"
-            : "transparent",
-
-          color: selected
-            ? "primary.contrastText"
-            : "text.secondary",
-
           "&:hover": {
-            bgcolor: selected
-              ? "primary.dark"
-              : "action.hover",
-
             transform: "scale(1.08)",
           },
         }}
@@ -51,7 +45,7 @@ export default function IconButtonCard({
             fontSize: 34,
           }}
         />
-      </IconButton>
+      </SelectableButton>
 
       <Typography
         variant="caption"
