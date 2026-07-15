@@ -21,7 +21,9 @@ export function calculateActivityDistribution(
   };
 
   attacks.forEach((attack) => {
-    distribution[attack.activity]++;
+    if (attack.activity) {
+      distribution[attack.activity]++;
+    }
   });
 
   return distribution;

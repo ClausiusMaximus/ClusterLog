@@ -11,7 +11,7 @@ import type { Activity } from "../options/activities";
 const ACTIVITY_COLUMNS = 4;
 
 type Props = {
-  value: Activity;
+  value: Activity | null;
   onChange: (value: Activity) => void;
 };
 

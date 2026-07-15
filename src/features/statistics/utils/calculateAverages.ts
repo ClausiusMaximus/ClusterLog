@@ -20,13 +20,17 @@ export function calculateAverages(
   }
 
   let kipSum = 0;
+  let kipCount = 0;
   let durationSum = 0;
 
   let longestDuration = attacks[0].duration;
   let shortestDuration = attacks[0].duration;
 
   attacks.forEach((attack) => {
-    kipSum += attack.kip;
+    if (attack.kip !== null) {
+      kipSum += attack.kip;
+      kipCount++;
+    }
     durationSum += attack.duration;
 
     longestDuration = Math.max(
@@ -42,7 +46,7 @@ export function calculateAverages(
 
   return {
     averageKip:
-      kipSum / attacks.length,
+      kipCount === 0 ? 0 : kipSum / kipCount,
 
     averageDuration:
       durationSum / attacks.length,

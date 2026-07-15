@@ -4,7 +4,7 @@ import type { Side } from "../options/sides";
 import { SIDE_OPTIONS } from "../options/options";
 
 type Props = {
-  value: Side;
+  value: Side | null;
   onChange: (side: Side) => void;
 };
 

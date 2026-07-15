@@ -10,7 +10,7 @@ const DEFAULT_COLUMNS = 2;
 
 type AppSelectorProps<T extends string | number> = {
   title: string;
-  value: T;
+  value: T | null;
   options: readonly Option<T>[];
   columns?: number;
   fitOptionsToGrid?: boolean;

@@ -15,13 +15,13 @@ export interface Attack {
   duration: number;
 
   /** KIP 0–10 */
-  kip: number;
+  kip: number | null;
 
   /** Betroffene Seite */
-  side: Side;
+  side: Side | null;
 
   /** Tätigkeit beim Beginn */
-  activity: Activity;
+  activity: Activity | null;
 
   /** Vermutete Auslöser */
   triggers: Trigger[];

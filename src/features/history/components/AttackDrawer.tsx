@@ -51,7 +51,7 @@ export default function AttackDrawer({
   const side = getSideOption(attack.side);
   const triggers = attack.triggers ?? [];
   const notes = attack.notes ?? "";
-  const ActivityIcon = activity.icon;
+  const ActivityIcon = activity?.icon;
   return (
     <Drawer
       anchor="bottom"
@@ -238,10 +238,12 @@ export default function AttackDrawer({
                                 alignItems: "center",
                             }}
                         >
-                            <ActivityIcon fontSize="small" />
+                            {ActivityIcon && (
+                              <ActivityIcon fontSize="small" />
+                            )}
 
                             <Typography>
-                                {activity.label}
+                                {activity?.label ?? "Nicht ausgewählt"}
                             </Typography>
                         </Stack>
 
@@ -263,7 +265,9 @@ export default function AttackDrawer({
                         fontWeight: 600,
                       }}
                     >
-                      {side.emoji} {side.label}
+                      {side
+                        ? `${side.emoji} ${side.label}`
+                        : "Nicht ausgewählt"}
 
                     </Typography>
                   </Box>

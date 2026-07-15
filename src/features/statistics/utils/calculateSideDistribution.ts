@@ -16,7 +16,9 @@ export function calculateSideDistribution(
   };
 
   attacks.forEach((attack) => {
-    distribution[attack.side]++;
+    if (attack.side) {
+      distribution[attack.side]++;
+    }
   });
 
   return distribution;

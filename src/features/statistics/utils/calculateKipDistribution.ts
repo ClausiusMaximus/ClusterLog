@@ -18,6 +18,7 @@ export function calculateKipDistribution(
 
   for (const attack of attacks) {
     if (
+      attack.kip !== null &&
       attack.kip >= 1 &&
       attack.kip <= 10
     ) {
