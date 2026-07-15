@@ -1,9 +1,11 @@
 import { useRef, useState } from "react";
 
+import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
+import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
+import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
 
-import { AppButton, AppCard, AppSnackbar } from "@/components/common";
+import { AppCard, AppSnackbar } from "@/components/common";
 
 import type { Attack } from "../types/attack";
 import { db } from "@/lib/db";
@@ -134,19 +136,21 @@ export default function BackupRestore() {
     <AppCard
       sx={{
         "& .MuiCardContent-root": {
-          p: 2,
-          "&:last-child": { pb: 2 },
+          p: 1,
+          "&:last-child": { pb: 1 },
         },
       }}
     >
-      <Typography variant="subtitle1" sx={{ mb: 1 }}>
-        Backup & Restore
-      </Typography>
-
-      <Stack spacing={1}>
-        <AppButton size="medium" sx={{ minHeight: 48 }} onClick={handleExport}>
-          Backup exportieren
-        </AppButton>
+      <Stack direction="row" spacing={1}>
+        <Button
+          fullWidth
+          variant="outlined"
+          startIcon={<FileDownloadOutlinedIcon />}
+          onClick={handleExport}
+          sx={{ flex: 1, minWidth: 0 }}
+        >
+          Export
+        </Button>
 
         <input
           ref={fileInputRef}
@@ -156,9 +160,15 @@ export default function BackupRestore() {
           onChange={handleFileChange}
         />
 
-        <AppButton size="medium" sx={{ minHeight: 48 }} onClick={handleImportClick}>
-          Backup importieren
-        </AppButton>
+        <Button
+          fullWidth
+          variant="outlined"
+          startIcon={<FileUploadOutlinedIcon />}
+          onClick={handleImportClick}
+          sx={{ flex: 1, minWidth: 0 }}
+        >
+          Import
+        </Button>
       </Stack>
 
       <AppSnackbar
