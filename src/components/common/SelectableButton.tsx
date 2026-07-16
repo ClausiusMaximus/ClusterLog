@@ -1,27 +1,28 @@
 import Button from "@mui/material/Button";
 import type { ButtonProps } from "@mui/material/Button";
+import { alpha } from "@mui/material/styles";
 import type { SxProps, Theme } from "@mui/material/styles";
 
-const selectableButtonStyles = {
-  borderColor: "rgba(59, 130, 246, 0.35)",
+const selectableButtonStyles = (theme: Theme) => ({
+  borderColor: alpha(theme.palette.primary.main, 0.55),
   backgroundColor: "transparent",
-  color: "rgba(59, 130, 246, 0.60)",
+  color: alpha(theme.palette.primary.main, 0.78),
   transition: "background-color 220ms ease, border-color 220ms ease, color 220ms ease, transform 220ms ease",
   "&:hover": {
-    borderColor: "rgba(59, 130, 246, 0.35)",
-    backgroundColor: "rgba(59, 130, 246, 0.08)",
+    borderColor: alpha(theme.palette.primary.main, 0.7),
+    backgroundColor: alpha(theme.palette.primary.main, 0.1),
   },
-} as const;
+});
 
-const selectedButtonStyles = {
-  borderColor: "rgba(30, 64, 175, 0.75)",
-  backgroundColor: "rgba(30, 64, 175, 0.75)",
-  color: "#fff",
+const selectedButtonStyles = (theme: Theme) => ({
+  borderColor: alpha(theme.palette.primary.main, 0.55),
+  backgroundColor: alpha(theme.palette.primary.main, 0.4),
+  color: theme.palette.common.white,
   "&:hover": {
-    borderColor: "rgba(30, 64, 175, 0.85)",
-    backgroundColor: "rgba(30, 64, 175, 0.85)",
+    borderColor: alpha(theme.palette.primary.main, 0.7),
+    backgroundColor: alpha(theme.palette.primary.main, 0.46),
   },
-} as const;
+});
 
 type Props = Omit<ButtonProps, "variant"> & {
   selected?: boolean;

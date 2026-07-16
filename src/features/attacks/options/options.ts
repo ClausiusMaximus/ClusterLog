@@ -84,47 +84,47 @@ export const KIP_OPTIONS: ReadonlyArray<Option<number>> = [
   {
     value: 1,
     label: "1",
-    color: "#4caf50",
+    color: "#ffeb3b",
   },
   {
     value: 2,
     label: "2",
-    color: "#8bc34a",
+    color: "#fdd835",
   },
   {
     value: 3,
     label: "3",
-    color: "#cddc39",
+    color: "#ffca28",
   },
   {
     value: 4,
     label: "4",
-    color: "#ffeb3b",
+    color: "#ffc107",
   },
   {
     value: 5,
     label: "5",
-    color: "#ffc107",
+    color: "#ffb300",
   },
   {
     value: 6,
     label: "6",
-    color: "#ff9800",
+    color: "#fb8c00",
   },
   {
     value: 7,
     label: "7",
-    color: "#ff5722",
+    color: "#f57c00",
   },
   {
     value: 8,
     label: "8",
-    color: "#f44336",
+    color: "#ef6c00",
   },
   {
     value: 9,
     label: "9",
-    color: "#d32f2f",
+    color: "#e53935",
   },
   {
     value: 10,

@@ -8,6 +8,7 @@ type NumberButtonProps = {
   label: string | number;
   icon?: ElementType;
   selected?: boolean;
+  color?: string;
   fillGridCell?: boolean;
   onClick?: () => void;
 };
@@ -16,6 +17,7 @@ export default function NumberButton({
   label,
   icon: Icon,
   selected = false,
+  color,
   fillGridCell = false,
   onClick,
 }: NumberButtonProps) {
@@ -35,14 +37,29 @@ export default function NumberButton({
         fontSize: "1.1rem",
         fontWeight: 700,
 
-        borderRadius: 3,
+        borderRadius: color ? "50%" : 3,
 
         textTransform: "none",
         whiteSpace: "nowrap",
 
         borderWidth: 2,
 
+        ...(color && {
+          borderColor: color,
+          backgroundColor: "transparent",
+          color,
+          boxShadow: "none",
+          ...(selected && {
+            borderWidth: 3,
+          }),
+        }),
+
         "&:hover": {
+          ...(color && {
+            borderColor: color,
+            backgroundColor: "transparent",
+            boxShadow: "none",
+          }),
           transform: "scale(1.03)",
         },
 
