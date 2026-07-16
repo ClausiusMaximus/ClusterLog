@@ -1,5 +1,6 @@
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import { alpha } from "@mui/material/styles";
 import type { ElementType } from "react";
 
 import SelectableButton from "./SelectableButton";
@@ -46,7 +47,9 @@ export default function NumberButton({
 
         ...(color && {
           borderColor: color,
-          backgroundColor: "transparent",
+          backgroundColor: selected
+            ? alpha(color, 0.4)
+            : "transparent",
           color,
           boxShadow: "none",
           ...(selected && {
@@ -57,7 +60,9 @@ export default function NumberButton({
         "&:hover": {
           ...(color && {
             borderColor: color,
-            backgroundColor: "transparent",
+            backgroundColor: selected
+              ? alpha(color, 0.46)
+              : "transparent",
             boxShadow: "none",
           }),
           transform: "scale(1.03)",
