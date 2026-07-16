@@ -38,11 +38,11 @@ export const activityOptions: readonly ActivityOption[] = ACTIVITY_OPTION_VALUES
 );
 
 export function getActivityOption(
-  activity: Activity,
-): ActivityOption {
+  activity: Activity | null,
+): ActivityOption | undefined {
   return (
     activityOptions.find(
       (option) => option.value === activity,
-    ) ?? activityOptions[activityOptions.length - 1]
+    )
   );
 }

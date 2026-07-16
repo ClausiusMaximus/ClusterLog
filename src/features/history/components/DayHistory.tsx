@@ -33,13 +33,17 @@ export default function DayHistory({
     },
   );
 
+  const selectedKips = attacks
+    .map((attack) => attack.kip)
+    .filter((kip): kip is number => kip !== null);
+
   const averageKip =
-    attacks.length === 0
+    selectedKips.length === 0
       ? 0
-      : attacks.reduce(
-          (sum, attack) => sum + attack.kip,
+      : selectedKips.reduce(
+          (sum, kip) => sum + kip,
           0,
-        ) / attacks.length;
+        ) / selectedKips.length;
 
   const averageDuration =
     attacks.length === 0

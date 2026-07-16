@@ -38,7 +38,7 @@ export default function AttackCard({
     attack.side,
   );
 
-  const ActivityIcon = activity.icon;
+  const ActivityIcon = activity?.icon;
 
   return (
     <Card
@@ -164,16 +164,18 @@ export default function AttackCard({
                   alignItems: "center",
                 }}
               >
-                <ActivityIcon
-                  fontSize="small"
-                  color="action"
-                />
+                {ActivityIcon && (
+                  <ActivityIcon
+                    fontSize="small"
+                    color="action"
+                  />
+                )}
 
                 <Typography
                   variant="body2"
                   color="text.secondary"
                 >
-                  {activity.label}
+                  {activity?.label ?? "Nicht ausgewählt"}
                 </Typography>
               </Stack>
 
@@ -181,7 +183,9 @@ export default function AttackCard({
                 variant="body2"
                 color="text.secondary"
               >
-                {side.emoji} {side.label}
+                {side
+                  ? `${side.emoji} ${side.label}`
+                  : "Nicht ausgewählt"}
               </Typography>
             </Stack>
           </Box>

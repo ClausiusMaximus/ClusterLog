@@ -5,7 +5,8 @@ export { getActivityOption, getSideOption };
 
 const KIP_COLOR_THRESHOLDS = [2, 4, 6, 9] as const;
 
-export function getKipColor(kip: number) {
+export function getKipColor(kip: number | null) {
+  if (kip === null) return "text.disabled";
   if (kip <= KIP_COLOR_THRESHOLDS[0]) return "success.main";
   if (kip <= KIP_COLOR_THRESHOLDS[1]) return "warning.light";
   if (kip <= KIP_COLOR_THRESHOLDS[2]) return "warning.main";

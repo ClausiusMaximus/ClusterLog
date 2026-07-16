@@ -11,24 +11,26 @@ export function filterAttacks(
   const now = new Date();
 
   return attacks.filter((attack) => {
-    if (attack.kip < filter.minKip) {
+    if (attack.kip === null || attack.kip < filter.minKip) {
       return false;
     }
 
     if (
       filter.activities.length > 0 &&
-      !filter.activities.includes(
-        attack.activity,
-      )
+      (attack.activity === null ||
+        !filter.activities.includes(
+          attack.activity,
+        ))
     ) {
       return false;
     }
 
     if (
       filter.sides.length > 0 &&
-      !filter.sides.includes(
-        attack.side,
-      )
+      (attack.side === null ||
+        !filter.sides.includes(
+          attack.side,
+        ))
     ) {
       return false;
     }

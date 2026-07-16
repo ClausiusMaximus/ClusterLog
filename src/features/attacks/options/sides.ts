@@ -30,11 +30,11 @@ export const sideOptions: readonly SideOption[] = SIDE_OPTION_VALUES.map(
 );
 
 export function getSideOption(
-  side: Side,
-): SideOption {
+  side: Side | null,
+): SideOption | undefined {
   return (
     sideOptions.find(
       (option) => option.value === side,
-    ) ?? sideOptions[0]
+    )
   );
 }
