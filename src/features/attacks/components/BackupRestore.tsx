@@ -100,7 +100,13 @@ export default function BackupRestore() {
           id: String(value.id),
           start: new Date(String(value.start)),
           duration: Number(value.duration) || 0,
-          kip: Number(value.kip) || 0,
+          kip:
+            typeof value.kip === "number" &&
+            Number.isFinite(value.kip) &&
+            value.kip >= 1 &&
+            value.kip <= 10
+              ? value.kip
+              : null,
           side: value.side as Attack["side"],
           activity: value.activity as Attack["activity"],
           triggers: Array.isArray(value.triggers)
