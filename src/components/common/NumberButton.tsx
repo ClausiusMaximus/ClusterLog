@@ -8,7 +8,6 @@ type NumberButtonProps = {
   label: string | number;
   icon?: ElementType;
   selected?: boolean;
-  color?: string;
   fillGridCell?: boolean;
   onClick?: () => void;
 };
@@ -17,7 +16,6 @@ export default function NumberButton({
   label,
   icon: Icon,
   selected = false,
-  color = "#1976d2",
   fillGridCell = false,
   onClick,
 }: NumberButtonProps) {
@@ -43,20 +41,9 @@ export default function NumberButton({
         whiteSpace: "nowrap",
 
         borderWidth: 2,
-        borderColor: color,
-
-        backgroundColor: selected ? color : undefined,
-        color: selected ? "#fff" : color,
-
-        transition:
-          "all .15s ease",
 
         "&:hover": {
-          backgroundColor: selected ? color : `${color}22`,
-          borderColor: color,
-          color: selected ? "#fff" : color,
           transform: "scale(1.03)",
-          boxShadow: 3,
         },
 
         "&.Mui-disabled": {
@@ -69,8 +56,7 @@ export default function NumberButton({
         },
       }}
     >
-
-        <Stack
+      <Stack
           spacing={0.5}
           sx={{
             alignItems: "center",
@@ -94,7 +80,7 @@ export default function NumberButton({
           >
             {label}
           </Typography>
-        </Stack>
+      </Stack>
     </SelectableButton>
   );
 }

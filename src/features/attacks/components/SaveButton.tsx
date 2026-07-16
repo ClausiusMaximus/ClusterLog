@@ -1,13 +1,19 @@
-import { AppButton } from "@/components/common";
+import { ActionSelectionButton } from "@/components/common";
 
 type Props = {
-  onClick: () => void;
+  onClick: () => void | Promise<void>;
 };
 
 export default function SaveButton({ onClick }: Props) {
   return (
-    <AppButton fullWidth onClick={onClick}>
+    <ActionSelectionButton
+      fullWidth
+      size="large"
+      resetAfterClick
+      onClick={onClick}
+      sx={{ borderRadius: 3, minHeight: 56 }}
+    >
       Attacke speichern
-    </AppButton>
+    </ActionSelectionButton>
   );
 }

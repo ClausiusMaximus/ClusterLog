@@ -53,8 +53,8 @@ export default function IconButtonCard({
         sx={{
           fontWeight: selected ? 700 : 500,
           color: selected
-            ? "primary.main"
-            : "text.primary",
+            ? "#fff"
+            : "rgba(59, 130, 246, 0.60)",
         }}
       >
         {label}

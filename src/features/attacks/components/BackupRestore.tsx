@@ -2,10 +2,13 @@ import { useRef, useState } from "react";
 
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
-import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 
-import { AppCard, AppSnackbar } from "@/components/common";
+import {
+  ActionSelectionButton,
+  AppCard,
+  AppSnackbar,
+} from "@/components/common";
 
 import type { Attack } from "../types/attack";
 import { db } from "@/lib/db";
@@ -148,15 +151,14 @@ export default function BackupRestore() {
       }}
     >
       <Stack direction="row" spacing={1}>
-        <Button
+        <ActionSelectionButton
           fullWidth
-          variant="contained"
           startIcon={<FileDownloadOutlinedIcon />}
           onClick={handleExport}
           sx={{ flex: 1, minWidth: 0 }}
         >
           Export
-        </Button>
+        </ActionSelectionButton>
 
         <input
           ref={fileInputRef}
@@ -166,15 +168,14 @@ export default function BackupRestore() {
           onChange={handleFileChange}
         />
 
-        <Button
+        <ActionSelectionButton
           fullWidth
-          variant="contained"
           startIcon={<FileUploadOutlinedIcon />}
           onClick={handleImportClick}
           sx={{ flex: 1, minWidth: 0 }}
         >
           Import
-        </Button>
+        </ActionSelectionButton>
       </Stack>
 
       <AppSnackbar

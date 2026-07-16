@@ -1,4 +1,5 @@
 export { default as AppButton } from "./AppButton";
+export { default as ActionSelectionButton } from "./ActionSelectionButton";
 export { default as AppCard } from "./AppCard";
 export { default as AppSnackbar } from "./AppSnackbar";
 export { default as AppSelector } from "./AppSelector";
