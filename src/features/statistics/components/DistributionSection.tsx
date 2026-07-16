@@ -1,7 +1,8 @@
 import { useMemo, useState } from "react";
 
-import ToggleButton from "@mui/material/ToggleButton";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import Stack from "@mui/material/Stack";
+
+import { SelectableButton } from "@/components/common";
 
 import {
   activityOptions,
@@ -100,25 +101,24 @@ export default function DistributionSection({
     <StatisticsSection
       title="Verteilungen"
       controls={
-        <ToggleButtonGroup
-          exclusive
-          value={distributionMode}
-          onChange={(_, value) => {
-            if (value) {
-              setDistributionMode(
-                value,
-              );
-            }
-          }}
+        <Stack
+          direction="row"
+          spacing={1}
         >
-          <ToggleButton value="activity">
+          <SelectableButton
+            selected={distributionMode === "activity"}
+            onClick={() => setDistributionMode("activity")}
+          >
             Aktivitäten
-          </ToggleButton>
+          </SelectableButton>
 
-          <ToggleButton value="side">
+          <SelectableButton
+            selected={distributionMode === "side"}
+            onClick={() => setDistributionMode("side")}
+          >
             Seiten
-          </ToggleButton>
-        </ToggleButtonGroup>
+          </SelectableButton>
+        </Stack>
       }
     >
       <DistributionChart

@@ -150,7 +150,7 @@ export default function BackupRestore() {
       <Stack direction="row" spacing={1}>
         <Button
           fullWidth
-          variant="outlined"
+          variant="contained"
           startIcon={<FileDownloadOutlinedIcon />}
           onClick={handleExport}
           sx={{ flex: 1, minWidth: 0 }}
@@ -168,7 +168,7 @@ export default function BackupRestore() {
 
         <Button
           fullWidth
-          variant="outlined"
+          variant="contained"
           startIcon={<FileUploadOutlinedIcon />}
           onClick={handleImportClick}
           sx={{ flex: 1, minWidth: 0 }}
