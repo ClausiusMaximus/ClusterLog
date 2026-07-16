@@ -38,7 +38,7 @@ export default function ConfirmDialog({
       </DialogContent>
 
       <DialogActions>
-        <Button onClick={onCancel}>
+        <Button variant="contained" onClick={onCancel}>
           {cancelText}
         </Button>
 

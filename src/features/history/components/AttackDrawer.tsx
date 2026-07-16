@@ -375,7 +375,7 @@ export default function AttackDrawer({
             </Button>
 
             <Button
-              variant="outlined"
+              variant="contained"
               color="error"
               size="large"
               startIcon={<DeleteIcon />}
@@ -385,7 +385,7 @@ export default function AttackDrawer({
             </Button>
 
             <Button
-              variant="text"
+              variant="contained"
               size="large"
               onClick={onClose}
             >

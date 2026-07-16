@@ -82,7 +82,7 @@ export default function StatisticsFilterPanel({
 
             <Button
               size="small"
-              variant="text"
+              variant="contained"
               disabled={!hasActiveFilters}
               onClick={(event) => {
                 event.stopPropagation();
